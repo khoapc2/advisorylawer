@@ -8,12 +8,12 @@ namespace AdvisoryLawyer.Data.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        private AdvisoryLawyerContext _context = null;
+        private AdvisoryLawyerContext _context;
         private DbSet<T> _dbSet = null;
 
-        public GenericRepository(AdvisoryLawyerContext context)
+        public GenericRepository(AdvisoryLawyerContext content)
         {
-            _context = context;
+            _context = content;
             _dbSet = _context.Set<T>();
         }
 

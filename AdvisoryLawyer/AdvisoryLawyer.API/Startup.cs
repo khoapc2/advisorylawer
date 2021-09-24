@@ -1,3 +1,9 @@
+using AdvisoryLawyer.Business.AutoMapper;
+using AdvisoryLawyer.Business.IServices;
+using AdvisoryLawyer.Business.Services;
+using AdvisoryLawyer.Data.IRepositories;
+using AdvisoryLawyer.Data.Models;
+using AdvisoryLawyer.Data.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,6 +34,11 @@ namespace AdvisoryLawyer.API
         {
 
             services.AddControllers();
+            services.AddAutoMapper(typeof(AdvisoryModule).Assembly);
+            services.AddScoped<IAdvisoryService, AdvisoryService>();
+         
+            services.AddScoped<IGenericRepository<Advisory>, GenericRepository<Advisory>>();
+            services.AddScoped<AdvisoryLawyerContext>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AdvisoryLawyer.API", Version = "v1" });
