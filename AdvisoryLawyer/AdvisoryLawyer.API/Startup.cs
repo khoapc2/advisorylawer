@@ -35,10 +35,15 @@ namespace AdvisoryLawyer.API
 
             services.AddControllers();
             services.AddAutoMapper(typeof(AdvisoryModule).Assembly);
+
             services.AddScoped<IAdvisoryService, AdvisoryService>();
+            services.AddScoped<ICategoryService, CategoryService>();
          
             services.AddScoped<IGenericRepository<Advisory>, GenericRepository<Advisory>>();
+            services.AddScoped<IGenericRepository<Category>, GenericRepository<Category>>();
+
             services.AddScoped<AdvisoryLawyerContext>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AdvisoryLawyer.API", Version = "v1" });
