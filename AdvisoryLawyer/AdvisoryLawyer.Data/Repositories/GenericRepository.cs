@@ -11,9 +11,9 @@ namespace AdvisoryLawyer.Data.Repositories
         private AdvisoryLawyerContext _context;
         private DbSet<T> _dbSet = null;
 
-        public GenericRepository(AdvisoryLawyerContext content)
+        public GenericRepository(AdvisoryLawyerContext context)
         {
-            _context = content;
+            _context = context;
             _dbSet = _context.Set<T>();
         }
 
