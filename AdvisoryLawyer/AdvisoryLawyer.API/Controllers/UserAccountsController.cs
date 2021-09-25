@@ -101,7 +101,7 @@ namespace AdvisoryLawyer.API.Controllers
             }
         }
 
-        [Authorize]
+        [Authorize(Roles = "admin")]
         [HttpPut("change-status/{id}")]
         public IActionResult ChangeAccountStatus(int id)
         {

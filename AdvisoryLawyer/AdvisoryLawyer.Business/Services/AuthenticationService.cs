@@ -38,16 +38,16 @@ namespace AdvisoryLawyer.Business.Services
                     new Claim("Id", account.Id.ToString()),
                     new Claim("Username", account.Username),
                     new Claim("Name", account.Name),
-                    new Claim("Role", account.Role),
-                    new Claim("Address", account.Address),
-                    new Claim("Location", account.Location),
-                    new Claim("Description", account.Description),
-                    new Claim("PhoneNumber", account.PhoneNumber),
-                    new Claim("Website", account.Website),
-                    new Claim("Email", account.Email),
-                    new Claim("Sex", account.Sex.ToString()),
-                    new Claim("DateOfBirth", account.DateOfBirth.ToString()),
-                    new Claim("Status", account.Status.ToString())
+                    new Claim(ClaimTypes.Role, account.Role)
+                    //new Claim("Address", account.Address),
+                    //new Claim("Location", account.Location),
+                    //new Claim("Description", account.Description),
+                    //new Claim("PhoneNumber", account.PhoneNumber),
+                    //new Claim("Website", account.Website),
+                    //new Claim("Email", account.Email),
+                    //new Claim("Sex", account.Sex.ToString()),
+                    //new Claim("DateOfBirth", account.DateOfBirth.ToString()),
+                    //new Claim("Status", account.Status.ToString())
                 };
 
                 var token = new JwtSecurityToken(_config["Jwt:Issuer"],
