@@ -45,10 +45,10 @@ namespace AdvisoryLawyer.API.Controllers
             );
         }
 
-        [HttpPut]
-        public IActionResult UpdateAdvisory([FromBody] UpdateAdvisoryRequest request)
+        [HttpPut("{id}")]
+        public IActionResult UpdateAdvisory(int id, [FromBody] UpdateAdvisoryRequest request)
         {
-            var AdvisoryModel = _advisoryService.UpdateAdvisory(request);
+            var AdvisoryModel = _advisoryService.UpdateAdvisory(id, request);
             if (AdvisoryModel == null)
                 return BadRequest();
             return Ok(AdvisoryModel);

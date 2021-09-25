@@ -8,7 +8,6 @@ namespace AdvisoryLawyer.Business.Requests.AdvisoryRequest
 {
     public class UpdateAdvisoryRequest
     {
-        public int Id { get; set; }
         public int CustomerId { get; set; }
         public int LawyerId { get; set; }
         public string QuestionAnswer { get; set; }

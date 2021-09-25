@@ -13,7 +13,7 @@ namespace AdvisoryLawyer.Business.IServices
         AdvisoryModel GetAdvisoryById(int id);
         List<AdvisoryModel> GetAllAdvisory();
         AdvisoryModel CreateAdvisory(CreateAdvisoryRequest request);
-        AdvisoryModel UpdateAdvisory(UpdateAdvisoryRequest request);
+        AdvisoryModel UpdateAdvisory(int id, UpdateAdvisoryRequest request);
         bool DeleteAdvisory(int id);
 
     }

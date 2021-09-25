@@ -63,15 +63,17 @@ namespace AdvisoryLawyer.Business.Services
 
       
 
-        public AdvisoryModel UpdateAdvisory(UpdateAdvisoryRequest request)
+        public AdvisoryModel UpdateAdvisory(int id, UpdateAdvisoryRequest request)
         {
-            if (GetAdvisoryById(request.Id) == null)
+            var advisory = _res.GetByID(id);
+            if (advisory == null)
             {
                 return null;
             }
-            var advisory = _mapper.Map<Advisory>(request);
+            advisory = _mapper.Map(request , advisory);
             _res.Update(advisory);
             _res.Save();
+
             return _mapper.Map<AdvisoryModel>(advisory);
         }
 
