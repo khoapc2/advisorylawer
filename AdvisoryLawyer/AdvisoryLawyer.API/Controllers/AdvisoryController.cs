@@ -1,5 +1,6 @@
 ﻿using AdvisoryLawyer.Business.IServices;
 using AdvisoryLawyer.Business.Requests.AdvisoryRequest;
+using AdvisoryLawyer.Business.Requests.BookingRequest;
 using AdvisoryLawyer.Business.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -64,4 +65,5 @@ namespace AdvisoryLawyer.API.Controllers
         }
     }
 }
+
 
