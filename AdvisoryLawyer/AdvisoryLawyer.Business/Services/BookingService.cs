@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace AdvisoryLawyer.Business.Services
 {
@@ -43,7 +44,7 @@ namespace AdvisoryLawyer.Business.Services
 
         public BookingModel GetBookingById(int id)
         {
-            var booking = _res.GetByID(id);
+            var booking = _res.Get(x => x.Id == id && x.Status == 1).FirstOrDefault();
             if (booking == null)
                 return null;
             var bookingModel = _mapper.Map<BookingModel>(booking);
@@ -52,7 +53,7 @@ namespace AdvisoryLawyer.Business.Services
 
         public List<BookingModel> GetAllBooking()
         {
-            var listBooking = _res.GetAll();
+            var listBooking = _res.Get(x => x.Status == 1);
             var listBookingModel = _mapper.Map<IEnumerable<BookingModel>>(listBooking).ToList();
             return listBookingModel;
         }
