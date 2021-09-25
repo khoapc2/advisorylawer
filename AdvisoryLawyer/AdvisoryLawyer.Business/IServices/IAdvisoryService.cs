@@ -10,5 +10,6 @@ namespace AdvisoryLawyer.Business.IServices
     public interface IAdvisoryService
     {
         AdvisoryModel GetAdvisoryById(int id);
+        List<AdvisoryModel> GetAllAdvisory();
     }
 }

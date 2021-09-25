@@ -4,6 +4,7 @@ using AdvisoryLawyer.Data.IRepositories;
 using AdvisoryLawyer.Data.Models;
 using AdvisoryLawyer.Data.Repositories;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,13 @@ namespace AdvisoryLawyer.Business.Services
             var advisory = _res.GetByID(id);
             var advisoryModel = _mapper.Map<AdvisoryModel>(advisory);
             return advisoryModel;
+        }
+
+        public List<AdvisoryModel> GetAllAdvisory()
+        {
+            var listAdvisory = _res.GetAllByIQueryable();
+            var listAdvisoryModel = listAdvisory.ProjectTo<AdvisoryModel>(_mapper.ConfigurationProvider).ToList();
+            return listAdvisoryModel;
         }
     }
 }

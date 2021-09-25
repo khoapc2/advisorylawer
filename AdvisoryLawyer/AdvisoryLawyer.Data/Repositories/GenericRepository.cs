@@ -1,8 +1,10 @@
 ﻿using AdvisoryLawyer.Data.IRepositories;
 using AdvisoryLawyer.Data.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace AdvisoryLawyer.Data.Repositories
 {
@@ -20,6 +22,11 @@ namespace AdvisoryLawyer.Data.Repositories
         public IEnumerable<T> GetAll()
         {
             return _dbSet.ToList();
+        }
+
+        public IQueryable<T> GetAllByIQueryable()
+        {
+            return _dbSet;
         }
 
         public T GetByID(int id)
@@ -48,5 +55,10 @@ namespace AdvisoryLawyer.Data.Repositories
         {
             _context.SaveChanges();
         }
+
+        //public IQueryable Get(Expression<Func<T, bool>> sdf)
+        //{
+        //    sdf.Body
+        //}
     }
 }

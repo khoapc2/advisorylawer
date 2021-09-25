@@ -25,6 +25,13 @@ namespace AdvisoryLawyer.API.Controllers
             var advisoryModel = _advisoryService.GetAdvisoryById(id);
             return Ok(advisoryModel);
         }
+
+        [HttpGet]
+        public IActionResult GetAllAdvisory(int id)
+        {
+            var listAdvisoryModel = _advisoryService.GetAllAdvisory();
+            return Ok(listAdvisoryModel);
+        }
     }
 }
 
