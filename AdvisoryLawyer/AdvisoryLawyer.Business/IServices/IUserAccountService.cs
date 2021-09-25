@@ -10,5 +10,6 @@ namespace AdvisoryLawyer.Business.IServices
     public interface IUserAccountService
     {
         public string Login(string username, string password);
+        public UserAccountModel GetProfileByID(string token);
     }
 }

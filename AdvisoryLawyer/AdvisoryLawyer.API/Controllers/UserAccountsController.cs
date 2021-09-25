@@ -1,5 +1,6 @@
 ﻿using AdvisoryLawyer.Business.IServices;
 using AdvisoryLawyer.Business.Requests.UserAccountsRequest;
+using AdvisoryLawyer.Business.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -25,14 +26,14 @@ namespace AdvisoryLawyer.API.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public ActionResult<string> Login([FromBody] LoginRequest account)
+        public ActionResult Login([FromBody] LoginRequest account)
         {
             try
             {
                 var token = _service.Login(account.Username, account.Password);
                 if (!string.IsNullOrEmpty(token))
                 {
-                    return Ok(token);
+                    return Ok(new {token = token});
                 }
                 else
                 {
@@ -45,6 +46,24 @@ namespace AdvisoryLawyer.API.Controllers
                 return BadRequest();
             }
         }
+
+        [Authorize]
+        [HttpGet("profile")]
+        public IActionResult GetProfileByID([FromHeader] string authorization)
+        {
+            try
+            {
+                var userProfile = _service.GetProfileByID(authorization.Substring(7));
+                return Ok(userProfile);
+            }
+            catch (Exception ex)
+            {
+                //logging
+                return BadRequest();
+            }
+        }
+
+
 
     }
 }
