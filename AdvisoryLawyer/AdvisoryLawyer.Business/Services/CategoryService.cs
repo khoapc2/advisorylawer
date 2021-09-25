@@ -1,4 +1,5 @@
 ﻿using AdvisoryLawyer.Business.IServices;
+using AdvisoryLawyer.Business.Requests.UserAccountsRequest;
 using AdvisoryLawyer.Business.ViewModel;
 using AdvisoryLawyer.Data.IRepositories;
 using AdvisoryLawyer.Data.Models;
@@ -38,33 +39,39 @@ namespace AdvisoryLawyer.Business.Services
             return null;
         }
 
-        public CategoryModel CreateCategory(CategoryModel categoryModel)
+        public CategoryModel CreateCategory(CategoryRequest categoryRequest)
         {
-            var category = _mapper.Map<Category>(categoryModel);
+            var category = _mapper.Map<Category>(categoryRequest);
             _genericRepository.Insert(category);
             _genericRepository.Save();
 
             return _mapper.Map<CategoryModel>(category);
         }
 
-        public void DeleteCategory(int id)
+        public bool DeleteCategory(int id)
         {
             var category = _genericRepository.GetByID(id);
             if(category != null)
             {
                 _genericRepository.Delete(id);
                 _genericRepository.Save();
+                return true;
             }
+            return false;
         }
 
-        public void UpdateCategory(int id, CategoryModel categoryModel)
+        public CategoryModel UpdateCategory(int id, CategoryRequest categoryRequest)
         {
             var category = _genericRepository.GetByID(id);
             if (category != null)
             {
-                _mapper.Map(categoryModel, category);
+                category = _mapper.Map(categoryRequest, category);
                 _genericRepository.Save();
+                return _mapper.Map<CategoryModel>(category);
             }
+            return null;
         }
+
+
     }
 }

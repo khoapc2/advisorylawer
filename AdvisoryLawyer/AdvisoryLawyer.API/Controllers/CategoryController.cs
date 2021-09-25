@@ -1,4 +1,5 @@
 ﻿using AdvisoryLawyer.Business.IServices;
+using AdvisoryLawyer.Business.Requests.UserAccountsRequest;
 using AdvisoryLawyer.Business.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -38,6 +39,41 @@ namespace AdvisoryLawyer.API.Controllers
             return categoryModel;
         }
 
-        
+        //POST api/categories
+        [HttpPost]
+        public ActionResult<CategoryModel> CreateCategory(CategoryRequest categoryRequest)
+        {
+            var categoryModel = _service.CreateCategory(categoryRequest);
+            if(categoryModel != null)
+            {
+                return CreatedAtRoute(nameof(GetCategoryById)
+                    , new { Id = categoryModel.Id }, categoryModel);
+            }
+            return BadRequest();
+        }
+
+        //PUT api/categories/{id}
+        [HttpPut("{id}")]
+        public ActionResult<CategoryModel> UpdateCategory(int id, CategoryRequest categoryRequest)
+        {
+            var categoryModel = _service.UpdateCategory(id, categoryRequest);
+            if (categoryModel != null)
+            {
+                return Ok(categoryModel);
+            }
+            return BadRequest();
+        }
+
+        //DELETE api/categories/{id}
+        [HttpDelete("{id}")]
+        public ActionResult DeleteCategory(int id)
+        {
+            bool deleteStatus = _service.DeleteCategory(id);
+            if (deleteStatus)
+            {
+                return Ok();
+            }
+            return BadRequest();
+        }
     }
 }
