@@ -10,5 +10,9 @@ namespace AdvisoryLawyer.Business.IServices
     public interface IUserAccountService
     {
         public string Login(string username, string password);
+        public UserAccountModel GetProfileByID(string token);
+        public IEnumerable<UserAccountModel> GetAllProfiles();
+        public bool ChangePassword(string token, string newPassword);
+        public bool ChangeAccountStatus(int id);
     }
 }

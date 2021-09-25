@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -51,6 +52,96 @@ namespace AdvisoryLawyer.Business.Services
             {
                 _logger.LogError("UserAccountService_Login: " + ex.Message);
                 return string.Empty;
+            }
+        }
+
+        public UserAccountModel GetProfileByID(string token)
+        {
+            try
+            {
+                var decode = new JwtSecurityTokenHandler().ReadToken(token) as JwtSecurityToken;
+                var id = Convert.ToInt32(decode.Claims.FirstOrDefault(claim => claim.Type == "Id").Value);
+
+                if(id > 0)
+                {
+                    var userProfile = _genericRepository.GetByID(id);
+                    if (userProfile != null)
+                    {
+                        return _mapper.Map<UserAccountModel>(userProfile);
+                    }
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                //logging
+                return null;
+            }
+        }
+
+        public IEnumerable<UserAccountModel> GetAllProfiles()
+        {
+            try
+            {
+                var profiles = _genericRepository.GetAll();
+                if (profiles != null)
+                {
+                    return _mapper.Map<IEnumerable<UserAccountModel>>(profiles).ToList();
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                //logging
+                return null;
+            }
+        }
+
+        public bool ChangePassword(string token, string newPassword)
+        {
+            try
+            {
+                var decode = new JwtSecurityTokenHandler().ReadToken(token) as JwtSecurityToken;
+                var id = Convert.ToInt32(decode.Claims.FirstOrDefault(claim => claim.Type == "Id").Value);
+
+                if(id > 0)
+                {
+                    var account = _genericRepository.GetByID(id);
+                    account.Password = newPassword;
+                    _genericRepository.Update(account);
+                    _genericRepository.Save();
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                //logging
+                return false;
+            }
+        }
+
+        public bool ChangeAccountStatus(int id)
+        {
+            try
+            {
+                var account = _genericRepository.GetByID(id);
+                if(account.Status == 1)
+                {
+                    account.Status = 0;
+                }
+                else
+                {
+                    account.Status = 1;
+                }
+                _genericRepository.Update(account);
+                _genericRepository.Save();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                //logging
+                return false;
             }
         }
     }
