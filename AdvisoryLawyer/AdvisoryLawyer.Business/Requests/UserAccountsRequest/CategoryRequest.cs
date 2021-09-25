@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AdvisoryLawyer.Business.ViewModel
+namespace AdvisoryLawyer.Business.Requests.UserAccountsRequest
 {
-    public class CategoryModel
+    public class CategoryRequest
     {
-        public int Id { get; set; }
         public string CategoryName { get; set; }
     }
 }

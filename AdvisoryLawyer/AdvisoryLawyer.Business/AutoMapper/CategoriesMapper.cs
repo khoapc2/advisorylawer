@@ -1,4 +1,5 @@
-﻿using AdvisoryLawyer.Business.ViewModel;
+﻿using AdvisoryLawyer.Business.Requests.UserAccountsRequest;
+using AdvisoryLawyer.Business.ViewModel;
 using AdvisoryLawyer.Data.Models;
 using AutoMapper;
 using System;
@@ -14,6 +15,7 @@ namespace AdvisoryLawyer.Business.AutoMapper
         public CategoriesMapper()
         {
             CreateMap<Category, CategoryModel>();
+            CreateMap<CategoryRequest, Category>();            
         }
     }
 }

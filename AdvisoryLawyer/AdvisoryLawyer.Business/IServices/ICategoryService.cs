@@ -1,4 +1,5 @@
-﻿using AdvisoryLawyer.Business.ViewModel;
+﻿using AdvisoryLawyer.Business.Requests.UserAccountsRequest;
+using AdvisoryLawyer.Business.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,8 @@ namespace AdvisoryLawyer.Business.IServices
     {
         IEnumerable<CategoryModel> GetAllCategories();
         CategoryModel GetCategoryById(int id);
-        CategoryModel CreateCategory(CategoryModel categoryModel);
-        void UpdateCategory(int id, CategoryModel categoryModel);
-        void DeleteCategory(int id);
+        CategoryModel CreateCategory(CategoryRequest categoryRequest);
+        CategoryModel UpdateCategory(int id, CategoryRequest categoryRequest);
+        bool DeleteCategory(int id);
     }
 }
