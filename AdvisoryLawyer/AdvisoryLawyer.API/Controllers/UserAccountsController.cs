@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace AdvisoryLawyer.API.Controllers
@@ -76,6 +77,44 @@ namespace AdvisoryLawyer.API.Controllers
             {
                 //logging
                 return BadRequest();
+            }
+        }
+
+        [Authorize]
+        [HttpPut("change-password")]
+        public IActionResult ChangePassword([FromHeader] string authorization, [FromBody] JsonElement body)
+        {
+            try
+            {
+                var newPassword = body.GetProperty("newPassword").GetString();
+                bool isChange = _service.ChangePassword(authorization.Substring(7), newPassword);
+                if(isChange)
+                {
+                    return Ok();
+                }
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                //logging
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Authorize]
+        [HttpPut("change-status/{id}")]
+        public IActionResult ChangeAccountStatus(int id)
+        {
+            try
+            {
+                bool isChange = _service.ChangeAccountStatus(id);
+                if (isChange) return Ok();
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                //logging
+                return BadRequest(ex.Message);
             }
         }
 

@@ -96,5 +96,53 @@ namespace AdvisoryLawyer.Business.Services
                 return null;
             }
         }
+
+        public bool ChangePassword(string token, string newPassword)
+        {
+            try
+            {
+                var decode = new JwtSecurityTokenHandler().ReadToken(token) as JwtSecurityToken;
+                var id = Convert.ToInt32(decode.Claims.FirstOrDefault(claim => claim.Type == "Id").Value);
+
+                if(id > 0)
+                {
+                    var account = _genericRepository.GetByID(id);
+                    account.Password = newPassword;
+                    _genericRepository.Update(account);
+                    _genericRepository.Save();
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                //logging
+                return false;
+            }
+        }
+
+        public bool ChangeAccountStatus(int id)
+        {
+            try
+            {
+                var account = _genericRepository.GetByID(id);
+                if(account.Status == 1)
+                {
+                    account.Status = 0;
+                }
+                else
+                {
+                    account.Status = 1;
+                }
+                _genericRepository.Update(account);
+                _genericRepository.Save();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                //logging
+                return false;
+            }
+        }
     }
 }
