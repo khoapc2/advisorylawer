@@ -11,5 +11,6 @@ namespace AdvisoryLawyer.Business.IServices
     {
         public string Login(string username, string password);
         public UserAccountModel GetProfileByID(string token);
+        public IEnumerable<UserAccountModel> GetAllProfiles();
     }
 }

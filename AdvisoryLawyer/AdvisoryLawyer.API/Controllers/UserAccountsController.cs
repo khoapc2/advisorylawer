@@ -33,7 +33,7 @@ namespace AdvisoryLawyer.API.Controllers
                 var token = _service.Login(account.Username, account.Password);
                 if (!string.IsNullOrEmpty(token))
                 {
-                    return Ok(new {token = token});
+                    return Ok(new { token = token });
                 }
                 else
                 {
@@ -63,6 +63,21 @@ namespace AdvisoryLawyer.API.Controllers
             }
         }
 
+        [Authorize]
+        [HttpGet("all-profile")]
+        public IActionResult GetAllProfiles()
+        {
+            try
+            {
+                var profiles = _service.GetAllProfiles();
+                return Ok(profiles);
+            }
+            catch (Exception ex)
+            {
+                //logging
+                return BadRequest();
+            }
+        }
 
 
     }

@@ -78,5 +78,23 @@ namespace AdvisoryLawyer.Business.Services
                 return null;
             }
         }
+
+        public IEnumerable<UserAccountModel> GetAllProfiles()
+        {
+            try
+            {
+                var profiles = _genericRepository.GetAll();
+                if (profiles != null)
+                {
+                    return _mapper.Map<IEnumerable<UserAccountModel>>(profiles).ToList();
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                //logging
+                return null;
+            }
+        }
     }
 }
