@@ -1,4 +1,5 @@
 ﻿using AdvisoryLawyer.Business.IServices;
+using AdvisoryLawyer.Business.Requests.AdvisoryRequest;
 using AdvisoryLawyer.Business.ViewModel;
 using AdvisoryLawyer.Data.IRepositories;
 using AdvisoryLawyer.Data.Models;
@@ -22,18 +23,58 @@ namespace AdvisoryLawyer.Business.Services
             _res = res;
             _mapper = mapper;
         }
+
+        public AdvisoryModel CreateAdvisory(CreateAdvisoryRequest request)
+        {
+            var advisory= _mapper.Map<Advisory>(request);
+            _res.Insert(advisory);
+            _res.Save();
+            return _mapper.Map<AdvisoryModel>(advisory); 
+        }
+
+        public bool DeleteAdvisory(int id)
+        {
+            if(GetAdvisoryById(id) == null)
+            {
+                return false;
+            }
+            _res.Delete(id);
+            _res.Save();
+            return true;
+        }
+
         public AdvisoryModel GetAdvisoryById(int id)
         {
             var advisory = _res.GetByID(id);
+            if (advisory == null)
+                return null;
             var advisoryModel = _mapper.Map<AdvisoryModel>(advisory);
+            var test = _mapper.Map<Advisory>(advisoryModel);
+
             return advisoryModel;
         }
 
         public List<AdvisoryModel> GetAllAdvisory()
         {
-            var listAdvisory = _res.GetAllByIQueryable();
-            var listAdvisoryModel = listAdvisory.ProjectTo<AdvisoryModel>(_mapper.ConfigurationProvider).ToList();
+            var listAdvisory = _res.GetAll();
+            var listAdvisoryModel = _mapper.Map<IEnumerable<AdvisoryModel>>(listAdvisory).ToList();
             return listAdvisoryModel;
         }
+
+      
+
+        public AdvisoryModel UpdateAdvisory(UpdateAdvisoryRequest request)
+        {
+            if (GetAdvisoryById(request.Id) == null)
+            {
+                return null;
+            }
+            var advisory = _mapper.Map<Advisory>(request);
+            _res.Update(advisory);
+            _res.Save();
+            return _mapper.Map<AdvisoryModel>(advisory);
+        }
+
+
     }
 }

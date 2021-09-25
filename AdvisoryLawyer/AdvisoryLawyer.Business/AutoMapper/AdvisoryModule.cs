@@ -1,4 +1,5 @@
-﻿using AdvisoryLawyer.Business.ViewModel;
+﻿using AdvisoryLawyer.Business.Requests.AdvisoryRequest;
+using AdvisoryLawyer.Business.ViewModel;
 using AdvisoryLawyer.Data.Models;
 using AutoMapper;
 using System;
@@ -14,6 +15,9 @@ namespace AdvisoryLawyer.Business.AutoMapper
         public AdvisoryModule()
         {
             CreateMap<Advisory, AdvisoryModel>();
+            CreateMap<AdvisoryModel, Advisory>();
+            CreateMap<CreateAdvisoryRequest, Advisory>();
+            CreateMap<UpdateAdvisoryRequest, Advisory>();
         }
     }
 }

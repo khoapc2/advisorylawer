@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AdvisoryLawyer.Business.ViewModel
+namespace AdvisoryLawyer.Business.Requests.AdvisoryRequest
 {
-    public class AdvisoryModel
+    public class UpdateAdvisoryRequest
     {
         public int Id { get; set; }
         public int CustomerId { get; set; }
