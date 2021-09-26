@@ -1,5 +1,4 @@
-﻿
-using AdvisoryLawyer.Business.Requests.DocumentRequest;
+﻿using AdvisoryLawyer.Business.Requests.DocumentRequest;
 using AdvisoryLawyer.Business.ViewModel;
 using System;
 using System.Collections.Generic;
