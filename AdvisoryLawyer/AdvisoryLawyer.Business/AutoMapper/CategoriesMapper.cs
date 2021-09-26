@@ -1,4 +1,4 @@
-﻿using AdvisoryLawyer.Business.Requests.UserAccountsRequest;
+﻿using AdvisoryLawyer.Business.Requests.CategoryRequest;
 using AdvisoryLawyer.Business.ViewModel;
 using AdvisoryLawyer.Data.Models;
 using AutoMapper;

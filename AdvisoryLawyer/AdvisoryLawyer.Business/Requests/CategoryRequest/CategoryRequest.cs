@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AdvisoryLawyer.Business.Requests.UserAccountsRequest
+namespace AdvisoryLawyer.Business.Requests.CategoryRequest
 {
     public class CategoryRequest
     {

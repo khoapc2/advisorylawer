@@ -1,5 +1,5 @@
 ﻿using AdvisoryLawyer.Business.IServices;
-using AdvisoryLawyer.Business.Requests.UserAccountsRequest;
+using AdvisoryLawyer.Business.Requests.CategoryRequest;
 using AdvisoryLawyer.Business.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -36,7 +36,7 @@ namespace AdvisoryLawyer.API.Controllers
             {
                 return BadRequest();
             }
-            return categoryModel;
+            return Ok(categoryModel);
         }
 
         //POST api/categories
