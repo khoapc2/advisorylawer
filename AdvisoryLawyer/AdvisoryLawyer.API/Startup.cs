@@ -27,6 +27,7 @@ namespace AdvisoryLawyer.API
 {
     public class Startup
     {
+        private readonly string _corsName = "AdvisoryLawyer";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -37,6 +38,15 @@ namespace AdvisoryLawyer.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(option =>
+            {
+                option.AddPolicy(name: _corsName,
+                                    builder =>
+                                    {
+                                        builder.WithOrigins().AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                                    });
+            });
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(option =>
             {
                 option.TokenValidationParameters = new TokenValidationParameters
@@ -83,16 +93,22 @@ namespace AdvisoryLawyer.API
             //var path = Directory.GetCurrentDirectory();
             //loggerFactory.AddFile($"{path}\\Logs\\Log.txt");
 
-            if (env.IsDevelopment())
+            if (env.IsDevelopment() || env.IsProduction())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AdvisoryLawyer.API v1"));
+                //app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AdvisoryLawyer.API v1"));
+                app.UseSwaggerUI(c => {
+                    string swaggerJsonBasePath = string.IsNullOrWhiteSpace(c.RoutePrefix) ? "." : "..";
+                    c.SwaggerEndpoint($"{swaggerJsonBasePath}/swagger/v1/swagger.json", "AdvisoryLawyer.API");
+                });
             }
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(_corsName);
 
             app.UseAuthentication();
 
