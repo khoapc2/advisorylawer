@@ -1,5 +1,6 @@
 ﻿using AdvisoryLawyer.Data.IRepositories;
 using AdvisoryLawyer.Data.Models;
+using Cqrs.Repositories.Queries;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -56,9 +57,9 @@ namespace AdvisoryLawyer.Data.Repositories
             _context.SaveChanges();
         }
 
-        //public IQueryable Get(Expression<Func<T, bool>> sdf)
-        //{
-        //    sdf.Body
-        //}
+        public IQueryable<T> Get(Expression<Func<T, bool>> predicate)
+        {
+            return _dbSet.Where(predicate);
+        }
     }
 }

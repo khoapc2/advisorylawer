@@ -9,7 +9,7 @@ namespace AdvisoryLawyer.Data.IRepositories
     {
         IEnumerable<T> GetAll();
         T GetByID(int id);
-        //IQueryable Get(Expression<Func<T, bool>> sdf);
+        IQueryable<T> Get(Expression<Func<T, bool>> predicate);
         void Insert(T obj);
         void Update(T obj);
         void Delete(int id);
