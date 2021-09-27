@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
+using AdvisoryLawyer.Business.Enum;
 
 namespace AdvisoryLawyer.Business.Services
 {
@@ -33,18 +34,20 @@ namespace AdvisoryLawyer.Business.Services
 
         public bool DeleteBooking(int id)
         {
-            if (GetBookingById(id) == null)
+            var booking = _res.Get(x => x.Id == id && x.Status == (int)BookingStatus.Active).FirstOrDefault();
+            if (booking == null)
             {
                 return false;
             }
-            _res.Delete(id);
+            booking.Status = 0;
+            _res.Update(booking);
             _res.Save();
             return true;
         }
 
         public BookingModel GetBookingById(int id)
         {
-            var booking = _res.Get(x => x.Id == id && x.Status == 1).FirstOrDefault();
+            var booking = _res.Get(x => x.Id == id && x.Status == (int)BookingStatus.Active).FirstOrDefault();
             if (booking == null)
                 return null;
             var bookingModel = _mapper.Map<BookingModel>(booking);
@@ -53,7 +56,7 @@ namespace AdvisoryLawyer.Business.Services
 
         public List<BookingModel> GetAllBooking()
         {
-            var listBooking = _res.Get(x => x.Status == 1);
+            var listBooking = _res.Get(x => x.Status == (int)BookingStatus.Active);
             var listBookingModel = _mapper.Map<IEnumerable<BookingModel>>(listBooking).ToList();
             return listBookingModel;
         }
@@ -62,7 +65,7 @@ namespace AdvisoryLawyer.Business.Services
 
         public BookingModel UpdateBooking(int id, UpdateBookingRequest request)
         {
-            var booking = _res.GetByID(id);
+            var booking = _res.Get(x => x.Id == id && x.Status == (int)BookingStatus.Active).FirstOrDefault();
             if (booking == null)
             {
                 return null;

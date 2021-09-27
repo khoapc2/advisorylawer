@@ -34,7 +34,7 @@ namespace AdvisoryLawyer.Business.Services
 
         public bool DeleteAdvisory(int id)
         {
-            if(GetAdvisoryById(id) == null)
+            if (GetAdvisoryById(id) == null)
             {
                 return false;
             }
