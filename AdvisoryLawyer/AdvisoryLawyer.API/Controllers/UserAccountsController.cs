@@ -25,28 +25,28 @@ namespace AdvisoryLawyer.API.Controllers
             _logger = logger;
         }
 
-        [AllowAnonymous]
-        [HttpPost("login")]
-        public ActionResult Login([FromBody] LoginRequest account)
-        {
-            try
-            {
-                var token = _service.Login(account.Username, account.Password);
-                if (!string.IsNullOrEmpty(token))
-                {
-                    return Ok(new { token = token });
-                }
-                else
-                {
-                    return BadRequest();
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("UserAccountsController_Login: " + ex.Message);
-                return BadRequest();
-            }
-        }
+        //[AllowAnonymous]
+        //[HttpPost("login")]
+        //public ActionResult Login([FromBody] LoginRequest account)
+        //{
+        //    try
+        //    {
+        //        var token = _service.Login(account.Username, account.Password);
+        //        if (!string.IsNullOrEmpty(token))
+        //        {
+        //            return Ok(new { token = token });
+        //        }
+        //        else
+        //        {
+        //            return BadRequest();
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError("UserAccountsController_Login: " + ex.Message);
+        //        return BadRequest();
+        //    }
+        //}
 
         [Authorize]
         [HttpGet]
@@ -80,26 +80,26 @@ namespace AdvisoryLawyer.API.Controllers
             }
         }
 
-        [Authorize]
-        [HttpPut("change-password")]
-        public IActionResult ChangePassword([FromHeader] string authorization, [FromBody] JsonElement body)
-        {
-            try
-            {
-                var newPassword = body.GetProperty("newPassword").GetString();
-                bool isChange = _service.ChangePassword(authorization.Substring(7), newPassword);
-                if(isChange)
-                {
-                    return Ok();
-                }
-                return BadRequest();
-            }
-            catch (Exception ex)
-            {
-                //logging
-                return BadRequest(ex.Message);
-            }
-        }
+        //[Authorize]
+        //[HttpPut("change-password")]
+        //public IActionResult ChangePassword([FromHeader] string authorization, [FromBody] JsonElement body)
+        //{
+        //    try
+        //    {
+        //        var newPassword = body.GetProperty("newPassword").GetString();
+        //        bool isChange = _service.ChangePassword(authorization.Substring(7), newPassword);
+        //        if(isChange)
+        //        {
+        //            return Ok();
+        //        }
+        //        return BadRequest();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //logging
+        //        return BadRequest(ex.Message);
+        //    }
+        //}
 
         [Authorize(Roles = "admin")]
         [HttpPut("change-status/{id}")]

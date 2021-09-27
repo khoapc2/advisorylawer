@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace AdvisoryLawyer.Data.Repositories
 {
@@ -13,6 +14,7 @@ namespace AdvisoryLawyer.Data.Repositories
     {
         private AdvisoryLawyerContext _context;
         private DbSet<T> _dbSet = null;
+
 
         public GenericRepository(AdvisoryLawyerContext context)
         {
@@ -25,6 +27,11 @@ namespace AdvisoryLawyer.Data.Repositories
             return _dbSet.ToList();
         }
 
+        public async Task<IEnumerable<T>> GetAllAsync()
+        {
+            return await _dbSet.ToListAsync();
+        }
+
         public IQueryable<T> GetAllByIQueryable()
         {
             return _dbSet;
@@ -35,9 +42,19 @@ namespace AdvisoryLawyer.Data.Repositories
             return _dbSet.Find(id);
         }
 
+        public async Task<T> GetByIDAsync(int id)
+        {
+            return await _dbSet.FindAsync(id);
+        }
+
         public void Insert(T obj)
         {
             _dbSet.Add(obj);
+        }
+
+        public async Task InsertAsync(T obj)
+        {
+             await _dbSet.AddAsync(obj);
         }
 
         public void Update(T obj)
@@ -46,9 +63,22 @@ namespace AdvisoryLawyer.Data.Repositories
             _context.Entry(obj).State = EntityState.Modified;
         }
 
+        public async Task UpdateAsync(T obj)
+        {
+            _dbSet.Attach(obj);
+            _context.Entry(obj).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
+
         public void Delete(int id)
         {
             T existing = _dbSet.Find(id);
+            _dbSet.Remove(existing);
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            T existing = await _dbSet.FindAsync(id);
             _dbSet.Remove(existing);
         }
 
@@ -57,9 +87,19 @@ namespace AdvisoryLawyer.Data.Repositories
             _context.SaveChanges();
         }
 
-        public IQueryable<T> Get(Expression<Func<T, bool>> predicate)
+        public async Task SaveAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
+
+        public IQueryable<T> FindBy(Expression<Func<T, bool>> predicate)
         {
             return _dbSet.Where(predicate);
+        }
+
+        public async Task<ICollection<T>> FindByAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await _dbSet.Where(predicate).ToListAsync();
         }
     }
 }

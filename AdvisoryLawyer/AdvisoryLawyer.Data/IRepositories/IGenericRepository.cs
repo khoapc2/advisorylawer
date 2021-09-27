@@ -2,18 +2,29 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace AdvisoryLawyer.Data.IRepositories
 {
     public interface IGenericRepository<T> where T : class
     {
         IEnumerable<T> GetAll();
-        T GetByID(int id);
-        IQueryable<T> Get(Expression<Func<T, bool>> predicate);
-        void Insert(T obj);
-        void Update(T obj);
-        void Delete(int id);
-        void Save();
+        Task<IEnumerable<T>> GetAllAsync();
         public IQueryable<T> GetAllByIQueryable();
+        T GetByID(int id);
+        Task<T> GetByIDAsync(int id);
+        IQueryable<T> FindBy(Expression<Func<T, bool>> predicate);
+        Task<ICollection<T>> FindByAsync(Expression<Func<T, bool>> predicate);
+        void Insert(T obj);
+        Task InsertAsync(T obj);
+        void Update(T obj);
+        Task UpdateAsync(T obj);
+        void Delete(int id);
+        Task DeleteAsync(int id);
+        void Save();
+        Task SaveAsync();
+        
+
+
     }
 }
