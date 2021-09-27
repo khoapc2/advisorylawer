@@ -1,5 +1,5 @@
 ﻿using AdvisoryLawyer.Business.IServices;
-using AdvisoryLawyer.Business.Requests.LevelRequest;
+using AdvisoryLawyer.Business.Requests.SlotRequest;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,27 +10,60 @@ using System.Threading.Tasks;
 
 namespace AdvisoryLawyer.API.Controllers
 {
-    [Route("api/levels")]
+    [Route("api/slots")]
     [ApiController]
-    public class LevelsController : ControllerBase
+    public class SlotsController : ControllerBase
     {
-        private readonly ILevelService _service;
+        private readonly ISlotService _service;
 
-        public LevelsController(ILevelService service)
+        public SlotsController(ISlotService service)
         {
             _service = service;
         }
 
         [Authorize]
         [HttpGet]
-        public IActionResult GetAllLevels()
+        public IActionResult GetAllSlot()
         {
             try
             {
-                var levelList = _service.GetAllLevels();
-                if(levelList != null)
+                var slotList = _service.GetAllSlot();
+                if (slotList != null) return Ok(slotList);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                //logging
+                return BadRequest();
+            }
+        }
+
+        [Authorize]
+        [HttpGet("id", Name = "GetSlotByID")]
+        public IActionResult GetSlotByID(int id)
+        {
+            try
+            {
+                var slot = _service.GetSlotByID(id);
+                return Ok(slot);
+            }
+            catch (Exception ex)
+            {
+                //logging
+                return BadRequest();
+            }
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult CreateSlot([FromBody] SlotRequest newSlot)
+        {
+            try
+            {
+                var slot = _service.CreateSlot(newSlot);
+                if(slot != null)
                 {
-                    return Ok(levelList);
+                    return CreatedAtRoute(nameof(GetSlotByID), new { Id = slot.Id }, slot);
                 }
                 return BadRequest();
             }
@@ -42,47 +75,13 @@ namespace AdvisoryLawyer.API.Controllers
         }
 
         [Authorize]
-        [HttpGet("{id}", Name = "GetLevelByID")]
-        public IActionResult GetLevelByID(int id)
-        {
-            try
-            {
-                var level = _service.GetLevelByID(id);
-                if (level != null) return Ok(level);
-                return BadRequest();
-            }
-            catch (Exception ex)
-            {
-                //logging
-                return BadRequest();
-            }
-        }
-
-        [Authorize]
-        [HttpPost]
-        public IActionResult CreateLevel([FromBody] LevelRequest newLevel)
-        {
-            try
-            {
-                var level = _service.CreateLevel(newLevel);
-                if (level != null) return CreatedAtRoute(nameof(GetLevelByID), new { Id = level.Id }, level);
-                return BadRequest();
-            }
-            catch (Exception ex)
-            {
-                //logging
-                return BadRequest();
-            }
-        }
-
-        [Authorize]
         [HttpPut("{id}")]
-        public IActionResult UpdateLevel(int id, [FromBody] LevelRequest newLevel)
+        public IActionResult UpdateSlot(int id, [FromBody] SlotRequest newSlot)
         {
             try
             {
-                var level = _service.UpdateLevel(id, newLevel);
-                if (level != null) return Ok();
+                var slot = _service.UpdateSlot(id, newSlot);
+                if (slot != null) return Ok(slot);
                 return BadRequest();
             }
             catch (Exception ex)
@@ -93,12 +92,12 @@ namespace AdvisoryLawyer.API.Controllers
         }
 
         [Authorize]
-        [HttpDelete("{id}")]
-        public IActionResult DeleteLevel(int id)
+        [HttpDelete("{id}")] 
+        public IActionResult DeleteSlot(int id)
         {
             try
             {
-                bool isDelete = _service.DeleteLevel(id);
+                var isDelete = _service.DeleteSlot(id);
                 if (isDelete) return Ok();
                 return BadRequest();
             }

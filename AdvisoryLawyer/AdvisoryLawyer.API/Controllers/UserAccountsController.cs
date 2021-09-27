@@ -26,7 +26,7 @@ namespace AdvisoryLawyer.API.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost]
+        [HttpPost("login")]
         public ActionResult Login([FromBody] LoginRequest account)
         {
             try
@@ -49,7 +49,7 @@ namespace AdvisoryLawyer.API.Controllers
         }
 
         [Authorize]
-        [HttpGet("profile")]
+        [HttpGet]
         public IActionResult GetProfileByID([FromHeader] string authorization)
         {
             try
