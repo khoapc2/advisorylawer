@@ -16,6 +16,7 @@ namespace AdvisoryLawyer.Data.Models
         public string LevelName { get; set; }
         public int MinPrice { get; set; }
         public int MaxPrice { get; set; }
+        public int Status { get; set; }
 
         public virtual ICollection<UserAccount> UserAccounts { get; set; }
     }

@@ -16,6 +16,7 @@ namespace AdvisoryLawyer.Data.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public int CategoryId { get; set; }
+        public int Status { get; set; }
 
         public virtual Category Category { get; set; }
         public virtual ICollection<DocumentCase> DocumentCases { get; set; }
