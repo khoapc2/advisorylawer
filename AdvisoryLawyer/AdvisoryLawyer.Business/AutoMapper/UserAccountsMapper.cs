@@ -9,11 +9,19 @@ using System.Threading.Tasks;
 
 namespace AdvisoryLawyer.Business.AutoMapper
 {
-    class UserAccountsMapper : Profile
+    public class UserAccountsMapper : Profile
     {
         public UserAccountsMapper()
         {
-            CreateMap<UserAccount, UserAccountModel>();
+            CreateMap<UserAccount, UserAccountModel>().ForMember(
+                destination => destination.Level, source => source.MapFrom(source => source.Level.LevelName)).ForMember(
+                destination => destination.LawyerOfficeName, source => source.MapFrom(source => source.LawyerOffice.Name))
+                .ForMember(destination => destination.DateOfBirth, source => source.MapFrom(source => ConvertDateTimeToString(source.DateOfBirth)));
+        }
+
+        private string ConvertDateTimeToString(DateTime? date)
+        {
+            return date?.ToString("dd/MM/yyyy");
         }
     }
 }

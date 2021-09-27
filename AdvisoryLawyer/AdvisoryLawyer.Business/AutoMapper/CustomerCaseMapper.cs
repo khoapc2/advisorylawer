@@ -1,4 +1,4 @@
-﻿using AdvisoryLawyer.Business.Requests.CategoryRequest;
+﻿using AdvisoryLawyer.Business.Requests.CustomerCaseRequest;
 using AdvisoryLawyer.Business.ViewModel;
 using AdvisoryLawyer.Data.Models;
 using AutoMapper;
@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace AdvisoryLawyer.Business.AutoMapper
 {
-    public class CategoriesMapper : Profile
+    public class CustomerCaseMapper : Profile
     {
-        public CategoriesMapper()
+        public CustomerCaseMapper()
         {
-            CreateMap<Category, CategoryModel>();
-            CreateMap<CategoryRequest, Category>();            
+            CreateMap<CustomerCase, CustomerCaseModel>();
+            CreateMap<CustomerCaseRequest, CustomerCase>();
         }
     }
 }

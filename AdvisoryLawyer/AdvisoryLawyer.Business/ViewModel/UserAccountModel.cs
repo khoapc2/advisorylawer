@@ -20,9 +20,9 @@ namespace AdvisoryLawyer.Business.ViewModel
         public string Website { get; set; }
         public string Email { get; set; }
         public bool? Sex { get; set; }
-        public DateTime? DateOfBirth { get; set; }
+        public string? DateOfBirth { get; set; }
         public int Status { get; set; }
-        public int? LawyerOfficeId { get; set; }
-        public int? LevelId { get; set; }
+        public string? LawyerOfficeName { get; set; }
+        public string? Level { get; set; }
     }
 }
