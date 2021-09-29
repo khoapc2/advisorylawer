@@ -23,8 +23,8 @@ namespace AdvisoryLawyer.Data.IRepositories
         Task DeleteAsync(int id);
         void Save();
         Task SaveAsync();
-        
-
+        T Find(Expression<Func<T, bool>> match);
+        Task<T> FindAsync(Expression<Func<T, bool>> match);
 
     }
 }

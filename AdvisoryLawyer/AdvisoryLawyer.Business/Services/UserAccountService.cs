@@ -33,8 +33,8 @@ namespace AdvisoryLawyer.Business.Services
 
         public async Task<string> LoginWithGmail(string gmail)
         {
-            var account = await _genericRepository.FindByAsync(u => u.Username.Equals(gmail));
-            if(account.Count <= 0)
+            var account = await _genericRepository.FindAsync(u => u.Username.Equals(gmail) && u.Status == 1);
+            if (account == null)
             {
                 var newAccount = new UserAccount{
                     Username = gmail,
@@ -52,7 +52,6 @@ namespace AdvisoryLawyer.Business.Services
             }
         }
 
-        public string Login(string username, string password)
         public string Login(string username)
         {
             try

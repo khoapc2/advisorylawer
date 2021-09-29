@@ -47,28 +47,28 @@ namespace AdvisoryLawyer.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [AllowAnonymous]
-        [HttpPost("login")]
-        public ActionResult Login([FromBody] LoginRequest account)
-        {
-            try
-            {
-                var token = _service.Login(account.Username);
-                if (!string.IsNullOrEmpty(token))
-                {
-                    return Ok(new { token = token });
-                }
-                else
-                {
-                    return BadRequest();
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("UserAccountsController_Login: " + ex.Message);
-                return BadRequest();
-            }
-        }
+        //[AllowAnonymous]
+        //[HttpPost("login")]
+        //public ActionResult Login([FromBody] LoginRequest account)
+        //{
+        //    try
+        //    {
+        //        var token = _service.Login(account.Username);
+        //        if (!string.IsNullOrEmpty(token))
+        //        {
+        //            return Ok(new { token = token });
+        //        }
+        //        else
+        //        {
+        //            return BadRequest();
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError("UserAccountsController_Login: " + ex.Message);
+        //        return BadRequest();
+        //    }
+        //}
 
         [Authorize]
         [HttpGet]

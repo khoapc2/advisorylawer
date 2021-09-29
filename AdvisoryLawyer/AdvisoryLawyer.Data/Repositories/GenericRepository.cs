@@ -101,5 +101,15 @@ namespace AdvisoryLawyer.Data.Repositories
         {
             return await _dbSet.Where(predicate).ToListAsync();
         }
+
+        public T Find(Expression<Func<T, bool>> match)
+        {
+            return _dbSet.FirstOrDefault(match);
+        }
+
+        public async Task<T> FindAsync(Expression<Func<T, bool>> match)
+        {
+            return await _dbSet.FirstOrDefaultAsync(match);
+        }
     }
 }
