@@ -24,7 +24,7 @@ namespace AdvisoryLawyer.Data.Repositories
             _logger = logger;
         }
 
-        public UserAccount CheckLogin(string username, string password)
+        public UserAccount CheckLogin(string username)
         {
             try
             {
