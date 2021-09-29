@@ -12,6 +12,6 @@ namespace AdvisoryLawyer.Business.ViewModel
         public string LevelName { get; set; }
         public int MinPrice { get; set; }
         public int MaxPrice { get; set; }
-
+        public int Status { get; set; }
     }
 }

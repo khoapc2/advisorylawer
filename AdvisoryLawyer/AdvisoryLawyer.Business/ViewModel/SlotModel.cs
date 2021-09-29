@@ -14,6 +14,6 @@ namespace AdvisoryLawyer.Business.ViewModel
         public DateTime EndAt { get; set; }
         public int Price { get; set; }
         public int LawyerId { get; set; }
-        public int? Status { get; set; }
+        public int Status { get; set; }
     }
 }

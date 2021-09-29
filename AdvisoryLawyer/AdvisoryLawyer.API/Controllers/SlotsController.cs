@@ -39,7 +39,7 @@ namespace AdvisoryLawyer.API.Controllers
         }
 
         [Authorize]
-        [HttpGet("id", Name = "GetSlotByID")]
+        [HttpGet("{id}", Name = "GetSlotByID")]
         public IActionResult GetSlotByID(int id)
         {
             try

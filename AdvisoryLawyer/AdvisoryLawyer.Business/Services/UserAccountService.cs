@@ -31,6 +31,27 @@ namespace AdvisoryLawyer.Business.Services
             _mapper = mapper;
         }
 
+        public async Task<string> LoginWithGmail(string gmail)
+        {
+            var account = await _genericRepository.FindByAsync(u => u.Username.Equals(gmail));
+            if(account.Count <= 0)
+            {
+                var newAccount = new UserAccount{
+                    Username = gmail,
+                    Name = gmail,
+                    Role = "customer",
+                    Status = 1
+                };
+                await _genericRepository.InsertAsync(newAccount);
+                await _genericRepository.SaveAsync();
+                return _authenticationService.GenerateJSONWebToken(_mapper.Map<UserAccountModel>(newAccount));
+            }
+            else
+            {
+                return _authenticationService.GenerateJSONWebToken(_mapper.Map<UserAccountModel>(account));
+            }
+        }
+
         public string Login(string username, string password)
         {
             try
