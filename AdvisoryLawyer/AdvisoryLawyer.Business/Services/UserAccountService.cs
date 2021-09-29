@@ -53,10 +53,11 @@ namespace AdvisoryLawyer.Business.Services
         }
 
         public string Login(string username, string password)
+        public string Login(string username)
         {
             try
             {
-                var userInfo = _userAccountRepository.CheckLogin(username, password);
+                var userInfo = _userAccountRepository.CheckLogin(username);
 
                 if (userInfo != null)
                 {

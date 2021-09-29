@@ -9,6 +9,6 @@ namespace AdvisoryLawyer.Data.IRepositories
 {
     public interface IUserAccountRepository
     {
-        public UserAccount CheckLogin(string username, string password);
+        public UserAccount CheckLogin(string username);
     }
 }
