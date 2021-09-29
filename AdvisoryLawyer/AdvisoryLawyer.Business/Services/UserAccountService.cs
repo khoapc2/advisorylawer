@@ -31,11 +31,32 @@ namespace AdvisoryLawyer.Business.Services
             _mapper = mapper;
         }
 
-        public string Login(string username, string password)
+        public async Task<string> LoginWithGmail(string gmail)
+        {
+            var account = await _genericRepository.FindAsync(u => u.Username.Equals(gmail) && u.Status == 1);
+            if (account == null)
+            {
+                var newAccount = new UserAccount{
+                    Username = gmail,
+                    Name = gmail,
+                    Role = "customer",
+                    Status = 1
+                };
+                await _genericRepository.InsertAsync(newAccount);
+                await _genericRepository.SaveAsync();
+                return _authenticationService.GenerateJSONWebToken(_mapper.Map<UserAccountModel>(newAccount));
+            }
+            else
+            {
+                return _authenticationService.GenerateJSONWebToken(_mapper.Map<UserAccountModel>(account));
+            }
+        }
+
+        public string Login(string username)
         {
             try
             {
-                var userInfo = _userAccountRepository.CheckLogin(username, password);
+                var userInfo = _userAccountRepository.CheckLogin(username);
 
                 if (userInfo != null)
                 {

@@ -25,13 +25,35 @@ namespace AdvisoryLawyer.API.Controllers
             _logger = logger;
         }
 
+        [AllowAnonymous]
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginRequest account)
+        {
+            try
+            {
+                var token = await _service.LoginWithGmail(account.Username);
+                if (!string.IsNullOrEmpty(token))
+                {
+                    return Ok(new { token = token });
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("UserAccountsController_Login: " + ex.Message);
+                return BadRequest(ex.Message);
+            }
+        }
         //[AllowAnonymous]
         //[HttpPost("login")]
         //public ActionResult Login([FromBody] LoginRequest account)
         //{
         //    try
         //    {
-        //        var token = _service.Login(account.Username, account.Password);
+        //        var token = _service.Login(account.Username);
         //        if (!string.IsNullOrEmpty(token))
         //        {
         //            return Ok(new { token = token });
