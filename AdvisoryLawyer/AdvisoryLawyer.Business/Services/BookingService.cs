@@ -34,7 +34,7 @@ namespace AdvisoryLawyer.Business.Services
 
         public bool DeleteBooking(int id)
         {
-            var booking = _res.Get(x => x.Id == id && x.Status == (int)BookingStatus.Active).FirstOrDefault();
+            var booking = _res.FindBy(x => x.Id == id && x.Status == (int)BookingStatus.Active).FirstOrDefault();
             if (booking == null)
             {
                 return false;
@@ -47,7 +47,7 @@ namespace AdvisoryLawyer.Business.Services
 
         public BookingModel GetBookingById(int id)
         {
-            var booking = _res.Get(x => x.Id == id && x.Status == (int)BookingStatus.Active).FirstOrDefault();
+            var booking = _res.FindBy(x => x.Id == id && x.Status == (int)BookingStatus.Active).FirstOrDefault();
             if (booking == null)
                 return null;
             var bookingModel = _mapper.Map<BookingModel>(booking);
@@ -56,7 +56,7 @@ namespace AdvisoryLawyer.Business.Services
 
         public List<BookingModel> GetAllBooking()
         {
-            var listBooking = _res.Get(x => x.Status == (int)BookingStatus.Active);
+            var listBooking = _res.FindBy(x => x.Status == (int)BookingStatus.Active);
             var listBookingModel = _mapper.Map<IEnumerable<BookingModel>>(listBooking).ToList();
             return listBookingModel;
         }
@@ -65,7 +65,7 @@ namespace AdvisoryLawyer.Business.Services
 
         public BookingModel UpdateBooking(int id, UpdateBookingRequest request)
         {
-            var booking = _res.Get(x => x.Id == id && x.Status == (int)BookingStatus.Active).FirstOrDefault();
+            var booking = _res.FindBy(x => x.Id == id && x.Status == (int)BookingStatus.Active).FirstOrDefault();
             if (booking == null)
             {
                 return null;

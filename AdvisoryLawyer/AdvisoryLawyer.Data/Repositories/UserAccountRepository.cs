@@ -28,7 +28,7 @@ namespace AdvisoryLawyer.Data.Repositories
         {
             try
             {
-                var userInfo = _dbSet.FirstOrDefault(u => u.Username.Equals(username) && u.Password.Equals(password) && u.Status == 1);
+                var userInfo = _dbSet.FirstOrDefault(u => u.Username.Equals(username) && u.Status == 1);
                 return userInfo;
             }
             catch (Exception ex)

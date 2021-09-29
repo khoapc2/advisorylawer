@@ -13,6 +13,7 @@ namespace AdvisoryLawyer.Data.Models
         public string QuestionAnswer { get; set; }
         public DateTime? StartAdvisory { get; set; }
         public TimeSpan? TimeAdvisory { get; set; }
+        public int Status { get; set; }
 
         public virtual UserAccount Customer { get; set; }
         public virtual UserAccount Lawyer { get; set; }

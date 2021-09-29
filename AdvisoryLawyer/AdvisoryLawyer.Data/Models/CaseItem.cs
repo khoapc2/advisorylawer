@@ -14,6 +14,7 @@ namespace AdvisoryLawyer.Data.Models
         public string ImageUrl { get; set; }
         public DateTime? EventDate { get; set; }
         public DateTime CreateDate { get; set; }
+        public int Status { get; set; }
 
         public virtual CustomerCase CustomerCase { get; set; }
     }
