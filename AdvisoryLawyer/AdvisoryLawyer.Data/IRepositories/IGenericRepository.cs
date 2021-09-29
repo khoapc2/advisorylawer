@@ -14,6 +14,7 @@ namespace AdvisoryLawyer.Data.IRepositories
         T GetByID(int id);
         Task<T> GetByIDAsync(int id);
         IQueryable<T> FindBy(Expression<Func<T, bool>> predicate);
+
         Task<ICollection<T>> FindByAsync(Expression<Func<T, bool>> predicate);
         void Insert(T obj);
         Task InsertAsync(T obj);

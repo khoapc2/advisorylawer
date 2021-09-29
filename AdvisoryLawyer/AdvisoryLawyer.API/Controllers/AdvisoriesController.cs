@@ -2,6 +2,7 @@
 using AdvisoryLawyer.Business.Requests.AdvisoryRequest;
 using AdvisoryLawyer.Business.Requests.BookingRequest;
 using AdvisoryLawyer.Business.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,52 +14,52 @@ namespace AdvisoryLawyer.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AdvisoryController : ControllerBase
+    public class AdvisoriesController : ControllerBase
     {
         private readonly IAdvisoryService _advisoryService;
 
-        public AdvisoryController(IAdvisoryService advisoryService)
+        public AdvisoriesController(IAdvisoryService advisoryService)
         {
             _advisoryService = advisoryService;
         }
 
         [HttpGet("{id}", Name = "GetAdvisoryById")]
-        public IActionResult GetAdvisoryById(int id)
+        public async Task<IActionResult> GetAdvisoryById(int id)
         {
-            var advisoryModel = _advisoryService.GetAdvisoryById(id);
+            var advisoryModel =  await _advisoryService.GetAdvisoryById(id);
             if (advisoryModel == null)
                 return BadRequest();
             return Ok(advisoryModel);
         }
 
         [HttpGet]
-        public IActionResult GetAllAdvisory()
+        public IActionResult GetAllAdvisory([FromQuery] AdvisoryModel fillter,[FromQuery] int pageIndex)
         {
-            var listAdvisoryModel = _advisoryService.GetAllAdvisory();
+            var listAdvisoryModel = _advisoryService.GetAllAdvisory(fillter, pageIndex);
             return Ok(listAdvisoryModel);
         }
 
         [HttpPost]
-        public IActionResult CreateAdvisory([FromBody] CreateAdvisoryRequest request)
+        public async Task<IActionResult> CreateAdvisory([FromBody] CreateAdvisoryRequest request)
         {
-            var AdvisoryModel = _advisoryService.CreateAdvisory(request);
+            var AdvisoryModel = await _advisoryService.CreateAdvisory(request);
             return CreatedAtRoute(nameof(GetAdvisoryById), new { id = AdvisoryModel.Id }, AdvisoryModel
             );
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateAdvisory(int id, [FromBody] UpdateAdvisoryRequest request)
+        public async Task<IActionResult> UpdateAdvisory(int id, [FromBody] UpdateAdvisoryRequest request)
         {
-            var AdvisoryModel = _advisoryService.UpdateAdvisory(id, request);
+            var AdvisoryModel = await _advisoryService.UpdateAdvisory(id, request);
             if (AdvisoryModel == null)
                 return BadRequest();
             return Ok(AdvisoryModel);
         }
 
         [HttpDelete]
-        public IActionResult DeleteAdvisory(int id)
+        public async Task<IActionResult> DeleteAdvisory(int id)
         {
-            var rs = _advisoryService.DeleteAdvisory(id);
+            var rs = await _advisoryService.DeleteAdvisory(id);
             if (rs == false)
                 return BadRequest();
             return Ok();

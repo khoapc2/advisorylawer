@@ -4,6 +4,7 @@ using AdvisoryLawyer.Business.Services;
 using AdvisoryLawyer.Data.IRepositories;
 using AdvisoryLawyer.Data.Models;
 using AdvisoryLawyer.Data.Repositories;
+using BookingLawyer.Business.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -135,6 +136,7 @@ namespace AdvisoryLawyer.API
             }
 
             app.UseHttpsRedirection();
+
 
             app.UseRouting();
 

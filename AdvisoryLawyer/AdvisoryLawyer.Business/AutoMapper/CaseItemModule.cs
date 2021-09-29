@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using AdvisoryLawyer.Business.Requests.CaseItemRequest;
+using AdvisoryLawyer.Business.Enum;
 
 namespace AdvisoryLawyer.Business.AutoMapper
 {
@@ -15,8 +16,10 @@ namespace AdvisoryLawyer.Business.AutoMapper
         public CaseItemModule()
         {
             CreateMap<CaseItem, CaseItemModel>().ReverseMap();
-            CreateMap<CreateCaseItemRequest, CaseItem>();
-            CreateMap<UpdateCaseItemRequest, CaseItem>();
+            CreateMap<CreateCaseItemRequest, CaseItem>().ForMember(des
+                => des.Status, opt => opt.MapFrom(src => (int)CaseItemStatus.Active)); 
+            CreateMap<UpdateCaseItemRequest, CaseItem>().ForMember(des
+                => des.Status, opt => opt.MapFrom(src => (int)CaseItemStatus.Active)); ;
         }
     }
 }

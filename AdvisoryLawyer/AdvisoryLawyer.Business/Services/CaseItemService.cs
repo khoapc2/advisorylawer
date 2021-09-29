@@ -1,4 +1,5 @@
-﻿using AdvisoryLawyer.Business.IServices;
+﻿using AdvisoryLawyer.Business.Enum;
+using AdvisoryLawyer.Business.IServices;
 using AdvisoryLawyer.Business.Requests.CaseItemRequest;
 using AdvisoryLawyer.Business.ViewModel;
 using AdvisoryLawyer.Data.IRepositories;
@@ -22,55 +23,64 @@ namespace AdvisoryLawyer.Business.Services
             _mapper = mapper;
         }
 
-        public CaseItemModel CreateCaseItem(CreateCaseItemRequest request)
+        public async Task<CaseItemModel> CreateCaseItem(CreateCaseItemRequest request)
         {
-            var caseItem = _mapper.Map<CaseItem>(request);
-            _res.Insert(caseItem);
-            _res.Save();
-            return _mapper.Map<CaseItemModel>(caseItem);
+            var CaseItem = _mapper.Map<CaseItem>(request);
+            await _res.InsertAsync(CaseItem);
+            await _res.SaveAsync();
+            return _mapper.Map<CaseItemModel>(CaseItem);
         }
 
-        public bool DeleteCaseItem(int id)
+        public async Task<bool> DeleteCaseItem(int id)
         {
-            if (GetCaseItemById(id) == null)
+            var CaseItem = (await _res.FindByAsync(x => x.Id == id && x.Status == (int)CaseItemStatus.Active)).FirstOrDefault();
+            if (CaseItem == null)
             {
                 return false;
             }
-            _res.Delete(id);
-            _res.Save();
+            CaseItem.Status = 0;
+            await _res.UpdateAsync(CaseItem);
+            await _res.SaveAsync();
             return true;
         }
 
-        public CaseItemModel GetCaseItemById(int id)
+        public async Task<CaseItemModel> GetCaseItemById(int id)
         {
-            var caseItem = _res.GetByID(id);
-            if (caseItem == null)
+            var CaseItem = (await _res.FindByAsync(x => x.Id == id && x.Status == (int)CaseItemStatus.Active)).FirstOrDefault();
+            if (CaseItem == null)
                 return null;
-            var caseItemModel = _mapper.Map<CaseItemModel>(caseItem);
+            var CaseItemModel = _mapper.Map<CaseItemModel>(CaseItem);
+            var test = _mapper.Map<CaseItem>(CaseItemModel);
 
-            return caseItemModel;
+            return CaseItemModel;
         }
 
-        public List<CaseItemModel> GetAllCaseItem()
+        public async Task<List<CaseItemModel>> GetAllCaseItem()
         {
-            var listCaseItem = _res.GetAll();
-            var listAdvisoryModel = _mapper.Map<IEnumerable<CaseItemModel>>(listCaseItem).ToList();
-            return listAdvisoryModel;
+            var listCaseItem = await _res.FindByAsync(x => x.Status == (int)CaseItemStatus.Active);
+            var listCaseItemModel = _mapper.Map<IEnumerable<CaseItemModel>>(listCaseItem).ToList();
+            return listCaseItemModel;
         }
 
-        public CaseItemModel UpdateCaseItem(int id, UpdateCaseItemRequest request)
+
+
+        public async Task<CaseItemModel> UpdateCaseItem(int id, UpdateCaseItemRequest request)
         {
-            var caseItem = _res.GetByID(id);
-            if (caseItem == null)
+            var listCaseItem = await _res.FindByAsync(x => x.Id == id && x.Status == (int)CaseItemStatus.Active);
+            var CaseItem = listCaseItem.FirstOrDefault();
+            if (CaseItem == null)
             {
                 return null;
             }
-            caseItem = _mapper.Map(request, caseItem);
-            _res.Update(caseItem);
-            _res.Save();
+            CaseItem = _mapper.Map(request, CaseItem);
+            await _res.UpdateAsync(CaseItem);
+            await _res.SaveAsync();
 
-            return _mapper.Map<CaseItemModel>(caseItem);
+            return _mapper.Map<CaseItemModel>(CaseItem);
         }
+
+
     }
 }
+
 

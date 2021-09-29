@@ -1,5 +1,7 @@
 ﻿using AdvisoryLawyer.Business.Requests.AdvisoryRequest;
 using AdvisoryLawyer.Business.ViewModel;
+using AdvisoryLawyer.Data.Models;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +12,11 @@ namespace AdvisoryLawyer.Business.IServices
 {
     public interface IAdvisoryService
     {
-        AdvisoryModel GetAdvisoryById(int id);
-        List<AdvisoryModel> GetAllAdvisory();
-        AdvisoryModel CreateAdvisory(CreateAdvisoryRequest request);
-        AdvisoryModel UpdateAdvisory(int id, UpdateAdvisoryRequest request);
-        bool DeleteAdvisory(int id);
+        Task<AdvisoryModel> GetAdvisoryById(int id);
+        IPagedList<AdvisoryModel> GetAllAdvisory(AdvisoryModel fillter, int pageIndex);
+        Task<AdvisoryModel> CreateAdvisory(CreateAdvisoryRequest request);
+        Task<AdvisoryModel> UpdateAdvisory(int id, UpdateAdvisoryRequest request);
+        Task<bool> DeleteAdvisory(int id);
 
     }
 }

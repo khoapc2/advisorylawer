@@ -1,8 +1,4 @@
-﻿using AdvisoryLawyer.Business.IServices;
-using AdvisoryLawyer.Business.Requests.BookingRequest;
-using AdvisoryLawyer.Business.ViewModel;
-using AdvisoryLawyer.Data.IRepositories;
-using AdvisoryLawyer.Data.Models;
+﻿
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -10,9 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
+using AdvisoryLawyer.Business.IServices;
+using AdvisoryLawyer.Data.IRepositories;
+using AdvisoryLawyer.Data.Models;
+using AdvisoryLawyer.Business.ViewModel;
+using AdvisoryLawyer.Business.Requests.BookingRequest;
 using AdvisoryLawyer.Business.Enum;
 
-namespace AdvisoryLawyer.Business.Services
+namespace BookingLawyer.Business.Services
 {
     public class BookingService  : IBookingService
     {
@@ -24,57 +25,60 @@ namespace AdvisoryLawyer.Business.Services
             _mapper = mapper;
         }
 
-        public BookingModel CreateBooking(CreateBookingRequest request)
+        public async Task<BookingModel> CreateBooking(CreateBookingRequest request)
         {
-            var booking = _mapper.Map<Booking>(request);
-            _res.Insert(booking);
-            _res.Save();
-            return _mapper.Map<BookingModel>(booking);
+            var Booking = _mapper.Map<Booking>(request);
+            await _res.InsertAsync(Booking);
+            await _res.SaveAsync();
+            return _mapper.Map<BookingModel>(Booking);
         }
 
-        public bool DeleteBooking(int id)
+        public async Task<bool> DeleteBooking(int id)
         {
-            var booking = _res.FindBy(x => x.Id == id && x.Status == (int)BookingStatus.Active).FirstOrDefault();
-            if (booking == null)
+            var Booking = (await _res.FindByAsync(x => x.Id == id && x.Status == (int)BookingStatus.Active)).FirstOrDefault();
+            if (Booking == null)
             {
                 return false;
             }
-            booking.Status = 0;
-            _res.Update(booking);
-            _res.Save();
+            Booking.Status = 0;
+            await _res.UpdateAsync(Booking);
+            await _res.SaveAsync();
             return true;
         }
 
-        public BookingModel GetBookingById(int id)
+        public async Task<BookingModel> GetBookingById(int id)
         {
-            var booking = _res.FindBy(x => x.Id == id && x.Status == (int)BookingStatus.Active).FirstOrDefault();
-            if (booking == null)
+            var Booking = (await _res.FindByAsync(x => x.Id == id && x.Status == (int)BookingStatus.Active)).FirstOrDefault();
+            if (Booking == null)
                 return null;
-            var bookingModel = _mapper.Map<BookingModel>(booking);
-            return bookingModel;
+            var BookingModel = _mapper.Map<BookingModel>(Booking);
+            var test = _mapper.Map<Booking>(BookingModel);
+
+            return BookingModel;
         }
 
-        public List<BookingModel> GetAllBooking()
+        public async Task<List<BookingModel>> GetAllBooking()
         {
-            var listBooking = _res.FindBy(x => x.Status == (int)BookingStatus.Active);
+            var listBooking = await _res.FindByAsync(x => x.Status == (int)BookingStatus.Active);
             var listBookingModel = _mapper.Map<IEnumerable<BookingModel>>(listBooking).ToList();
             return listBookingModel;
         }
 
 
 
-        public BookingModel UpdateBooking(int id, UpdateBookingRequest request)
+        public async Task<BookingModel> UpdateBooking(int id, UpdateBookingRequest request)
         {
-            var booking = _res.FindBy(x => x.Id == id && x.Status == (int)BookingStatus.Active).FirstOrDefault();
-            if (booking == null)
+            var listBooking = await _res.FindByAsync(x => x.Id == id && x.Status == (int)BookingStatus.Active);
+            var Booking = listBooking.FirstOrDefault();
+            if (Booking == null)
             {
                 return null;
             }
-            booking = _mapper.Map(request, booking);
-            _res.Update(booking);
-            _res.Save();
+            Booking = _mapper.Map(request, Booking);
+            await _res.UpdateAsync(Booking);
+            await _res.SaveAsync();
 
-            return _mapper.Map<BookingModel>(booking);
+            return _mapper.Map<BookingModel>(Booking);
         }
 
 

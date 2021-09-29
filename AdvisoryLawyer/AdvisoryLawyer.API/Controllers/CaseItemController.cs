@@ -13,50 +13,50 @@ namespace AdvisoryLawyer.API.Controllers
     [ApiController]
     public class CaseItemController : ControllerBase
     {
-        private readonly ICaseItemService _caseItemService;
+        private readonly ICaseItemService _CaseItemService;
 
-        public CaseItemController(ICaseItemService caseItemService)
+        public CaseItemController(ICaseItemService CaseItemService)
         {
-            _caseItemService = caseItemService;
+            _CaseItemService = CaseItemService;
         }
 
         [HttpGet("{id}", Name = "GetCaseItemById")]
-        public IActionResult GetCaseItemById(int id)
+        public async Task<IActionResult> GetCaseItemById(int id)
         {
-            var caseItemModel = _caseItemService.GetCaseItemById(id);
-            if (caseItemModel == null)
+            var CaseItemModel = await _CaseItemService.GetCaseItemById(id);
+            if (CaseItemModel == null)
                 return BadRequest();
-            return Ok(caseItemModel);
+            return Ok(CaseItemModel);
         }
 
         [HttpGet]
-        public IActionResult GetAllBooking()
+        public async Task<IActionResult> GetAllCaseItem()
         {
-            var listCaseItemModel = _caseItemService.GetAllCaseItem();
+            var listCaseItemModel = await _CaseItemService.GetAllCaseItem();
             return Ok(listCaseItemModel);
         }
 
         [HttpPost]
-        public IActionResult CreateAdvisory([FromBody] CreateCaseItemRequest request)
+        public async Task<IActionResult> CreateCaseItem([FromBody] CreateCaseItemRequest request)
         {
-            var caseItemModel = _caseItemService.CreateCaseItem(request);
-            return CreatedAtRoute(nameof(GetCaseItemById), new { id = caseItemModel.Id }, caseItemModel
+            var CaseItemModel = await _CaseItemService.CreateCaseItem(request);
+            return CreatedAtRoute(nameof(GetCaseItemById), new { id = CaseItemModel.Id }, CaseItemModel
             );
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateBooking(int id, [FromBody] UpdateCaseItemRequest request)
+        public async Task<IActionResult> UpdateCaseItem(int id, [FromBody] UpdateCaseItemRequest request)
         {
-            var caseItemModel = _caseItemService.UpdateCaseItem(id, request);
-            if (caseItemModel == null)
+            var CaseItemModel = await _CaseItemService.UpdateCaseItem(id, request);
+            if (CaseItemModel == null)
                 return BadRequest();
-            return Ok(caseItemModel);
+            return Ok(CaseItemModel);
         }
 
         [HttpDelete]
-        public IActionResult DeleteBooking(int id)
+        public async Task<IActionResult> DeleteCaseItem(int id)
         {
-            var rs = _caseItemService.DeleteCaseItem(id);
+            var rs = await _CaseItemService.DeleteCaseItem(id);
             if (rs == false)
                 return BadRequest();
             return Ok();

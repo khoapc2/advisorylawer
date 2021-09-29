@@ -13,5 +13,6 @@ namespace AdvisoryLawyer.Business.Requests.AdvisoryRequest
         public string QuestionAnswer { get; set; }
         public DateTime? StartAdvisory { get; set; }
         public TimeSpan? TimeAdvisory { get; set; }
+       
     }
 }

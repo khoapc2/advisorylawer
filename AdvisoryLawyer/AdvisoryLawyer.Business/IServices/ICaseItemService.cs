@@ -10,10 +10,10 @@ namespace AdvisoryLawyer.Business.IServices
 {
     public interface ICaseItemService
     {
-        CaseItemModel GetCaseItemById(int id);
-        List<CaseItemModel> GetAllCaseItem();
-        CaseItemModel CreateCaseItem(CreateCaseItemRequest request);
-        CaseItemModel UpdateCaseItem(int id, UpdateCaseItemRequest request);
-        bool DeleteCaseItem(int id);
+        Task<CaseItemModel> GetCaseItemById(int id);
+        Task<List<CaseItemModel>> GetAllCaseItem();
+        Task<CaseItemModel> CreateCaseItem(CreateCaseItemRequest request);
+        Task<CaseItemModel> UpdateCaseItem(int id, UpdateCaseItemRequest request);
+        Task<bool> DeleteCaseItem(int id);
     }
 }

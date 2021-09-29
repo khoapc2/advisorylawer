@@ -1,4 +1,5 @@
-﻿using AdvisoryLawyer.Business.Requests.BookingRequest;
+﻿using AdvisoryLawyer.Business.Enum;
+using AdvisoryLawyer.Business.Requests.BookingRequest;
 using AdvisoryLawyer.Business.ViewModel;
 using AdvisoryLawyer.Data.Models;
 using AutoMapper;
@@ -15,8 +16,10 @@ namespace AdvisoryLawyer.Business.AutoMapper
         public BookingModule()
         {
             CreateMap<Booking, BookingModel>().ReverseMap();
-            CreateMap<CreateBookingRequest, Booking>();
-            CreateMap<UpdateBookingRequest, Booking>();
+            CreateMap<CreateBookingRequest, Booking>().ForMember(des
+                => des.Status, opt => opt.MapFrom(src => (int)BookingStatus.Active));
+            CreateMap<UpdateBookingRequest, Booking>().ForMember(des
+                => des.Status, opt => opt.MapFrom(src => (int)BookingStatus.Active)); 
         }
         
     }

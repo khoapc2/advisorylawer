@@ -1,4 +1,5 @@
-﻿using AdvisoryLawyer.Business.Requests.AdvisoryRequest;
+﻿using AdvisoryLawyer.Business.Enum;
+using AdvisoryLawyer.Business.Requests.AdvisoryRequest;
 using AdvisoryLawyer.Business.ViewModel;
 using AdvisoryLawyer.Data.Models;
 using AutoMapper;
@@ -16,8 +17,10 @@ namespace AdvisoryLawyer.Business.AutoMapper
         {
             CreateMap<Advisory, AdvisoryModel>();
             CreateMap<AdvisoryModel, Advisory>();
-            CreateMap<CreateAdvisoryRequest, Advisory>();
-            CreateMap<UpdateAdvisoryRequest, Advisory>();
+            CreateMap<CreateAdvisoryRequest, Advisory>().ForMember(des 
+                => des.Status, opt => opt.MapFrom(src => (int)AdvisoryStatus.Active));
+            CreateMap<UpdateAdvisoryRequest, Advisory>().ForMember(des
+                => des.Status, opt => opt.MapFrom(src => (int)AdvisoryStatus.Active)); ;
         }
     }
 }

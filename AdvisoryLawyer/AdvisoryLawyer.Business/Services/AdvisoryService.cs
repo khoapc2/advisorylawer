@@ -1,4 +1,5 @@
-﻿using AdvisoryLawyer.Business.IServices;
+﻿using AdvisoryLawyer.Business.Enum;
+using AdvisoryLawyer.Business.IServices;
 using AdvisoryLawyer.Business.Requests.AdvisoryRequest;
 using AdvisoryLawyer.Business.ViewModel;
 using AdvisoryLawyer.Data.IRepositories;
@@ -6,11 +7,15 @@ using AdvisoryLawyer.Data.Models;
 using AdvisoryLawyer.Data.Repositories;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
+using NPOI.SS.Formula.Functions;
+using Reso.Core.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PagedList;
 
 namespace AdvisoryLawyer.Business.Services
 {
@@ -24,28 +29,30 @@ namespace AdvisoryLawyer.Business.Services
             _mapper = mapper;
         }
 
-        public AdvisoryModel CreateAdvisory(CreateAdvisoryRequest request)
+        public async Task<AdvisoryModel> CreateAdvisory(CreateAdvisoryRequest request)
         {
             var advisory= _mapper.Map<Advisory>(request);
-            _res.Insert(advisory);
-            _res.Save();
+            await _res.InsertAsync(advisory);
+            await _res.SaveAsync();
             return _mapper.Map<AdvisoryModel>(advisory); 
         }
 
-        public bool DeleteAdvisory(int id)
+        public async Task<bool> DeleteAdvisory(int id)
         {
-            if (GetAdvisoryById(id) == null)
+            var advisory = (await _res.FindByAsync(x => x.Id == id && x.Status == (int)AdvisoryStatus.Active)).FirstOrDefault();
+            if (advisory == null)
             {
                 return false;
             }
-            _res.Delete(id);
-            _res.Save();
+            advisory.Status = 0;
+            await _res.UpdateAsync(advisory);
+            await _res.SaveAsync();
             return true;
         }
 
-        public AdvisoryModel GetAdvisoryById(int id)
+        public async Task<AdvisoryModel> GetAdvisoryById(int id)
         {
-            var advisory = _res.GetByID(id);
+            var advisory = (await _res.FindByAsync(x => x.Id == id && x.Status == (int)AdvisoryStatus.Active)).FirstOrDefault();
             if (advisory == null)
                 return null;
             var advisoryModel = _mapper.Map<AdvisoryModel>(advisory);
@@ -54,29 +61,29 @@ namespace AdvisoryLawyer.Business.Services
             return advisoryModel;
         }
 
-        public List<AdvisoryModel> GetAllAdvisory()
+        public IPagedList<AdvisoryModel> GetAllAdvisory(AdvisoryModel flitter, int pageIndex)
         {
-            var listAdvisory = _res.GetAll();
-            var listAdvisoryModel = _mapper.Map<IEnumerable<AdvisoryModel>>(listAdvisory).ToList();
-            return listAdvisoryModel;
+            var listAdvisory =  _res.FindBy(x => x.Status == (int)AdvisoryStatus.Active);
+            var listAdvisoryModel = (listAdvisory.ProjectTo<AdvisoryModel>
+                (_mapper.ConfigurationProvider)).DynamicFilter(flitter);
+            return PagedListExtensions.ToPagedList<AdvisoryModel>(listAdvisoryModel, pageIndex, 1);
         }
 
-      
 
-        public AdvisoryModel UpdateAdvisory(int id, UpdateAdvisoryRequest request)
+
+        public async Task<AdvisoryModel> UpdateAdvisory(int id, UpdateAdvisoryRequest request)
         {
-            var advisory = _res.GetByID(id);
+            var listadvisory = await _res.FindByAsync(x => x.Id == id && x.Status == (int)AdvisoryStatus.Active);
+            var advisory = listadvisory.FirstOrDefault();
             if (advisory == null)
             {
                 return null;
             }
             advisory = _mapper.Map(request , advisory);
-            _res.Update(advisory);
-            _res.Save();
+            await _res.UpdateAsync(advisory);
+            await _res.SaveAsync();
 
             return _mapper.Map<AdvisoryModel>(advisory);
         }
-
-
     }
 }

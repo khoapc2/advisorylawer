@@ -11,10 +11,10 @@ namespace AdvisoryLawyer.Business.IServices
 {
     public interface IBookingService
     {
-        BookingModel GetBookingById(int id);
-        List<BookingModel> GetAllBooking();
-        BookingModel CreateBooking(CreateBookingRequest request);
-        BookingModel UpdateBooking(int id, UpdateBookingRequest request);
-        bool DeleteBooking(int id);
+        Task<BookingModel> GetBookingById(int id);
+        Task<List<BookingModel>> GetAllBooking();
+        Task<BookingModel> CreateBooking(CreateBookingRequest request);
+        Task<BookingModel> UpdateBooking(int id, UpdateBookingRequest request);
+        Task<bool> DeleteBooking(int id);
     }
 }

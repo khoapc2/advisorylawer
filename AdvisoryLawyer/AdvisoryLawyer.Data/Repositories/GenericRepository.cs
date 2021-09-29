@@ -101,5 +101,7 @@ namespace AdvisoryLawyer.Data.Repositories
         {
             return await _dbSet.Where(predicate).ToListAsync();
         }
+
+      
     }
 }
