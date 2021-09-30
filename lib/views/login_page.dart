@@ -1,13 +1,9 @@
+import 'package:advisories_lawer/provider/google_sign_in.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
-
-  @override
-  _LoginPageState createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
+class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget titileSection = Container(
@@ -34,110 +30,29 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
 
-    Widget inputSection = Container(
-      padding: EdgeInsets.fromLTRB(10, 30, 0, 10),
-      child: Row(
-        children: [
-          Expanded(
-              child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-                child: TextField(
-                  style: TextStyle(fontSize: 18, color: Colors.black),
-                  decoration: InputDecoration(
-                    labelText: "USERNAME",
-                    labelStyle:
-                        TextStyle(color: Color(0xff888888), fontSize: 15),
-                  ),
-                ),
-              ),
-
-              //password
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-                child: Stack(
-                  alignment: AlignmentDirectional.centerEnd,
-                  children: [
-                    TextField(
-                      style: TextStyle(fontSize: 18, color: Colors.black),
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        labelText: "PASSWORD",
-                        labelStyle:
-                            TextStyle(color: Color(0xff888888), fontSize: 15),
-                      ),
-                    ),
-                    //textfeild
-
-                    GestureDetector(
-                      onTap: onToggleShowPass,
-                      child: Text(
-                        "SHOW",
-                        style: TextStyle(color: Colors.blue, fontSize: 15),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ],
-          ))
-        ],
-      ),
-    );
-
     Widget buttonSection = Container(
       child:
           //Button
           Padding(
-        padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+        padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
         child: SizedBox(
-          width: double.infinity,
-          height: 56,
-          child: RaisedButton(
-            color: Colors.blue,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(8))),
-            onPressed: onSignInClicked,
-            child: Text("SIGN IN"),
-          ),
-        ),
-      ),
-    );
-
-    Widget accountSection = Container(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 30, 0, 10),
-        child: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                  child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "NEW USER?  ",
-                    style: TextStyle(fontSize: 15, color: Color(0xff888888)),
-                  ),
-                  Text(
-                    "SIGN UP",
-                    style: TextStyle(fontSize: 15, color: Colors.blue),
-                  )
-                ],
-              )),
-              Expanded(
-                  child: Row(
-                children: [
-                  Text(
-                    "FORGOT PASSWORD?",
-                    style: TextStyle(fontSize: 15, color: Colors.blue),
-                  )
-                ],
-              ))
-            ],
-          ),
-        ),
+            width: double.infinity,
+            height: 56,
+            child: ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.white,
+                    onPrimary: Colors.black,
+                    minimumSize: Size(double.infinity, 50)),
+                onPressed: () {
+                  final provider =
+                      Provider.of<GoogleSignInProvider>(context, listen: false);
+                  provider.googleLogin();
+                },
+                icon: FaIcon(
+                  FontAwesomeIcons.google,
+                  color: Colors.red,
+                ),
+                label: Text('Sign Up with google'))),
       ),
     );
 
@@ -157,15 +72,10 @@ class _LoginPageState extends State<LoginPage> {
                 fit: BoxFit.cover,
               ),
             ),
-            inputSection,
             buttonSection,
-            accountSection
           ],
         ),
       ),
     );
   }
-
-  void onToggleShowPass() {}
-  void onSignInClicked() {}
 }

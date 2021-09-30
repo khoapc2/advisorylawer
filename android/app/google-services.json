@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "867512814805",
+    "project_id": "advisories-7799d",
+    "storage_bucket": "advisories-7799d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:867512814805:android:6285c423bfc3733878a65c",
+        "android_client_info": {
+          "package_name": "com.example.advisories_lawer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "867512814805-a3o744agftnragnqvqpam5mt3s6mjj2s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbsoj8qhkeZFPBetvVyzXSXZrEQVGNw88"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "867512814805-a3o744agftnragnqvqpam5mt3s6mjj2s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
