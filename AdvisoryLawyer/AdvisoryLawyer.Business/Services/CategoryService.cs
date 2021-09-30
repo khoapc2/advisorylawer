@@ -23,15 +23,15 @@ namespace AdvisoryLawyer.Business.Services
             _mapper = mapper;
         }
 
-        public IEnumerable<CategoryModel> GetAllCategories()
+        public async Task<IEnumerable<CategoryModel>> GetAllCategories()
         {
-            var categories = _genericRepository.GetAll();
+            var categories = await _genericRepository.GetAllAsync();
             return _mapper.Map<IEnumerable<CategoryModel>>(categories);
         }
 
-        public CategoryModel GetCategoryById(int id)
+        public async Task<CategoryModel> GetCategoryById(int id)
         {
-            var category = _genericRepository.GetByID(id);
+            var category = await _genericRepository.GetByIDAsync(id);
             if(category != null) 
             {
                 return _mapper.Map<CategoryModel>(category);
@@ -39,34 +39,34 @@ namespace AdvisoryLawyer.Business.Services
             return null;
         }
 
-        public CategoryModel CreateCategory(CategoryRequest categoryRequest)
+        public async Task<CategoryModel> CreateCategory(CategoryRequest categoryRequest)
         {
             var category = _mapper.Map<Category>(categoryRequest);
-            _genericRepository.Insert(category);
-            _genericRepository.Save();
+            await _genericRepository.InsertAsync(category);
+            await _genericRepository.SaveAsync();
 
             return _mapper.Map<CategoryModel>(category);
         }
 
-        public bool DeleteCategory(int id)
+        public async Task<bool> DeleteCategory(int id)
         {
-            var category = _genericRepository.GetByID(id);
+            var category = await _genericRepository.GetByIDAsync(id);
             if(category != null)
             {
-                _genericRepository.Delete(id);
-                _genericRepository.Save();
+                await _genericRepository.DeleteAsync(id);
+                await _genericRepository.SaveAsync();
                 return true;
             }
             return false;
         }
 
-        public CategoryModel UpdateCategory(int id, CategoryRequest categoryRequest)
+        public async Task<CategoryModel> UpdateCategory(int id, CategoryRequest categoryRequest)
         {
-            var category = _genericRepository.GetByID(id);
+            var category = await _genericRepository.GetByIDAsync(id);
             if (category != null)
             {
                 category = _mapper.Map(categoryRequest, category);
-                _genericRepository.Save();
+                await _genericRepository.SaveAsync();
                 return _mapper.Map<CategoryModel>(category);
             }
             return null;

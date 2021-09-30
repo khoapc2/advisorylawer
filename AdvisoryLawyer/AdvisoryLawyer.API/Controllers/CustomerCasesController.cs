@@ -22,16 +22,16 @@ namespace AdvisoryLawyer.API.Controllers
 
         //GET api/customer-cases
         [HttpGet]
-        public ActionResult<IEnumerable<CustomerCaseModel>> GetAllCustomerCases()
+        public async Task<ActionResult<IEnumerable<CustomerCaseModel>>> GetAllCustomerCases()
         {
-            return Ok(_service.GetAllCustomerCases());
+            return Ok(await _service.GetAllCustomerCases());
         }
 
         //GET api/customer-cases/{id}
         [HttpGet("{id}", Name = "GetCustomerCaseById")]
-        public ActionResult<CustomerCaseModel> GetCustomerCaseById(int id)
+        public async Task<ActionResult<CustomerCaseModel>> GetCustomerCaseById(int id)
         {
-            var categoryModel = _service.GetCustomerCaseById(id);
+            var categoryModel = await _service.GetCustomerCaseById(id);
             if (categoryModel == null)
             {
                 return BadRequest();
@@ -41,9 +41,9 @@ namespace AdvisoryLawyer.API.Controllers
 
         //POST api/customer-cases
         [HttpPost]
-        public ActionResult<CustomerCaseModel> CreateCustomerCase(CustomerCaseRequest categoryRequest)
+        public async Task<ActionResult<CustomerCaseModel>> CreateCustomerCase(CustomerCaseRequest categoryRequest)
         {
-            var categoryModel = _service.CreateCustomerCase(categoryRequest);
+            var categoryModel = await _service.CreateCustomerCase(categoryRequest);
             if (categoryModel != null)
             {
                 return CreatedAtRoute(nameof(GetCustomerCaseById)
@@ -54,9 +54,9 @@ namespace AdvisoryLawyer.API.Controllers
 
         //PUT api/customer-cases/{id}
         [HttpPut("{id}")]
-        public ActionResult<CustomerCaseModel> UpdateCustomerCase(int id, CustomerCaseRequest categoryRequest)
+        public async Task<ActionResult<CustomerCaseModel>> UpdateCustomerCase(int id, CustomerCaseRequest categoryRequest)
         {
-            var categoryModel = _service.UpdateCustomerCase(id, categoryRequest);
+            var categoryModel = await _service.UpdateCustomerCase(id, categoryRequest);
             if (categoryModel != null)
             {
                 return Ok(categoryModel);
@@ -66,9 +66,9 @@ namespace AdvisoryLawyer.API.Controllers
 
         //DELETE api/customer-cases/{id}
         [HttpDelete("{id}")]
-        public ActionResult DeleteCustomerCase(int id)
+        public async Task<ActionResult> DeleteCustomerCase(int id)
         {
-            bool deleteStatus = _service.DeleteCustomerCase(id);
+            bool deleteStatus = await _service.DeleteCustomerCase(id);
             if (deleteStatus)
             {
                 return Ok();

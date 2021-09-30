@@ -22,16 +22,16 @@ namespace AdvisoryLawyer.API.Controllers
 
         //GET api/categories
         [HttpGet]
-        public ActionResult <IEnumerable<CategoryModel>> GetAllCategories()
+        public async Task<ActionResult <IEnumerable<CategoryModel>>> GetAllCategories()
         {
-            return Ok(_service.GetAllCategories());
+            return Ok(await _service.GetAllCategories());
         }
 
         //GET api/categories/{id}
         [HttpGet("{id}", Name = "GetCategoryById")]
-        public ActionResult <CategoryModel> GetCategoryById(int id)
+        public async Task<ActionResult <CategoryModel>> GetCategoryById(int id)
         {
-            var categoryModel = _service.GetCategoryById(id);
+            var categoryModel = await _service.GetCategoryById(id);
             if(categoryModel == null)
             {
                 return BadRequest();
@@ -41,9 +41,9 @@ namespace AdvisoryLawyer.API.Controllers
 
         //POST api/categories
         [HttpPost]
-        public ActionResult<CategoryModel> CreateCategory(CategoryRequest categoryRequest)
+        public async Task<ActionResult<CategoryModel>> CreateCategory(CategoryRequest categoryRequest)
         {
-            var categoryModel = _service.CreateCategory(categoryRequest);
+            var categoryModel = await _service.CreateCategory(categoryRequest);
             if(categoryModel != null)
             {
                 return CreatedAtRoute(nameof(GetCategoryById)
@@ -54,9 +54,9 @@ namespace AdvisoryLawyer.API.Controllers
 
         //PUT api/categories/{id}
         [HttpPut("{id}")]
-        public ActionResult<CategoryModel> UpdateCategory(int id, CategoryRequest categoryRequest)
+        public async Task<ActionResult<CategoryModel>> UpdateCategory(int id, CategoryRequest categoryRequest)
         {
-            var categoryModel = _service.UpdateCategory(id, categoryRequest);
+            var categoryModel = await _service.UpdateCategory(id, categoryRequest);
             if (categoryModel != null)
             {
                 return Ok(categoryModel);
@@ -66,9 +66,9 @@ namespace AdvisoryLawyer.API.Controllers
 
         //DELETE api/categories/{id}
         [HttpDelete("{id}")]
-        public ActionResult DeleteCategory(int id)
+        public async Task<ActionResult> DeleteCategory(int id)
         {
-            bool deleteStatus = _service.DeleteCategory(id);
+            bool deleteStatus = await _service.DeleteCategory(id);
             if (deleteStatus)
             {
                 return Ok();

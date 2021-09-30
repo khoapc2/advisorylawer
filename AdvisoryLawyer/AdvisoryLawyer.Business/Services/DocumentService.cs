@@ -23,36 +23,36 @@ namespace AdvisoryLawyer.Business.Services
             _mapper = mapper;
         }
 
-        public DocumentModel CreateDocument(DocumentRequest documentRequest)
+        public async Task<DocumentModel> CreateDocument(DocumentRequest documentRequest)
         {
             var document = _mapper.Map<Document>(documentRequest);
-            _genericRepository.Insert(document);
-            _genericRepository.Save();
+            await _genericRepository.InsertAsync(document);
+            await _genericRepository.SaveAsync();
 
             return _mapper.Map<DocumentModel>(document);
         }
 
-        public bool DeleteDocument(int id)
+        public async Task<bool> DeleteDocument(int id)
         {
-            var document = _genericRepository.GetByID(id);
+            var document = await _genericRepository.GetByIDAsync(id);
             if (document != null)
             {
-                _genericRepository.Delete(id);
-                _genericRepository.Save();
+                await _genericRepository.DeleteAsync(id);
+                await _genericRepository.SaveAsync();
                 return true;
             }
             return false;
         }
 
-        public IEnumerable<DocumentModel> GetAllDocuments()
+        public async Task<IEnumerable<DocumentModel>> GetAllDocuments()
         {
-            var documents = _genericRepository.GetAll();
+            var documents = await _genericRepository.GetAllAsync();
             return _mapper.Map<IEnumerable<DocumentModel>>(documents);
         }
 
-        public DocumentModel GetDocumentById(int id)
+        public async Task<DocumentModel> GetDocumentById(int id)
         {
-            var document = _genericRepository.GetByID(id);
+            var document = await _genericRepository.GetByIDAsync(id);
             if (document != null)
             {
                 return _mapper.Map<DocumentModel>(document);
@@ -60,13 +60,13 @@ namespace AdvisoryLawyer.Business.Services
             return null;
         }
 
-        public DocumentModel UpdateDocument(int id, DocumentRequest documentRequest)
+        public async Task<DocumentModel> UpdateDocument(int id, DocumentRequest documentRequest)
         {
-            var document = _genericRepository.GetByID(id);
+            var document = await _genericRepository.GetByIDAsync(id);
             if (document != null)
             {
                 document = _mapper.Map(documentRequest, document);
-                _genericRepository.Save();
+                await _genericRepository.SaveAsync();
                 return _mapper.Map<DocumentModel>(document);
             }
             return null;

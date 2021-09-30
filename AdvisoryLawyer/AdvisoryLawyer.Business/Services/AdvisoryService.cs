@@ -61,11 +61,11 @@ namespace AdvisoryLawyer.Business.Services
             return advisoryModel;
         }
 
-        public IPagedList<AdvisoryModel> GetAllAdvisory(AdvisoryModel flitter, int pageIndex)
+        public IPagedList<AdvisoryModel> GetAllAdvisory(AdvisoryModel filter, int pageIndex)
         {
             var listAdvisory =  _res.FindBy(x => x.Status == (int)AdvisoryStatus.Active);
             var listAdvisoryModel = (listAdvisory.ProjectTo<AdvisoryModel>
-                (_mapper.ConfigurationProvider)).DynamicFilter(flitter);
+                (_mapper.ConfigurationProvider)).DynamicFilter(filter);
             return PagedListExtensions.ToPagedList<AdvisoryModel>(listAdvisoryModel, pageIndex, 1);
         }
 

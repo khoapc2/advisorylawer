@@ -22,36 +22,36 @@ namespace AdvisoryLawyer.Business.Services
             _genericRepository = genericRepository;
             _mapper = mapper;
         }
-        public CustomerCaseModel CreateCustomerCase(CustomerCaseRequest customerCaseRequest)
+        public async Task<CustomerCaseModel> CreateCustomerCase(CustomerCaseRequest customerCaseRequest)
         {
             var customerCase = _mapper.Map<CustomerCase>(customerCaseRequest);
-            _genericRepository.Insert(customerCase);
-            _genericRepository.Save();
+            await _genericRepository.InsertAsync(customerCase);
+            await _genericRepository.SaveAsync();
 
             return _mapper.Map<CustomerCaseModel>(customerCase);
         }
 
-        public bool DeleteCustomerCase(int id)
+        public async Task<bool> DeleteCustomerCase(int id)
         {
-            var customerCase = _genericRepository.GetByID(id);
+            var customerCase = await _genericRepository.GetByIDAsync(id);
             if (customerCase != null)
             {
-                _genericRepository.Delete(id);
-                _genericRepository.Save();
+                await _genericRepository.DeleteAsync(id);
+                await _genericRepository.SaveAsync();
                 return true;
             }
             return false;
         }
 
-        public IEnumerable<CustomerCaseModel> GetAllCustomerCases()
+        public async Task<IEnumerable<CustomerCaseModel>> GetAllCustomerCases()
         {
-            var customerCases = _genericRepository.GetAll();
+            var customerCases = await _genericRepository.GetAllAsync();
             return _mapper.Map<IEnumerable<CustomerCaseModel>>(customerCases);
         }
 
-        public CustomerCaseModel GetCustomerCaseById(int id)
+        public async Task<CustomerCaseModel> GetCustomerCaseById(int id)
         {
-            var customerCase = _genericRepository.GetByID(id);
+            var customerCase = await _genericRepository.GetByIDAsync(id);
             if (customerCase != null)
             {
                 return _mapper.Map<CustomerCaseModel>(customerCase);
@@ -59,13 +59,13 @@ namespace AdvisoryLawyer.Business.Services
             return null;
         }
 
-        public CustomerCaseModel UpdateCustomerCase(int id, CustomerCaseRequest customerCaseRequest)
+        public async Task<CustomerCaseModel> UpdateCustomerCase(int id, CustomerCaseRequest customerCaseRequest)
         {
-            var customerCase = _genericRepository.GetByID(id);
+            var customerCase = await _genericRepository.GetByIDAsync(id);
             if (customerCase != null)
             {
                 customerCase = _mapper.Map(customerCaseRequest, customerCase);
-                _genericRepository.Save();
+                await _genericRepository.SaveAsync();
                 return _mapper.Map<CustomerCaseModel>(customerCase);
             }
             return null;
