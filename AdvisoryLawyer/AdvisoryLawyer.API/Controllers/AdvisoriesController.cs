@@ -14,11 +14,11 @@ namespace AdvisoryLawyer.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AdvisoriesController : ControllerBase
+    public class advisoriesController : ControllerBase
     {
         private readonly IAdvisoryService _advisoryService;
 
-        public AdvisoriesController(IAdvisoryService advisoryService)
+        public advisoriesController(IAdvisoryService advisoryService)
         {
             _advisoryService = advisoryService;
         }
@@ -33,9 +33,9 @@ namespace AdvisoryLawyer.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllAdvisory([FromQuery] AdvisoryModel fillter,[FromQuery] int pageIndex)
+        public IActionResult GetAllAdvisory([FromQuery] AdvisoryModel fillter,int pageIndex, string sortBy, string order)
         {
-            var listAdvisoryModel = _advisoryService.GetAllAdvisory(fillter, pageIndex);
+            var listAdvisoryModel = _advisoryService.GetAllAdvisory(fillter, pageIndex, sortBy, order);
             return Ok(listAdvisoryModel);
         }
 

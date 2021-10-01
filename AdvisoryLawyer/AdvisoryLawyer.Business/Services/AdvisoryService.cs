@@ -16,6 +16,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PagedList;
+using System.Linq.Dynamic.Core;
 
 namespace AdvisoryLawyer.Business.Services
 {
@@ -61,11 +62,35 @@ namespace AdvisoryLawyer.Business.Services
             return advisoryModel;
         }
 
-        public IPagedList<AdvisoryModel> GetAllAdvisory(AdvisoryModel flitter, int pageIndex)
+        public IPagedList<AdvisoryModel> GetAllAdvisory(AdvisoryModel flitter, int pageIndex, string sortBy, string order)
         {
             var listAdvisory =  _res.FindBy(x => x.Status == (int)AdvisoryStatus.Active);
+          
             var listAdvisoryModel = (listAdvisory.ProjectTo<AdvisoryModel>
                 (_mapper.ConfigurationProvider)).DynamicFilter(flitter);
+            switch(sortBy){
+                case "QuestionAnswer":
+                    if(order == "asc")
+                    {
+                        listAdvisoryModel = (IQueryable<AdvisoryModel>)listAdvisoryModel.OrderBy(x => x.QuestionAnswer);
+                    }
+                    else
+                    {
+                        listAdvisoryModel = (IQueryable<AdvisoryModel>)listAdvisoryModel.OrderByDescending(x => x.QuestionAnswer);
+                    }
+                    break;
+                case "StartAdvisory":
+                    if (order == "asc")
+                    {
+                        listAdvisoryModel = (IQueryable<AdvisoryModel>)listAdvisoryModel.OrderBy(x => x.StartAdvisory);
+                    }
+                    else
+                    {
+                        listAdvisoryModel = (IQueryable<AdvisoryModel>)listAdvisoryModel.OrderByDescending(x => x.StartAdvisory);
+                    }
+                    break;
+
+            }
             return PagedListExtensions.ToPagedList<AdvisoryModel>(listAdvisoryModel, pageIndex, 1);
         }
 
@@ -85,5 +110,7 @@ namespace AdvisoryLawyer.Business.Services
 
             return _mapper.Map<AdvisoryModel>(advisory);
         }
+
+
     }
 }

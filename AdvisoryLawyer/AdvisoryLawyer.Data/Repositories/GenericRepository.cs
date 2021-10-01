@@ -2,6 +2,7 @@
 using AdvisoryLawyer.Data.Models;
 using Cqrs.Repositories.Queries;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -110,6 +111,11 @@ namespace AdvisoryLawyer.Data.Repositories
         public async Task<T> FindAsync(Expression<Func<T, bool>> match)
         {
             return await _dbSet.FirstOrDefaultAsync(match);
+        }
+
+      public IQueryable<T> sortAsc<TResult>(Expression<Func<T, TResult>> match, IQueryable<T> list)
+        {
+            return list.Select(x => x).OrderBy(match);
         }
     }
 }

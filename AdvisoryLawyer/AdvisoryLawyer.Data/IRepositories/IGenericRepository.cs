@@ -26,6 +26,6 @@ namespace AdvisoryLawyer.Data.IRepositories
         Task SaveAsync();
         T Find(Expression<Func<T, bool>> match);
         Task<T> FindAsync(Expression<Func<T, bool>> match);
-
+        IQueryable<T> sortAsc<TResult>(Expression<Func<T, TResult>> match, IQueryable<T> list);
     }
 }

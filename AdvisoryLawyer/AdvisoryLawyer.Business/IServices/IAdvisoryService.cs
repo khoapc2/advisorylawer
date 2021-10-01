@@ -13,7 +13,8 @@ namespace AdvisoryLawyer.Business.IServices
     public interface IAdvisoryService
     {
         Task<AdvisoryModel> GetAdvisoryById(int id);
-        IPagedList<AdvisoryModel> GetAllAdvisory(AdvisoryModel fillter, int pageIndex);
+        IPagedList<AdvisoryModel> GetAllAdvisory(AdvisoryModel fillter, int pageIndex, 
+            string sortBy, string order);
         Task<AdvisoryModel> CreateAdvisory(CreateAdvisoryRequest request);
         Task<AdvisoryModel> UpdateAdvisory(int id, UpdateAdvisoryRequest request);
         Task<bool> DeleteAdvisory(int id);

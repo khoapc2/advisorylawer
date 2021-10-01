@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace AdvisoryLawyer.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/case-items")]
     [ApiController]
-    public class CaseItemController : ControllerBase
+    public class case_itemsController : ControllerBase
     {
         private readonly ICaseItemService _CaseItemService;
 
-        public CaseItemController(ICaseItemService CaseItemService)
+        public case_itemsController(ICaseItemService CaseItemService)
         {
             _CaseItemService = CaseItemService;
         }

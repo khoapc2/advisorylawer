@@ -11,11 +11,11 @@ namespace BookingLawyer.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BookingController : ControllerBase
+    public class bookingsController : ControllerBase
     {
         private readonly IBookingService _BookingService;
 
-        public BookingController(IBookingService BookingService)
+        public bookingsController(IBookingService BookingService)
         {
             _BookingService = BookingService;
         }
