@@ -1,6 +1,5 @@
-import 'package:advisories_lawer/provider/google_sign_in.dart';
-import 'package:advisories_lawer/views/home_page.dart';
-import 'package:advisories_lawer/views/login_page.dart';
+import 'package:advisories_lawyer/provider/google_sign_in.dart';
+import 'package:advisories_lawyer/views/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';

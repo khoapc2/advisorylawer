@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.advisories_lawer">
+    package="com.example.advisories_lawyer">
    <application
-        android:label="advisories_lawer"
+        android:label="advisories_lawyer"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

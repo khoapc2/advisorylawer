@@ -1,6 +1,6 @@
 {
-    "name": "advisories_lawer",
-    "short_name": "advisories_lawer",
+    "name": "advisories_lawyer",
+    "short_name": "advisories_lawyer",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

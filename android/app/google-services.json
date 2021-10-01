@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "867512814805",
-    "project_id": "advisories-7799d",
-    "storage_bucket": "advisories-7799d.appspot.com"
+    "project_number": "71355061912",
+    "project_id": "advisory-lawyer",
+    "storage_bucket": "advisory-lawyer.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:867512814805:android:6285c423bfc3733878a65c",
+        "mobilesdk_app_id": "1:71355061912:android:8cf6793083d7ac78c422ed",
         "android_client_info": {
-          "package_name": "com.example.advisories_lawer"
+          "package_name": "com.example.advisories_lawyer"
         }
       },
       "oauth_client": [
         {
-          "client_id": "867512814805-a3o744agftnragnqvqpam5mt3s6mjj2s.apps.googleusercontent.com",
+          "client_id": "advisory-lawyer",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAbsoj8qhkeZFPBetvVyzXSXZrEQVGNw88"
+          "current_key": "AIzaSyACsfrtSDiEndGv1GCnIl_VYX4Pr4ltY4k"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "867512814805-a3o744agftnragnqvqpam5mt3s6mjj2s.apps.googleusercontent.com",
+              "client_id": "71355061912-7icu8bptfn0emnqoaidhealpknkuru3r.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

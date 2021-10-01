@@ -1,5 +1,5 @@
-import 'package:advisories_lawer/views/logged_in.dart';
-import 'package:advisories_lawer/views/login_page.dart';
+import 'package:advisories_lawyer/views/logged_in.dart';
+import 'package:advisories_lawyer/views/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

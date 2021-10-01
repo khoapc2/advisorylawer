@@ -1,4 +1,4 @@
-# advisories_lawer
+# advisories_lawyer
 
 A new Flutter project.
 
