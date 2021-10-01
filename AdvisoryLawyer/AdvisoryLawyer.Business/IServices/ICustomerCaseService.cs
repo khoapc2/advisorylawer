@@ -10,10 +10,10 @@ namespace AdvisoryLawyer.Business.IServices
 {
     public interface ICustomerCaseService
     {
-        IEnumerable<CustomerCaseModel> GetAllCustomerCases();
-        CustomerCaseModel GetCustomerCaseById(int id);
-        CustomerCaseModel CreateCustomerCase(CustomerCaseRequest categoryRequest);
-        CustomerCaseModel UpdateCustomerCase(int id, CustomerCaseRequest categoryRequest);
-        bool DeleteCustomerCase(int id);
+        Task<IEnumerable<CustomerCaseModel>> GetAllCustomerCases();
+        Task<CustomerCaseModel> GetCustomerCaseById(int id);
+        Task<CustomerCaseModel> CreateCustomerCase(CustomerCaseRequest categoryRequest);
+        Task<CustomerCaseModel> UpdateCustomerCase(int id, CustomerCaseRequest categoryRequest);
+        Task<bool> DeleteCustomerCase(int id);
     }
 }

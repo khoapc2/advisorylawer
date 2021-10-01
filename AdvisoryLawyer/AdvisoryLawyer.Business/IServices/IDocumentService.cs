@@ -10,10 +10,10 @@ namespace AdvisoryLawyer.Business.IServices
 {
     public interface IDocumentService
     {
-        IEnumerable<DocumentModel> GetAllDocuments();
-        DocumentModel GetDocumentById(int id);
-        DocumentModel CreateDocument(DocumentRequest documentRequest);
-        DocumentModel UpdateDocument(int id, DocumentRequest documentRequest);
-        bool DeleteDocument(int id);
+        Task<IEnumerable<DocumentModel>> GetAllDocuments();
+        Task<DocumentModel> GetDocumentById(int id);
+        Task<DocumentModel> CreateDocument(DocumentRequest documentRequest);
+        Task<DocumentModel> UpdateDocument(int id, DocumentRequest documentRequest);
+        Task<bool> DeleteDocument(int id);
     }
 }

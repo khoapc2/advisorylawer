@@ -9,12 +9,9 @@ namespace AdvisoryLawyer.Business.IServices
 {
     public interface IUserAccountService
     {
-        public Task<string> LoginWithGmail(string gmail);
-        //public string Login(string username, string password);
-        public string Login(string username);
+        public Task<UserAccountModel> CheckGmail(string gmail, string fullname);
         public UserAccountModel GetProfileByID(string token);
         public IEnumerable<UserAccountModel> GetAllProfiles();
-        //public bool ChangePassword(string token, string newPassword);
         public bool ChangeAccountStatus(int id);
     }
 }

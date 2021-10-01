@@ -22,16 +22,16 @@ namespace AdvisoryLawyer.API.Controllers
 
         //GET api/documents
         [HttpGet]
-        public ActionResult<IEnumerable<DocumentModel>> GetAllDocuments()
+        public async Task<ActionResult<IEnumerable<DocumentModel>>> GetAllDocuments()
         {
-            return Ok(_service.GetAllDocuments());
+            return Ok(await _service.GetAllDocuments());
         }
 
         //GET api/documents/{id}
         [HttpGet("{id}", Name = "GetDocumentById")]
-        public ActionResult<DocumentModel> GetDocumentById(int id)
+        public async Task<ActionResult<DocumentModel>> GetDocumentById(int id)
         {
-            var documentModel = _service.GetDocumentById(id);
+            var documentModel = await _service.GetDocumentById(id);
             if (documentModel == null)
             {
                 return BadRequest();
@@ -41,9 +41,9 @@ namespace AdvisoryLawyer.API.Controllers
 
         //POST api/documents
         [HttpPost]
-        public ActionResult<DocumentModel> CreateDocument(DocumentRequest documentRequest)
+        public async Task<ActionResult<DocumentModel>> CreateDocument(DocumentRequest documentRequest)
         {
-            var documentModel = _service.CreateDocument(documentRequest);
+            var documentModel = await _service.CreateDocument(documentRequest);
             if (documentModel != null)
             {
                 return CreatedAtRoute(nameof(GetDocumentById)
@@ -54,9 +54,9 @@ namespace AdvisoryLawyer.API.Controllers
 
         //PUT api/documents/{id}
         [HttpPut("{id}")]
-        public ActionResult<DocumentModel> UpdateDocument(int id, DocumentRequest documentRequest)
+        public async Task<ActionResult<DocumentModel>> UpdateDocument(int id, DocumentRequest documentRequest)
         {
-            var documentModel = _service.UpdateDocument(id, documentRequest);
+            var documentModel = await _service.UpdateDocument(id, documentRequest);
             if (documentModel != null)
             {
                 return Ok(documentModel);
@@ -66,9 +66,9 @@ namespace AdvisoryLawyer.API.Controllers
 
         //DELETE api/documents/{id}
         [HttpDelete("{id}")]
-        public ActionResult DeleteDocument(int id)
+        public async Task<ActionResult> DeleteDocument(int id)
         {
-            bool deleteStatus = _service.DeleteDocument(id);
+            bool deleteStatus = await _service.DeleteDocument(id);
             if (deleteStatus)
             {
                 return Ok();

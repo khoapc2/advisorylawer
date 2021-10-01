@@ -1,4 +1,5 @@
 ﻿using AdvisoryLawyer.Business.ViewModel;
+using FirebaseAdmin.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace AdvisoryLawyer.Business.IServices
 {
     public interface IAuthenticationService
     {
-        public string GenerateJSONWebToken(UserAccountModel account);
+        //public string GenerateJSONWebToken(UserAccountModel account);
+        public Task<AuthenticationModel> LoginWithGmail(string idToken);
     }
 }

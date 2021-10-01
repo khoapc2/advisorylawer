@@ -5,6 +5,8 @@ using AdvisoryLawyer.Data.IRepositories;
 using AdvisoryLawyer.Data.Models;
 using AdvisoryLawyer.Data.Repositories;
 using BookingLawyer.Business.Services;
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -39,6 +41,12 @@ namespace AdvisoryLawyer.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var path = Directory.GetCurrentDirectory();
+            FirebaseApp.Create(new AppOptions()
+            {
+                Credential = GoogleCredential.FromFile($"{path}\\Firebase\\firebase-config.json"),
+            });
+
             services.AddCors(option =>
             {
                 option.AddPolicy(name: _corsName,
@@ -50,15 +58,16 @@ namespace AdvisoryLawyer.API
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(option =>
             {
-                option.TokenValidationParameters = new TokenValidationParameters
+               option.Authority = Configuration["Jwt:Authority"];
+               option.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateIssuer = true,                      //generates the token
-                    ValidateAudience = true,                    //Validate the recipient of the token is authorized to receive
-                    ValidateLifetime = true,                    //Check if the token is not expired and the signing key of the issuer is valid
-                    ValidateIssuerSigningKey = true,            //Validate signature of the token 
+                    ValidateIssuer = true,                     
+                    ValidateAudience = true,                    
+                    ValidateLifetime = true,                    
+                    //ValidateIssuerSigningKey = true,            
                     ValidIssuer = Configuration["Jwt:Issuer"],
-                    ValidAudience = Configuration["Jwt:Issuer"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                    ValidAudience = Configuration["Jwt:Audience"],
+                    //IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                 };
             });
 
@@ -72,6 +81,7 @@ namespace AdvisoryLawyer.API
             services.AddScoped<IBookingService, BookingService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
+            //services.AddTransient<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IUserAccountService, UserAccountService>();
             services.AddScoped<ICaseItemService, CaseItemService>();
             services.AddScoped<ILevelService, LevelService>();

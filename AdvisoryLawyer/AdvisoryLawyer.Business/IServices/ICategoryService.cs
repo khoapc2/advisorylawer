@@ -10,10 +10,10 @@ namespace AdvisoryLawyer.Business.IServices
 {
     public interface ICategoryService
     {
-        IEnumerable<CategoryModel> GetAllCategories();
-        CategoryModel GetCategoryById(int id);
-        CategoryModel CreateCategory(CategoryRequest categoryRequest);
-        CategoryModel UpdateCategory(int id, CategoryRequest categoryRequest);
-        bool DeleteCategory(int id);
+        Task<IEnumerable<CategoryModel>> GetAllCategories();
+        Task<CategoryModel> GetCategoryById(int id);
+        Task<CategoryModel> CreateCategory(CategoryRequest categoryRequest);
+        Task<CategoryModel> UpdateCategory(int id, CategoryRequest categoryRequest);
+        Task<bool> DeleteCategory(int id);
     }
 }
