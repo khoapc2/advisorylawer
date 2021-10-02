@@ -17,6 +17,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PagedList;
 using System.Linq.Dynamic.Core;
+using AdvisoryLawyer.Business.Requests;
 
 namespace AdvisoryLawyer.Business.Services
 {
@@ -62,15 +63,17 @@ namespace AdvisoryLawyer.Business.Services
             return advisoryModel;
         }
 
-        public IPagedList<AdvisoryModel> GetAllAdvisory(AdvisoryModel flitter, int pageIndex, string sortBy, string order)
+        public IPagedList<AdvisoryModel> GetAllAdvisory(AdvisoryModel flitter, int pageIndex,
+            int pageSize, AdvisorySortBy sortBy, OrderBy order)
         {
             var listAdvisory =  _res.FindBy(x => x.Status == (int)AdvisoryStatus.Active);
           
             var listAdvisoryModel = (listAdvisory.ProjectTo<AdvisoryModel>
                 (_mapper.ConfigurationProvider)).DynamicFilter(flitter);
-            switch(sortBy){
+            switch (sortBy.ToString())
+            {
                 case "QuestionAnswer":
-                    if(order == "asc")
+                    if (order.ToString() == "Asc")
                     {
                         listAdvisoryModel = (IQueryable<AdvisoryModel>)listAdvisoryModel.OrderBy(x => x.QuestionAnswer);
                     }
@@ -80,7 +83,7 @@ namespace AdvisoryLawyer.Business.Services
                     }
                     break;
                 case "StartAdvisory":
-                    if (order == "asc")
+                    if (order.ToString() == "Asc")
                     {
                         listAdvisoryModel = (IQueryable<AdvisoryModel>)listAdvisoryModel.OrderBy(x => x.StartAdvisory);
                     }
@@ -89,9 +92,8 @@ namespace AdvisoryLawyer.Business.Services
                         listAdvisoryModel = (IQueryable<AdvisoryModel>)listAdvisoryModel.OrderByDescending(x => x.StartAdvisory);
                     }
                     break;
-
             }
-            return PagedListExtensions.ToPagedList<AdvisoryModel>(listAdvisoryModel, pageIndex, 1);
+            return PagedListExtensions.ToPagedList<AdvisoryModel>(listAdvisoryModel, pageIndex, pageSize);
         }
 
 

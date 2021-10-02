@@ -1,24 +1,28 @@
 ﻿using AdvisoryLawyer.Business.IServices;
+using AdvisoryLawyer.Business.Requests;
 using AdvisoryLawyer.Business.Requests.AdvisoryRequest;
 using AdvisoryLawyer.Business.Requests.BookingRequest;
 using AdvisoryLawyer.Business.ViewModel;
+using FirebaseAdmin.Messaging;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace AdvisoryLawyer.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
-    public class advisoriesController : ControllerBase
+    public class AdvisoriesController : ControllerBase
     {
         private readonly IAdvisoryService _advisoryService;
 
-        public advisoriesController(IAdvisoryService advisoryService)
+        public AdvisoriesController(IAdvisoryService advisoryService)
         {
             _advisoryService = advisoryService;
         }
@@ -31,11 +35,11 @@ namespace AdvisoryLawyer.API.Controllers
                 return BadRequest();
             return Ok(advisoryModel);
         }
-
         [HttpGet]
-        public IActionResult GetAllAdvisory([FromQuery] AdvisoryModel fillter,int pageIndex, string sortBy, string order)
+        public IActionResult GetAllAdvisory([FromQuery]  AdvisoryModel fillter, AdvisorySortBy sortBy, OrderBy order,
+            int pageIndex =1 , int pageSize = 1)
         {
-            var listAdvisoryModel = _advisoryService.GetAllAdvisory(fillter, pageIndex, sortBy, order);
+            var listAdvisoryModel = _advisoryService.GetAllAdvisory(fillter, pageIndex,pageSize, sortBy, order);
             return Ok(listAdvisoryModel);
         }
 

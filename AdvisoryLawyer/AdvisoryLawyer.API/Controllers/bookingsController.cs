@@ -1,5 +1,7 @@
 ﻿using AdvisoryLawyer.Business.IServices;
+using AdvisoryLawyer.Business.Requests;
 using AdvisoryLawyer.Business.Requests.BookingRequest;
+using AdvisoryLawyer.Business.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -9,13 +11,13 @@ using System.Threading.Tasks;
 
 namespace BookingLawyer.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
-    public class bookingsController : ControllerBase
+    public class BookingsController : ControllerBase
     {
         private readonly IBookingService _BookingService;
 
-        public bookingsController(IBookingService BookingService)
+        public BookingsController(IBookingService BookingService)
         {
             _BookingService = BookingService;
         }
@@ -30,9 +32,11 @@ namespace BookingLawyer.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllBooking()
+        public IActionResult GetAllBooking([FromQuery]BookingModel flitter, BookingSortBy sortBy, OrderBy order,
+            int pageIndex = 1, int pageSize = 1)
         {
-            var listBookingModel = await _BookingService.GetAllBooking();
+            var listBookingModel = _BookingService.GetAllAdvisory(flitter, pageIndex, pageSize,
+                sortBy, order);
             return Ok(listBookingModel);
         }
 

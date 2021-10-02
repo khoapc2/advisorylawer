@@ -13,18 +13,23 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using System.Web.Http;
 
 namespace AdvisoryLawyer.API
 {
@@ -73,8 +78,6 @@ namespace AdvisoryLawyer.API
 
             var connectionString = Configuration.GetConnectionString("AdvisoryConnectionString");
             services.AddDbContext<AdvisoryLawyerContext>(options => options.UseSqlServer(connectionString));
-
-            services.AddControllers();
             services.AddAutoMapper(typeof(AdvisoryModule).Assembly);
 
             services.AddScoped<IAdvisoryService, AdvisoryService>();
@@ -90,6 +93,10 @@ namespace AdvisoryLawyer.API
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IUserAccountRepository, UserAccountRepository>();
+            
+            services.AddControllersWithViews()
+                .AddJsonOptions(options =>
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
             services.AddScoped<AdvisoryLawyerContext>();
 
@@ -126,6 +133,8 @@ namespace AdvisoryLawyer.API
                       }
                     });
             });
+            
+      
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

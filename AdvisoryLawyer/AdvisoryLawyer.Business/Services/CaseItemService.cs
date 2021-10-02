@@ -1,10 +1,14 @@
 ﻿using AdvisoryLawyer.Business.Enum;
 using AdvisoryLawyer.Business.IServices;
+using AdvisoryLawyer.Business.Requests;
 using AdvisoryLawyer.Business.Requests.CaseItemRequest;
 using AdvisoryLawyer.Business.ViewModel;
 using AdvisoryLawyer.Data.IRepositories;
 using AdvisoryLawyer.Data.Models;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using PagedList;
+using Reso.Core.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,11 +59,47 @@ namespace AdvisoryLawyer.Business.Services
             return CaseItemModel;
         }
 
-        public async Task<List<CaseItemModel>> GetAllCaseItem()
+        public IPagedList<CaseItemModel> GetAllAdvisory(CaseItemModel flitter, int pageIndex,
+           int pageSize, CaseItemSortBy sortBy, OrderBy order)
         {
-            var listCaseItem = await _res.FindByAsync(x => x.Status == (int)CaseItemStatus.Active);
-            var listCaseItemModel = _mapper.Map<IEnumerable<CaseItemModel>>(listCaseItem).ToList();
-            return listCaseItemModel;
+            var listCaseItem = _res.FindBy(x => x.Status == (int)AdvisoryStatus.Active);
+
+            var listCaseItemModel = (listCaseItem.ProjectTo<CaseItemModel>
+                (_mapper.ConfigurationProvider)).DynamicFilter(flitter);
+            switch (sortBy.ToString())
+            {
+                case "Name":
+                    if (order.ToString() == "Asc")
+                    {
+                        listCaseItemModel = (IQueryable<CaseItemModel>)listCaseItemModel.OrderBy(x => x.Name);
+                    }
+                    else
+                    {
+                        listCaseItemModel = (IQueryable<CaseItemModel>)listCaseItemModel.OrderByDescending(x => x.Name);
+                    }
+                    break;
+                case "EventDate":
+                    if (order.ToString() == "Asc")
+                    {
+                        listCaseItemModel = (IQueryable<CaseItemModel>)listCaseItemModel.OrderBy(x => x.EventDate);
+                    }
+                    else
+                    {
+                        listCaseItemModel = (IQueryable<CaseItemModel>)listCaseItemModel.OrderByDescending(x => x.EventDate);
+                    }
+                    break;
+                case "CreateDate":
+                    if (order.ToString() == "Asc")
+                    {
+                        listCaseItemModel = (IQueryable<CaseItemModel>)listCaseItemModel.OrderBy(x => x.CreateDate);
+                    }
+                    else
+                    {
+                        listCaseItemModel = (IQueryable<CaseItemModel>)listCaseItemModel.OrderByDescending(x => x.CreateDate);
+                    }
+                    break;
+            }
+            return PagedListExtensions.ToPagedList<CaseItemModel>(listCaseItemModel, pageIndex, pageSize);
         }
 
 

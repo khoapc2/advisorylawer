@@ -1,5 +1,7 @@
 ﻿using AdvisoryLawyer.Business.IServices;
+using AdvisoryLawyer.Business.Requests;
 using AdvisoryLawyer.Business.Requests.CaseItemRequest;
+using AdvisoryLawyer.Business.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -9,13 +11,13 @@ using System.Threading.Tasks;
 
 namespace AdvisoryLawyer.API.Controllers
 {
-    [Route("api/case-items")]
+    [Route("api/v1/case-items")]
     [ApiController]
-    public class case_itemsController : ControllerBase
+    public class Case_ItemsController : ControllerBase
     {
         private readonly ICaseItemService _CaseItemService;
 
-        public case_itemsController(ICaseItemService CaseItemService)
+        public Case_ItemsController(ICaseItemService CaseItemService)
         {
             _CaseItemService = CaseItemService;
         }
@@ -30,9 +32,11 @@ namespace AdvisoryLawyer.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllCaseItem()
+        public IActionResult GetAllCaseItem([FromQuery] CaseItemModel flitter, CaseItemSortBy sortBy, OrderBy order,
+            int pageIndex = 1, int pageSize = 1)
         {
-            var listCaseItemModel = await _CaseItemService.GetAllCaseItem();
+            var listCaseItemModel = _CaseItemService.GetAllAdvisory(flitter, pageIndex, pageSize,
+                sortBy, order);
             return Ok(listCaseItemModel);
         }
 

@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Text;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace AdvisoryLawyer.Business.ViewModel
+namespace AdvisoryLawyer.Business.Requests.AdvisoryRequest
 {
-    public class AdvisoryModel
+    public class AdvisoryFilter
     {
-        public int? Id { get; set; }
         public int? CustomerId { get; set; }
         public int? LawyerId { get; set; }
         public string QuestionAnswer { get; set; }

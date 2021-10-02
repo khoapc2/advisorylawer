@@ -1,4 +1,5 @@
-﻿using AdvisoryLawyer.Business.Requests.AdvisoryRequest;
+﻿using AdvisoryLawyer.Business.Requests;
+using AdvisoryLawyer.Business.Requests.AdvisoryRequest;
 using AdvisoryLawyer.Business.ViewModel;
 using AdvisoryLawyer.Data.Models;
 using PagedList;
@@ -13,8 +14,8 @@ namespace AdvisoryLawyer.Business.IServices
     public interface IAdvisoryService
     {
         Task<AdvisoryModel> GetAdvisoryById(int id);
-        IPagedList<AdvisoryModel> GetAllAdvisory(AdvisoryModel fillter, int pageIndex, 
-            string sortBy, string order);
+        IPagedList<AdvisoryModel> GetAllAdvisory(AdvisoryModel fillter, int pageIndex, int pageSize, 
+            AdvisorySortBy sortBy, OrderBy order);
         Task<AdvisoryModel> CreateAdvisory(CreateAdvisoryRequest request);
         Task<AdvisoryModel> UpdateAdvisory(int id, UpdateAdvisoryRequest request);
         Task<bool> DeleteAdvisory(int id);

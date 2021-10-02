@@ -12,6 +12,10 @@ using AdvisoryLawyer.Data.Models;
 using AdvisoryLawyer.Business.ViewModel;
 using AdvisoryLawyer.Business.Requests.BookingRequest;
 using AdvisoryLawyer.Business.Enum;
+using PagedList;
+using AdvisoryLawyer.Business.Requests;
+using AutoMapper.QueryableExtensions;
+using Reso.Core.Utilities;
 
 namespace BookingLawyer.Business.Services
 {
@@ -57,11 +61,47 @@ namespace BookingLawyer.Business.Services
             return BookingModel;
         }
 
-        public async Task<List<BookingModel>> GetAllBooking()
+        public IPagedList<BookingModel> GetAllAdvisory(BookingModel flitter, int pageIndex,
+           int pageSize, BookingSortBy sortBy, OrderBy order)
         {
-            var listBooking = await _res.FindByAsync(x => x.Status == (int)BookingStatus.Active);
-            var listBookingModel = _mapper.Map<IEnumerable<BookingModel>>(listBooking).ToList();
-            return listBookingModel;
+            var listBooking = _res.FindBy(x => x.Status == (int)AdvisoryStatus.Active);
+
+            var listBookingModel = (listBooking.ProjectTo<BookingModel>
+                (_mapper.ConfigurationProvider)).DynamicFilter(flitter);
+            switch (sortBy.ToString())
+            {
+                case "BookingDate":
+                    if (order.ToString() == "Asc")
+                    {
+                        listBookingModel = (IQueryable<BookingModel>)listBookingModel.OrderBy(x => x.BookingDate);
+                    }
+                    else
+                    {
+                        listBookingModel = (IQueryable<BookingModel>)listBookingModel.OrderByDescending(x => x.BookingDate);
+                    }
+                    break;
+                case "TotalPrice":
+                    if (order.ToString() == "Asc")
+                    {
+                        listBookingModel = (IQueryable<BookingModel>)listBookingModel.OrderBy(x => x.TotalPrice);
+                    }
+                    else
+                    {
+                        listBookingModel = (IQueryable<BookingModel>)listBookingModel.OrderByDescending(x => x.TotalPrice);
+                    }
+                    break;
+                case "PayDate":
+                    if (order.ToString() == "Asc")
+                    {
+                        listBookingModel = (IQueryable<BookingModel>)listBookingModel.OrderBy(x => x.PayDate);
+                    }
+                    else
+                    {
+                        listBookingModel = (IQueryable<BookingModel>)listBookingModel.OrderByDescending(x => x.PayDate);
+                    }
+                    break;
+            }
+            return PagedListExtensions.ToPagedList<BookingModel>(listBookingModel, pageIndex, pageSize);
         }
 
 
@@ -80,8 +120,6 @@ namespace BookingLawyer.Business.Services
 
             return _mapper.Map<BookingModel>(Booking);
         }
-
-
     }
 }
 
