@@ -12,7 +12,6 @@
               <img v-lazy="'img/now-logo.png'" alt="" />
             </div> -->
 
-
           <section id="firebaseui-auth-container" ></section>
 
           <!-- <fg-input
@@ -61,14 +60,22 @@
 import { Card, Button, FormGroupInput } from "@/components";
 // import firebase from "firebase/compat/app";
 // import "firebase/compat/auth";
-// import firebaseConfig from '../components/helpers/firebaseConfig';
+import {firebaseConfig} from '../components/helpers/firebaseConfig';
 import firebase from "firebase";
 import firebaseui from "firebaseui";
 import "firebaseui/dist/firebaseui.css";
+
+import axios from "axios";
+
 // 
 
 // import MainFooter from '@/layout/MainFooter';
 export default {
+  data() {
+    return {
+        
+    };
+  },
   mounted() {
     var uiConfig = {
       signInSuccessUrl: "/",
@@ -89,18 +96,42 @@ export default {
     ui.start("#firebaseui-auth-container", uiConfig);
 
   },
-  // created() {
-  //   firebase.initializeApp(firebaseConfig);
-    
-  //   firebase.auth().onAuthStateChanged((user) => {
-  //     if(user) {
-        
-  //       this.$router.push('/dashboard')
-  //     } else {
-  //       this.$router.push('/')
-  //     }
-  //    });
-  //   },
+
+  created() {
+    firebase.initializeApp(firebaseConfig);
+    firebase.auth().onAuthStateChanged((user) => {
+      if(user) {
+        user.getIdToken().then((idTokenn) => {
+          console.log('ID Token: ', idTokenn);
+          
+          axios({
+                method: 'POST',
+                url:'https://104.215.186.78/api/authentications/login', 
+                data: {
+                  'idToken' : `${idTokenn}`
+                }, 
+                headers:{'Content-Type': 'application/json; charset=utf-8'}
+            }).then(res => console.log(res)).catch(error => console.log('There was an error: ' + error))
+
+        }).catch((error) => {
+          console.log(error)
+        }) 
+        this.$router.push('/')
+      } else {
+        this.$router.push('/')
+      }      
+     });
+    },
+  mounted() {
+    var uiConfig = {
+      signInSuccessUrl: "/",
+      signInOptions: [
+        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+      ],
+    };
+    var ui = new firebaseui.auth.AuthUI(firebase.auth());
+    ui.start("#firebaseui-auth-container", uiConfig);
+    },
 
   
 

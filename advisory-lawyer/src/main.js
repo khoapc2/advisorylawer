@@ -21,8 +21,7 @@ import router from './router';
 import NowUiKit from './plugins/now-ui-kit';
 import PaperDashboard from "./plugins/paperDashboard"
 
-import firebase from 'firebase'
-import {firebaseConfig} from './components/helpers/firebaseConfig'
+
 
 
 Vue.config.productionTip = false;
@@ -42,21 +41,7 @@ Vue.use(NowUiKit);
 
 new Vue({
   router,
-  created() {
-    firebase.initializeApp(firebaseConfig);
-    firebase.auth().onAuthStateChanged((user) => {
-      if(user) {
-        user.getIdToken().then((idToken) => {
-          console.log('ID Tokennnn: ', idToken);
-        }).catch((error) => {
-          console.log(error)
-        }) 
-        this.$router.push('/dashboard')
-      } else {
-        this.$router.push('/')
-      }
-     });
-    },
+  
   
   render: h => h(App)
 }).$mount('#app');
