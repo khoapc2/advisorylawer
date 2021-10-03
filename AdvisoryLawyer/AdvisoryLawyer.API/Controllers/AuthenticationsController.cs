@@ -28,7 +28,7 @@ namespace AdvisoryLawyer.API.Controllers
         {
             try
             {
-                var data = await _service.LoginWithGmail(request.IdToken);
+                var data = await _service.LoginWithGmail(request.id_token);
                 if(data == null) return BadRequest();
                 return Ok(data);
             }

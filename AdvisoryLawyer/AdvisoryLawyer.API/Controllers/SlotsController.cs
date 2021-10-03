@@ -1,4 +1,5 @@
 ﻿using AdvisoryLawyer.Business.IServices;
+using AdvisoryLawyer.Business.Requests;
 using AdvisoryLawyer.Business.Requests.SlotRequest;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -23,11 +24,11 @@ namespace AdvisoryLawyer.API.Controllers
 
         [Authorize]
         [HttpGet]
-        public IActionResult GetAllSlot()
+        public async Task<IActionResult> GetAllSlot([FromQuery] SlotRequest request, SlotSortBy sort_by, OrderBy order_by, int page_index = 1, int page_size = 5)
         {
             try
             {
-                var slotList = _service.GetAllSlot();
+                var slotList = await _service.GetAllSlot(request, sort_by, order_by, page_index, page_size);
                 if (slotList != null) return Ok(slotList);
                 return NoContent();
             }
@@ -40,11 +41,11 @@ namespace AdvisoryLawyer.API.Controllers
 
         [Authorize]
         [HttpGet("{id}", Name = "GetSlotByID")]
-        public IActionResult GetSlotByID(int id)
+        public async Task<IActionResult> GetSlotByID(int id)
         {
             try
             {
-                var slot = _service.GetSlotByID(id);
+                var slot = await _service.GetSlotByID(id);
                 return Ok(slot);
             }
             catch (Exception ex)
@@ -56,16 +57,12 @@ namespace AdvisoryLawyer.API.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult CreateSlot([FromBody] SlotRequest newSlot)
+        public async Task<IActionResult> CreateSlot([FromBody] SlotRequest newSlot)
         {
             try
             {
-                var slot = _service.CreateSlot(newSlot);
-                if(slot != null)
-                {
-                    return CreatedAtRoute(nameof(GetSlotByID), new { Id = slot.Id }, slot);
-                }
-                return BadRequest();
+                var slot = await _service.CreateSlot(newSlot);
+                return CreatedAtRoute(nameof(GetSlotByID), new { id = slot.id }, slot);
             }
             catch (Exception ex)
             {
@@ -76,13 +73,12 @@ namespace AdvisoryLawyer.API.Controllers
 
         [Authorize]
         [HttpPut("{id}")]
-        public IActionResult UpdateSlot(int id, [FromBody] SlotRequest newSlot)
+        public async Task<IActionResult> UpdateSlot(int id, [FromBody] SlotRequest newSlot)
         {
             try
             {
-                var slot = _service.UpdateSlot(id, newSlot);
-                if (slot != null) return Ok(slot);
-                return BadRequest();
+                var slot = await _service.UpdateSlot(id, newSlot);
+                return Ok(slot);
             }
             catch (Exception ex)
             {
@@ -93,13 +89,12 @@ namespace AdvisoryLawyer.API.Controllers
 
         [Authorize]
         [HttpDelete("{id}")] 
-        public IActionResult DeleteSlot(int id)
+        public async Task<IActionResult> DeleteSlot(int id)
         {
             try
             {
-                var isDelete = _service.DeleteSlot(id);
-                if (isDelete) return Ok();
-                return BadRequest();
+                await _service.DeleteSlot(id);
+                return Ok();
             }
             catch (Exception ex)
             {

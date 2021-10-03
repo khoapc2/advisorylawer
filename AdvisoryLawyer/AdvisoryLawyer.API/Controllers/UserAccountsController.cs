@@ -1,4 +1,5 @@
 ﻿using AdvisoryLawyer.Business.IServices;
+using AdvisoryLawyer.Business.Requests;
 using AdvisoryLawyer.Business.Requests.UserAccountsRequest;
 using AdvisoryLawyer.Business.ViewModel;
 using Microsoft.AspNetCore.Authorization;
@@ -26,12 +27,12 @@ namespace AdvisoryLawyer.API.Controllers
         }
 
         [Authorize]
-        [HttpGet]
-        public IActionResult GetProfileByID([FromHeader] string authorization)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetProfileByID(int id)
         {
             try
             {
-                var userProfile = _service.GetProfileByID(authorization.Substring(7));
+                var userProfile = await _service.GetProfileByID(id);
                 return Ok(userProfile);
             }
             catch (Exception ex)
@@ -42,12 +43,12 @@ namespace AdvisoryLawyer.API.Controllers
         }
 
         [Authorize]
-        [HttpGet("all-profile")]
-        public IActionResult GetAllProfiles()
+        [HttpGet]
+        public async Task<IActionResult> GetAllProfiles([FromQuery] UserAccountRequest request, UserAccountSortBy sort_by, OrderBy order_by, int page_index = 1, int page_size = 5)
         {
             try
             {
-                var profiles = _service.GetAllProfiles();
+                var profiles = await _service.GetAllProfiles(request, sort_by, order_by, page_index, page_size);
                 return Ok(profiles);
             }
             catch (Exception ex)
@@ -59,13 +60,12 @@ namespace AdvisoryLawyer.API.Controllers
 
         [Authorize(Roles = "admin")]
         [HttpPut("change-status/{id}")]
-        public IActionResult ChangeAccountStatus(int id)
+        public async Task<IActionResult> ChangeAccountStatus(int id)
         {
             try
             {
-                bool isChange = _service.ChangeAccountStatus(id);
-                if (isChange) return Ok();
-                return BadRequest();
+                await _service.ChangeAccountStatus(id);
+                return Ok();
             }
             catch (Exception ex)
             {

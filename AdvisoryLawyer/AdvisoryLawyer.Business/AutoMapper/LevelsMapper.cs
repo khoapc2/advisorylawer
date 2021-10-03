@@ -21,6 +21,8 @@ namespace AdvisoryLawyer.Business.AutoMapper
                 .ForMember(d => d.LevelName, s => s.MapFrom(s => s.level_name))
                 .ForMember(d => d.MinPrice, s => s.MapFrom(s => s.min_price))
                 .ForMember(d => d.MaxPrice, s => s.MapFrom(s => s.max_price));
+
+            CreateMap<LevelRequest, LevelModel>();
         }
     }
 }

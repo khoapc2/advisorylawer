@@ -1,4 +1,5 @@
 ﻿using AdvisoryLawyer.Business.IServices;
+using AdvisoryLawyer.Business.Requests;
 using AdvisoryLawyer.Business.Requests.LevelRequest;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -23,16 +24,16 @@ namespace AdvisoryLawyer.API.Controllers
 
         [Authorize]
         [HttpGet]
-        public IActionResult GetAllLevels()
+        public async Task<IActionResult> GetAllLevels([FromQuery] LevelRequest request, LevelSortBy sort_by, OrderBy order_by, int page_index = 1, int page_size = 5)
         {
             try
             {
-                var levelList = _service.GetAllLevels();
+                var levelList = await _service.GetAllLevels(request, sort_by, order_by, page_index, page_size);
                 if(levelList != null)
                 {
                     return Ok(levelList);
                 }
-                return BadRequest();
+                return NoContent();
             }
             catch (Exception ex)
             {
@@ -43,13 +44,12 @@ namespace AdvisoryLawyer.API.Controllers
 
         [Authorize]
         [HttpGet("{id}", Name = "GetLevelByID")]
-        public IActionResult GetLevelByID(int id)
+        public async Task<IActionResult> GetLevelByID(int id)
         {
             try
             {
-                var level = _service.GetLevelByID(id);
-                if (level != null) return Ok(level);
-                return BadRequest();
+                var level = await _service.GetLevelByID(id);
+                return Ok(level);
             }
             catch (Exception ex)
             {
@@ -60,13 +60,12 @@ namespace AdvisoryLawyer.API.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult CreateLevel([FromBody] LevelRequest newLevel)
+        public async Task<IActionResult> CreateLevel([FromBody] LevelRequest newLevel)
         {
             try
             {
-                var level = _service.CreateLevel(newLevel);
-                if (level != null) return CreatedAtRoute(nameof(GetLevelByID), new { Id = level.Id }, level);
-                return BadRequest();
+                var level = await _service.CreateLevel(newLevel);
+                return CreatedAtRoute(nameof(GetLevelByID), new { id = level.id }, level);
             }
             catch (Exception ex)
             {
@@ -77,13 +76,12 @@ namespace AdvisoryLawyer.API.Controllers
 
         [Authorize]
         [HttpPut("{id}")]
-        public IActionResult UpdateLevel(int id, [FromBody] LevelRequest newLevel)
+        public async Task<IActionResult> UpdateLevel(int id, [FromBody] LevelRequest newLevel)
         {
             try
             {
-                var level = _service.UpdateLevel(id, newLevel);
-                if (level != null) return Ok();
-                return BadRequest();
+                var level = await _service.UpdateLevel(id, newLevel);
+                return Ok();
             }
             catch (Exception ex)
             {
@@ -94,13 +92,12 @@ namespace AdvisoryLawyer.API.Controllers
 
         [Authorize]
         [HttpDelete("{id}")]
-        public IActionResult DeleteLevel(int id)
+        public async Task<IActionResult> DeleteLevel(int id)
         {
             try
             {
-                bool isDelete = _service.DeleteLevel(id);
-                if (isDelete) return Ok();
-                return BadRequest();
+                await _service.DeleteLevel(id);
+                return Ok();
             }
             catch (Exception ex)
             {

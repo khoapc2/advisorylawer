@@ -25,6 +25,8 @@ namespace AdvisoryLawyer.Business.AutoMapper
                 .ForMember(d => d.Price, s => s.MapFrom(s => s.price))
                 .ForMember(d => d.LawyerId, s => s.MapFrom(s => s.lawyer_id))
                 .ForMember(d => d.Status, s => s.MapFrom(s => s.status));
+
+            CreateMap<SlotRequest, SlotModel>();
         }
     }
 }
