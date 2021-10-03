@@ -14,7 +14,7 @@ namespace AdvisoryLawyer.Business.IServices
     {
         public Task<UserAccountModel> CheckGmail(string gmail, string fullname);
         public Task<UserAccountModel> GetProfileByID(int id);
-        public Task<IPagedList<UserAccountModel>> GetAllProfiles(UserAccountRequest request, UserAccountSortBy sortBy, OrderBy orderBy, int pageIndex, int pageSize);
+        public IPagedList<UserAccountModel> GetAllProfiles(UserAccountRequest request, UserAccountSortBy sortBy, OrderBy orderBy, int pageIndex, int pageSize);
         public Task ChangeAccountStatus(int id);
     }
 }

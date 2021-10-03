@@ -9,7 +9,7 @@ namespace AdvisoryLawyer.Business.IServices
 {
     public interface ISlotService
     {
-        public Task<IPagedList<SlotModel>> GetAllSlot(SlotRequest request, SlotSortBy sortBy, OrderBy orderBy, int pageIndex, int pageSize);
+        public IPagedList<SlotModel> GetAllSlot(SlotRequest request, SlotSortBy sortBy, OrderBy orderBy, int pageIndex, int pageSize);
         public Task<SlotModel> GetSlotByID(int id);
         public Task<SlotModel> CreateSlot(SlotRequest level);
         public Task<SlotModel> UpdateSlot(int id, SlotRequest level);

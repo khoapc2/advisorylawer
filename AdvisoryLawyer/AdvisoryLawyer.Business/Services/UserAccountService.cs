@@ -64,12 +64,12 @@ namespace AdvisoryLawyer.Business.Services
             return _mapper.Map<UserAccountModel>(userProfile);
         }
 
-        public async Task<IPagedList<UserAccountModel>> GetAllProfiles(UserAccountRequest request, UserAccountSortBy sortBy, OrderBy orderBy, int pageIndex, int pageSize)
+        public IPagedList<UserAccountModel> GetAllProfiles(UserAccountRequest request, UserAccountSortBy sortBy, OrderBy orderBy, int pageIndex, int pageSize)
         {
-            var userList = await _genericRepository.FindByAsync(u => u.Status == (int)UserAccountStatus.Active);
+            var userList = _genericRepository.FindBy(u => u.Status == (int)UserAccountStatus.Active);
             if (userList == null) return null;
 
-            var slotModelList = userList.AsQueryable().ProjectTo<UserAccountModel>(_mapper.ConfigurationProvider).DynamicFilter(_mapper.Map<UserAccountModel>(request));
+            var slotModelList = userList.ProjectTo<UserAccountModel>(_mapper.ConfigurationProvider).DynamicFilter(_mapper.Map<UserAccountModel>(request));
 
             switch (sortBy.ToString())
             {

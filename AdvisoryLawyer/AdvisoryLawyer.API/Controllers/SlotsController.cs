@@ -24,11 +24,11 @@ namespace AdvisoryLawyer.API.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> GetAllSlot([FromQuery] SlotRequest request, SlotSortBy sort_by, OrderBy order_by, int page_index = 1, int page_size = 5)
+        public IActionResult GetAllSlot([FromQuery] SlotRequest request, SlotSortBy sort_by, OrderBy order_by, int page_index = 1, int page_size = 5)
         {
             try
             {
-                var slotList = await _service.GetAllSlot(request, sort_by, order_by, page_index, page_size);
+                var slotList = _service.GetAllSlot(request, sort_by, order_by, page_index, page_size);
                 if (slotList != null) return Ok(slotList);
                 return NoContent();
             }

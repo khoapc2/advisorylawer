@@ -42,17 +42,17 @@ namespace AdvisoryLawyer.Business.Services
             await _genericRepository.SaveAsync();
         }
 
-        public async Task<IPagedList<LevelModel>> GetAllLevels(LevelRequest request, LevelSortBy sortBy, OrderBy orderBy, int pageIndex, int pageSize)
+        public IPagedList<LevelModel> GetAllLevels(LevelRequest request, LevelSortBy sortBy, OrderBy orderBy, int pageIndex, int pageSize)
         {
-            var levelList = await _genericRepository.FindByAsync(l => l.Status == (int)LevelStatus.Active);
+            var levelList = _genericRepository.FindBy(l => l.Status == (int)LevelStatus.Active);
             if (levelList == null) return null;
 
-            var levelModelList = levelList.AsQueryable().ProjectTo<LevelModel>(_mapper.ConfigurationProvider).DynamicFilter(_mapper.Map<LevelModel>(request));
+            var levelModelList = levelList.ProjectTo<LevelModel>(_mapper.ConfigurationProvider).DynamicFilter(_mapper.Map<LevelModel>(request));
 
-            switch(sortBy.ToString())
+            switch (sortBy.ToString())
             {
                 case "MinPrice":
-                    if("Asc".Equals(orderBy.ToString()))
+                    if ("Asc".Equals(orderBy.ToString()))
                     {
                         levelModelList = levelModelList.OrderBy(l => l.min_price);
                     }

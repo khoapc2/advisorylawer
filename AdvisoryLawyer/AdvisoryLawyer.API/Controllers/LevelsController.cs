@@ -24,12 +24,12 @@ namespace AdvisoryLawyer.API.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> GetAllLevels([FromQuery] LevelRequest request, LevelSortBy sort_by, OrderBy order_by, int page_index = 1, int page_size = 5)
+        public IActionResult GetAllLevels([FromQuery] LevelRequest request, LevelSortBy sort_by, OrderBy order_by, int page_index = 1, int page_size = 5)
         {
             try
             {
-                var levelList = await _service.GetAllLevels(request, sort_by, order_by, page_index, page_size);
-                if(levelList != null)
+                var levelList = _service.GetAllLevels(request, sort_by, order_by, page_index, page_size);
+                if (levelList != null)
                 {
                     return Ok(levelList);
                 }

@@ -44,11 +44,11 @@ namespace AdvisoryLawyer.API.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> GetAllProfiles([FromQuery] UserAccountRequest request, UserAccountSortBy sort_by, OrderBy order_by, int page_index = 1, int page_size = 5)
+        public IActionResult GetAllProfiles([FromQuery] UserAccountRequest request, UserAccountSortBy sort_by, OrderBy order_by, int page_index = 1, int page_size = 5)
         {
             try
             {
-                var profiles = await _service.GetAllProfiles(request, sort_by, order_by, page_index, page_size);
+                var profiles = _service.GetAllProfiles(request, sort_by, order_by, page_index, page_size);
                 return Ok(profiles);
             }
             catch (Exception ex)

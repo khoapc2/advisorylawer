@@ -42,12 +42,12 @@ namespace AdvisoryLawyer.Business.Services
             await _genericRepository.SaveAsync();
         }
 
-        public async Task<IPagedList<SlotModel>> GetAllSlot(SlotRequest request, SlotSortBy sortBy, OrderBy orderBy, int pageIndex, int pageSize)
+        public IPagedList<SlotModel> GetAllSlot(SlotRequest request, SlotSortBy sortBy, OrderBy orderBy, int pageIndex, int pageSize)
         {
-            var slotList = await _genericRepository.FindByAsync(s => s.Status == (int)SlotStatus.Active);
+            var slotList = _genericRepository.FindBy(s => s.Status == (int)SlotStatus.Active);
             if (slotList == null) return null;
 
-            var slotModelList = slotList.AsQueryable().ProjectTo<SlotModel>(_mapper.ConfigurationProvider).DynamicFilter(_mapper.Map<SlotModel>(request));
+            var slotModelList = slotList.ProjectTo<SlotModel>(_mapper.ConfigurationProvider).DynamicFilter(_mapper.Map<SlotModel>(request));
 
             switch (sortBy.ToString())
             {
