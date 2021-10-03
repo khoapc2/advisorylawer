@@ -8,6 +8,6 @@ namespace AdvisoryLawyer.Business.Requests.AuthenticationRequest
 {
     public class AuthenticationRequest
     {
-        public string IdToken { get; set; }
+        public string id_token { get; set; }
     }
 }

@@ -8,8 +8,8 @@ namespace AdvisoryLawyer.Business.Requests.LevelRequest
 {
     public class LevelRequest
     {
-        public string LevelName { get; set; }
-        public int MinPrice { get; set; }
-        public int MaxPrice { get; set; }
+        public string level_name { get; set; }
+        public int min_price { get; set; }
+        public int max_price { get; set; }
     }
 }

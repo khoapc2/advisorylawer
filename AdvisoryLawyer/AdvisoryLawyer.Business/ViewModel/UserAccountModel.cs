@@ -8,21 +8,20 @@ namespace AdvisoryLawyer.Business.ViewModel
 {
     public class UserAccountModel
     {
-        public int Id { get; set; }
-        public string Username { get; set; }
-        //public string Password { get; set; }
-        public string Role { get; set; }
-        public string Name { get; set; }
-        public string Address { get; set; }
-        public string Location { get; set; }
-        public string Description { get; set; }
-        public string PhoneNumber { get; set; }
-        public string Website { get; set; }
-        public string Email { get; set; }
-        public bool? Sex { get; set; }
-        public string? DateOfBirth { get; set; }
-        public int Status { get; set; }
-        public string? LawyerOfficeName { get; set; }
-        public string? Level { get; set; }
+        public int id { get; set; }
+        public string username { get; set; }
+        public string role { get; set; }
+        public string name { get; set; }
+        public string address { get; set; }
+        public string location { get; set; }
+        public string description { get; set; }
+        public string phone_number { get; set; }
+        public string website { get; set; }
+        public string email { get; set; }
+        public bool? sex { get; set; }
+        public string? date_of_birth { get; set; }
+        public int status { get; set; }
+        public string? lawyer_office_name { get; set; }
+        public string? level { get; set; }
     }
 }
