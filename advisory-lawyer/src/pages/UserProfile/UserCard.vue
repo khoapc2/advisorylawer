@@ -5,19 +5,19 @@
     </div>
     <div>
       <div class="author">
-        <img class="avatar border-white" src="@/assets/img/faces/face-2.jpg" alt="...">
-        <h4 class="title"> {{userFullname}}
+        <img class="avatar border-white" :src="photo" alt="...">
+        <h4 class="title"> {{name}}
           <br>
-          <a href="#">
-            <small>@chetfaker</small>
-          </a>
+          <!-- <a href="#"> -->
+            <small>Admin</small>
+          <!-- </a> -->
         </h4>
       </div>
-      <p class="description text-center">
+      <!-- <p class="description text-center">
         "I like the way you work it
         <br> No diggity
         <br> I wanna bag it up"
-      </p>
+      </p> -->
     </div>
     <hr>
     <div class="text-center">
@@ -33,10 +33,14 @@
   </card>
 </template>
 <script>
+import firebase from 'firebase'
 
 export default {
   data() {
     return {
+      name: '',
+      photo: '',
+      email: '',
       details: [
         {
           title: "",
@@ -53,6 +57,17 @@ export default {
       ]
     };
   },
+  created() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.user = user;
+        this.name = this.user.displayName;
+        this.email = this.user.email;
+        this.photo = this.user.photoURL;
+        // this.userId = vm.user.uid;
+      }
+    });
+  },  
   methods: {
     getClasses(index) {
       var remainder = index % 3;
@@ -63,14 +78,11 @@ export default {
       } else {
         return "col-lg-3";
       }
-    }
+    },
   },
-  computed: {
-    userFullname(){
-      console.log('edit ' + this.$store.state.users.displayName)
-      return this.$store.state.users.displayName
-    }
-  }
+  // computed: {
+  //   return this.$store.state.users.displayName
+  // }
 };
 </script>
 <style>

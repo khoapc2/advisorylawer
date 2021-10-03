@@ -30,10 +30,10 @@
             <a class="dropdown-item" href="#">Another notification</a>
           </drop-down>
           <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="ti-settings"></i>
+            <a href="/" class="nav-link" @click='logOut'>
+              <i class="ti-shift-left"></i>
               <p>
-                Settings
+                Log Out
               </p>
             </a>
           </li>
@@ -42,6 +42,8 @@
     </div></nav>
 </template>
 <script>
+import firebase from 'firebase'
+
 export default {
   computed: {
     routeName() {
@@ -70,6 +72,9 @@ export default {
     },
     hideSidebar() {
       this.$sidebar.displaySidebar(false);
+    },
+    logOut(){
+      firebase.auth().signOut();
     }
   }
 };

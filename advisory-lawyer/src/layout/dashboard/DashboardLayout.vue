@@ -10,14 +10,14 @@
         <!-- <sidebar-link to="/maps" name="Map" icon="ti-map"/> -->
         <!-- <sidebar-link to="/notifications" name="Notifications" icon="ti-bell"/> -->
       </template>
-      <!-- <mobile-menu>
-        <li class="nav-item">
+      <!-- <mobile-menu> -->
+        <!-- <li class="nav-item">
           <a class="nav-link">
             <i class="ti-panel"></i>
             <p>Stats</p>
           </a>
-        </li> -->
-        <!-- <drop-down class="nav-item"
+        </li> 
+        <drop-down class="nav-item"
                    title="5 Notifications"
                    title-classes="nav-link"
                    icon="ti-bell">
@@ -26,15 +26,15 @@
           <a class="dropdown-item">Notification 3</a>
           <a class="dropdown-item">Notification 4</a>
           <a class="dropdown-item">Another notification</a>
-        </drop-down> -->
-        <!-- <li class="nav-item">
+        </drop-down>
+         <li class="nav-item">
           <a class="nav-link">
             <i class="ti-settings"></i>
             <p>Settings</p>
           </a>
         </li>
-        <li class="divider"></li>
-      </mobile-menu> -->
+        <li class="divider"></li> -->
+      <!-- </mobile-menu> -->
     </side-bar>
     <div class="main-panel">
       <top-navbar></top-navbar>
@@ -50,13 +50,13 @@
 <style lang="scss">
 </style>
 <script>
-// import TopNavbar from "./TopNavbar.vue";
+import TopNavbar from "./TopNavbar.vue";
 import ContentFooter from "./ContentFooter.vue";
 import DashboardContent from "./Content.vue";
-// import MobileMenu from "./MobileMenu";
+// import MobileMenu from "./MobileMenu.vue";
 export default {
   components: {
-    // TopNavbar,
+    TopNavbar,
     ContentFooter,
     DashboardContent,
     // MobileMenu

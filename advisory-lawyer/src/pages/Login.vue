@@ -97,35 +97,34 @@ export default {
 
   },
 
-  created() {
+   created() {
     firebase.initializeApp(firebaseConfig);
     firebase.auth().onAuthStateChanged((user) => {
       if(user) {
-        user.getIdToken().then((idTokenn) => {
+        user.getIdToken().then(async(idTokenn) => {
           console.log('ID Token: ', idTokenn);
           
-          axios({
+          await Promise.resolve(axios({
                 method: 'POST',
                 url:'https://104.215.186.78/api/authentications/login', 
                 data: {
                   'idToken' : `${idTokenn}`
                 }, 
                 headers:{'Content-Type': 'application/json; charset=utf-8'}
-            }).then(res => {
+            })).then(async(res) => {
               const data = res.data
               const users = {
                 displayName: data.displayName,
                 token: data.token
               }
-              this.$store.state.users = users;
-              console.log('state nè: ' + this.$store.state.users.displayName)
+              await Promise.resolve(this.$store.state.users = users)
+               console.log('state nè: ' + this.$store.state.users.displayName)
             }
             ).catch(error => console.log('There was an error: ' + error))
-            console.log(this.userFullname);
         }).catch((error) => {
           console.log(error)
         }) 
-        this.$router.push('/dashboard')
+        this.$router.push('/stats')
       } else {
         this.$router.push('/')
       }      
@@ -141,11 +140,6 @@ export default {
     var ui = new firebaseui.auth.AuthUI(firebase.auth());
     ui.start("#firebaseui-auth-container", uiConfig);
     },
-
-  
-
-
-
 };
 </script>
 <style></style>
