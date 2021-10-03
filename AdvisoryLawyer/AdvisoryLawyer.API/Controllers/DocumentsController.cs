@@ -1,4 +1,5 @@
 ﻿using AdvisoryLawyer.Business.IServices;
+using AdvisoryLawyer.Business.Requests;
 using AdvisoryLawyer.Business.Requests.DocumentRequest;
 using AdvisoryLawyer.Business.ViewModel;
 using Microsoft.AspNetCore.Http;
@@ -22,9 +23,10 @@ namespace AdvisoryLawyer.API.Controllers
 
         //GET api/documents
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<DocumentModel>>> GetAllDocuments()
+        public ActionResult<IEnumerable<DocumentModel>> GetAllDocuments([FromQuery] DocumentRequest filter, DocumentSortBy sortBy,
+            OrderBy order, int pageIndex = 1, int pageSize = 1)
         {
-            return Ok(await _service.GetAllDocuments());
+            return Ok(_service.GetAllDocuments(filter, sortBy, order, pageIndex, pageSize));
         }
 
         //GET api/documents/{id}

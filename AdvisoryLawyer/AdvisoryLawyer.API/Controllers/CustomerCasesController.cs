@@ -1,4 +1,5 @@
 ﻿using AdvisoryLawyer.Business.IServices;
+using AdvisoryLawyer.Business.Requests;
 using AdvisoryLawyer.Business.Requests.CustomerCaseRequest;
 using AdvisoryLawyer.Business.ViewModel;
 using Microsoft.AspNetCore.Http;
@@ -22,9 +23,10 @@ namespace AdvisoryLawyer.API.Controllers
 
         //GET api/customer-cases
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CustomerCaseModel>>> GetAllCustomerCases()
+        public ActionResult<IEnumerable<CustomerCaseModel>> GetAllCustomerCases([FromQuery] CustomerCaseRequest filter,
+            CustomerCaseSortBy sortBy, OrderBy order, int pageIndex = 1, int pageSize = 1)
         {
-            return Ok(await _service.GetAllCustomerCases());
+            return Ok(_service.GetAllCustomerCases(filter, sortBy, order, pageIndex, pageSize));
         }
 
         //GET api/customer-cases/{id}

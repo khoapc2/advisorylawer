@@ -37,7 +37,7 @@ namespace AdvisoryLawyer.API.Controllers
         }
         [HttpGet]
         public IActionResult GetAllAdvisory([FromQuery]  AdvisoryModel filter, AdvisorySortBy sortBy, OrderBy order,
-            int pageIndex =1 , int pageSize = 1)
+            int pageIndex = 1 , int pageSize = 1)
         {
             var listAdvisoryModel = _advisoryService.GetAllAdvisory(filter, pageIndex,pageSize, sortBy, order);
             return Ok(listAdvisoryModel);

@@ -1,5 +1,7 @@
-﻿using AdvisoryLawyer.Business.Requests.CustomerCaseRequest;
+﻿using AdvisoryLawyer.Business.Requests;
+using AdvisoryLawyer.Business.Requests.CustomerCaseRequest;
 using AdvisoryLawyer.Business.ViewModel;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +12,8 @@ namespace AdvisoryLawyer.Business.IServices
 {
     public interface ICustomerCaseService
     {
-        Task<IEnumerable<CustomerCaseModel>> GetAllCustomerCases();
+        IPagedList<CustomerCaseModel> GetAllCustomerCases(CustomerCaseRequest filter,
+            CustomerCaseSortBy sortBy, OrderBy order, int pageIndex, int pageSize);
         Task<CustomerCaseModel> GetCustomerCaseById(int id);
         Task<CustomerCaseModel> CreateCustomerCase(CustomerCaseRequest categoryRequest);
         Task<CustomerCaseModel> UpdateCustomerCase(int id, CustomerCaseRequest categoryRequest);

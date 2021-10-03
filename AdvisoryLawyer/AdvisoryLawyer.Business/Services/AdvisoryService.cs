@@ -63,13 +63,13 @@ namespace AdvisoryLawyer.Business.Services
             return advisoryModel;
         }
 
-        public IPagedList<AdvisoryModel> GetAllAdvisory(AdvisoryModel flitter, int pageIndex,
+        public IPagedList<AdvisoryModel> GetAllAdvisory(AdvisoryModel filter, int pageIndex,
             int pageSize, AdvisorySortBy sortBy, OrderBy order)
         {
             var listAdvisory =  _res.FindBy(x => x.Status == (int)AdvisoryStatus.Active);
           
             var listAdvisoryModel = (listAdvisory.ProjectTo<AdvisoryModel>
-                (_mapper.ConfigurationProvider)).DynamicFilter(flitter);
+                (_mapper.ConfigurationProvider)).DynamicFilter(filter);
             switch (sortBy.ToString())
             {
                 case "QuestionAnswer":

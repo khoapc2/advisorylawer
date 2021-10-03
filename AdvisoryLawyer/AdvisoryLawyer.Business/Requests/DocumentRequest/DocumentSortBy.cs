@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace AdvisoryLawyer.Business.Requests.DocumentRequest
 {
-    public class DocumentRequest
+    public enum DocumentSortBy
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public int? CategoryId { get; set; }
+        Name,
+        Description
     }
 }

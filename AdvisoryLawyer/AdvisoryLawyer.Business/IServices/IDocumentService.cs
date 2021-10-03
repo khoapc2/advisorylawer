@@ -1,5 +1,7 @@
-﻿using AdvisoryLawyer.Business.Requests.DocumentRequest;
+﻿using AdvisoryLawyer.Business.Requests;
+using AdvisoryLawyer.Business.Requests.DocumentRequest;
 using AdvisoryLawyer.Business.ViewModel;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +12,8 @@ namespace AdvisoryLawyer.Business.IServices
 {
     public interface IDocumentService
     {
-        Task<IEnumerable<DocumentModel>> GetAllDocuments();
+        IPagedList<DocumentModel> GetAllDocuments(DocumentRequest filter,
+            DocumentSortBy sortBy, OrderBy order, int pageIndex, int pageSize);
         Task<DocumentModel> GetDocumentById(int id);
         Task<DocumentModel> CreateDocument(DocumentRequest documentRequest);
         Task<DocumentModel> UpdateDocument(int id, DocumentRequest documentRequest);
