@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace AdvisoryLawyer.API.Controllers
 {
-    [Route("api/user-accounts")]
+    [Route("api/v1/user-accounts")]
     [ApiController]
     public class UserAccountsController : ControllerBase
     {

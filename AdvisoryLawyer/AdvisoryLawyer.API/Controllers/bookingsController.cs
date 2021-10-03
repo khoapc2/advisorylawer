@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace BookingLawyer.API.Controllers
 {
-    [Route("api/v1/[controller]")]
+    [Route("api/v1/bookings")]
     [ApiController]
     public class BookingsController : ControllerBase
     {

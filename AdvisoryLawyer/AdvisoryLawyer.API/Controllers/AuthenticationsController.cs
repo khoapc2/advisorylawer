@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace AdvisoryLawyer.API.Controllers
 {
-    [Route("api/authentications")]
+    [Route("api/v1/authentications")]
     [ApiController]
     public class AuthenticationsController : ControllerBase
     {
