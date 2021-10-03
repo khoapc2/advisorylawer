@@ -29,7 +29,9 @@ namespace AdvisoryLawyer.Business.AutoMapper
                 .ForMember(d => d.sex, s => s.MapFrom(s => s.Sex == true ? UserAccountSex.Male : UserAccountSex.Femail))
                 .ForMember(d => d.status, s => s.MapFrom(s => s.Status))
                 .ForMember(d => d.level, s => s.MapFrom(s => s.Level.LevelName))
+                .ForMember(d => d.level_id, s => s.MapFrom(s => s.LevelId))
                 .ForMember(d => d.lawyer_office_name, s => s.MapFrom(s => s.LawyerOffice.Name))
+                .ForMember(d => d.lawyer_office_id, s => s.MapFrom(s => s.LawyerOfficeId))
                 .ForMember(d => d.date_of_birth, s => s.MapFrom(s => ConvertDateTimeToString(s.DateOfBirth)));
 
             CreateMap<UserAccountRequest, UserAccount>()
@@ -44,8 +46,8 @@ namespace AdvisoryLawyer.Business.AutoMapper
                 .ForMember(d => d.Email, s => s.MapFrom(s => s.email))
                 .ForMember(d => d.Sex, s => s.MapFrom(s => s.sex == UserAccountSex.Male ? true : false))
                 .ForMember(d => d.Status, s => s.MapFrom(s => s.status))
-                .ForMember(d => d.Level.LevelName, s => s.MapFrom(s => s.level))
-                .ForMember(d => d.LawyerOffice.Name, s => s.MapFrom(s => s.lawyer_office_name))
+                .ForMember(d => d.LevelId, s => s.MapFrom(s => s.level_id))
+                .ForMember(d => d.LawyerOfficeId, s => s.MapFrom(s => s.lawyer_office_id))
                 .ForMember(d => d.DateOfBirth, s => s.MapFrom(s => s.date_of_birth));
 
             CreateMap<UserAccountRequest, UserAccountModel>();
