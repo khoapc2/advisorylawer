@@ -6,7 +6,7 @@
     <div>
       <div class="author">
         <img class="avatar border-white" src="@/assets/img/faces/face-2.jpg" alt="...">
-        <h4 class="title">Chet Faker
+        <h4 class="title"> {{userFullname}}
           <br>
           <a href="#">
             <small>@chetfaker</small>
@@ -33,6 +33,7 @@
   </card>
 </template>
 <script>
+
 export default {
   data() {
     return {
@@ -62,6 +63,12 @@ export default {
       } else {
         return "col-lg-3";
       }
+    }
+  },
+  computed: {
+    userFullname(){
+      console.log('edit ' + this.$store.state.users.displayName)
+      return this.$store.state.users.displayName
     }
   }
 };

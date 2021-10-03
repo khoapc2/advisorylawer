@@ -73,7 +73,7 @@ import axios from "axios";
 export default {
   data() {
     return {
-        
+      userFullname : null,
     };
   },
   mounted() {
@@ -111,12 +111,21 @@ export default {
                   'idToken' : `${idTokenn}`
                 }, 
                 headers:{'Content-Type': 'application/json; charset=utf-8'}
-            }).then(res => console.log(res)).catch(error => console.log('There was an error: ' + error))
-
+            }).then(res => {
+              const data = res.data
+              const users = {
+                displayName: data.displayName,
+                token: data.token
+              }
+              this.$store.state.users = users;
+              console.log('state nè: ' + this.$store.state.users.displayName)
+            }
+            ).catch(error => console.log('There was an error: ' + error))
+            console.log(this.userFullname);
         }).catch((error) => {
           console.log(error)
         }) 
-        this.$router.push('/')
+        this.$router.push('/dashboard')
       } else {
         this.$router.push('/')
       }      

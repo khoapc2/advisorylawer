@@ -20,6 +20,7 @@ import App from './App.vue';
 import router from './router';
 import NowUiKit from './plugins/now-ui-kit';
 import PaperDashboard from "./plugins/paperDashboard"
+import { store } from './store/index';
 
 
 
@@ -41,7 +42,6 @@ Vue.use(NowUiKit);
 
 new Vue({
   router,
-  
-  
+  store,
   render: h => h(App)
 }).$mount('#app');
