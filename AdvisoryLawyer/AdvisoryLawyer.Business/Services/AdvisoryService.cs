@@ -41,7 +41,7 @@ namespace AdvisoryLawyer.Business.Services
 
         public async Task<bool> DeleteAdvisory(int id)
         {
-            var advisory = (await _res.FindByAsync(x => x.Id == id && x.Status == (int)AdvisoryStatus.Active)).FirstOrDefault();
+            var advisory = (await _res.FindAsync(x => x.Id == id && x.Status == (int)AdvisoryStatus.Active));
             if (advisory == null)
             {
                 return false;
@@ -54,7 +54,7 @@ namespace AdvisoryLawyer.Business.Services
 
         public async Task<AdvisoryModel> GetAdvisoryById(int id)
         {
-            var advisory = (await _res.FindByAsync(x => x.Id == id && x.Status == (int)AdvisoryStatus.Active)).FirstOrDefault();
+            var advisory = await _res.FindAsync(x => x.Id == id && x.Status == (int)AdvisoryStatus.Active);
             if (advisory == null)
                 return null;
             var advisoryModel = _mapper.Map<AdvisoryModel>(advisory);
@@ -100,8 +100,7 @@ namespace AdvisoryLawyer.Business.Services
 
         public async Task<AdvisoryModel> UpdateAdvisory(int id, UpdateAdvisoryRequest request)
         {
-            var listadvisory = await _res.FindByAsync(x => x.Id == id && x.Status == (int)AdvisoryStatus.Active);
-            var advisory = listadvisory.FirstOrDefault();
+            var advisory = await _res.FindAsync(x => x.Id == id && x.Status == (int)AdvisoryStatus.Active);
             if (advisory == null)
             {
                 return null;

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace AdvisoryLawyer.API.Controllers
 {
-    [Route("api/customer-cases")]
+    [Route("api/v1/customer-cases")]
     [ApiController]
     public class CustomerCasesController : ControllerBase
     {

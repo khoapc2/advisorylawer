@@ -32,21 +32,21 @@ namespace AdvisoryLawyer.Business.AutoMapper
                 .ForMember(d => d.lawyer_office_name, s => s.MapFrom(s => s.LawyerOffice.Name))
                 .ForMember(d => d.date_of_birth, s => s.MapFrom(s => ConvertDateTimeToString(s.DateOfBirth)));
 
-            CreateMap<UserAccountRequest, UserAccount>()
-                .ForMember(d => d.Username, s => s.MapFrom(s => s.username))
-                .ForMember(d => d.Role, s => s.MapFrom(s => s.role))
-                .ForMember(d => d.Name, s => s.MapFrom(s => s.name))
-                .ForMember(d => d.Address, s => s.MapFrom(s => s.address))
-                .ForMember(d => d.Location, s => s.MapFrom(s => s.location))
-                .ForMember(d => d.Description, s => s.MapFrom(s => s.description))
-                .ForMember(d => d.PhoneNumber, s => s.MapFrom(s => s.phone_number))
-                .ForMember(d => d.Website, s => s.MapFrom(s => s.website))
-                .ForMember(d => d.Email, s => s.MapFrom(s => s.email))
-                .ForMember(d => d.Sex, s => s.MapFrom(s => s.sex == UserAccountSex.Male ? true : false))
-                .ForMember(d => d.Status, s => s.MapFrom(s => s.status))
-                .ForMember(d => d.Level.LevelName, s => s.MapFrom(s => s.level))
-                .ForMember(d => d.LawyerOffice.Name, s => s.MapFrom(s => s.lawyer_office_name))
-                .ForMember(d => d.DateOfBirth, s => s.MapFrom(s => s.date_of_birth));
+            CreateMap<UserAccountRequest, UserAccount>();
+                //.ForMember(d => d.Username, s => s.MapFrom(s => s.username))
+                //.ForMember(d => d.Role, s => s.MapFrom(s => s.role))
+                //.ForMember(d => d.Name, s => s.MapFrom(s => s.name))
+                //.ForMember(d => d.Address, s => s.MapFrom(s => s.address))
+                //.ForMember(d => d.Location, s => s.MapFrom(s => s.location))
+                //.ForMember(d => d.Description, s => s.MapFrom(s => s.description))
+                //.ForMember(d => d.PhoneNumber, s => s.MapFrom(s => s.phone_number))
+                //.ForMember(d => d.Website, s => s.MapFrom(s => s.website))
+                //.ForMember(d => d.Email, s => s.MapFrom(s => s.email))
+                //.ForMember(d => d.Sex, s => s.MapFrom(s => s.sex == UserAccountSex.Male ? true : false))
+                //.ForMember(d => d.Status, s => s.MapFrom(s => s.status))
+                ////.ForMember(d => d.Level.LevelName, s => s.MapFrom(s => s.level))
+                //.ForMember(d => d.LawyerOffice.Name, s => s.MapFrom(s => s.lawyer_office_name))
+                //.ForMember(d => d.DateOfBirth, s => s.MapFrom(s => s.date_of_birth));
 
             CreateMap<UserAccountRequest, UserAccountModel>();
         }
