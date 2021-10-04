@@ -170,5 +170,21 @@ namespace AdvisoryLawyer.Business.Services
             }
             await _genericRepository.UpdateAsync(account);
         }
+
+        public async Task<UserAccountModel> GetProfileByID(string token)
+        {
+            var decode = new JwtSecurityTokenHandler().ReadToken(token) as JwtSecurityToken;
+            var id = Convert.ToInt32(decode.Claims.FirstOrDefault(claim => claim.Type == "Id").Value);
+
+            if (id > 0)
+            {
+                var userProfile = await _genericRepository.GetByIDAsync(id);
+                if (userProfile != null)
+                {
+                    return _mapper.Map<UserAccountModel>(userProfile);
+                }
+            }
+            return null;
+        }
     }
 }

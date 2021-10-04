@@ -26,13 +26,13 @@ namespace AdvisoryLawyer.Business.AutoMapper
                 .ForMember(d => d.phone_number, s => s.MapFrom(s => s.PhoneNumber))
                 .ForMember(d => d.website, s => s.MapFrom(s => s.Website))
                 .ForMember(d => d.email, s => s.MapFrom(s => s.Email))
-                .ForMember(d => d.sex, s => s.MapFrom(s => s.Sex == true ? UserAccountSex.Male : UserAccountSex.Femail))
+                .ForMember(d => d.sex, s => s.MapFrom(s => s.Sex == true ? UserAccountSex.Male : UserAccountSex.Female))
                 .ForMember(d => d.status, s => s.MapFrom(s => s.Status))
                 .ForMember(d => d.level, s => s.MapFrom(s => s.Level.LevelName))
                 .ForMember(d => d.level_id, s => s.MapFrom(s => s.LevelId))
                 .ForMember(d => d.lawyer_office_name, s => s.MapFrom(s => s.LawyerOffice.Name))
                 .ForMember(d => d.lawyer_office_id, s => s.MapFrom(s => s.LawyerOfficeId))
-                .ForMember(d => d.date_of_birth, s => s.MapFrom(s => ConvertDateTimeToString(s.DateOfBirth)));
+                .ForMember(d => d.date_of_birth, s => s.MapFrom(s => s.DateOfBirth));
 
             CreateMap<UserAccountRequest, UserAccount>()
                 .ForMember(d => d.Username, s => s.MapFrom(s => s.username))

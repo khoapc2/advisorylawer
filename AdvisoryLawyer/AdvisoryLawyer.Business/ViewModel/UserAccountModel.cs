@@ -9,7 +9,7 @@ namespace AdvisoryLawyer.Business.ViewModel
 {
     public class UserAccountModel
     {
-        public int id { get; set; }
+        public int? id { get; set; }
         public string username { get; set; }
         public string role { get; set; }
         public string name { get; set; }
@@ -20,8 +20,8 @@ namespace AdvisoryLawyer.Business.ViewModel
         public string website { get; set; }
         public string email { get; set; }
         public UserAccountSex? sex { get; set; }
-        public string? date_of_birth { get; set; }
-        public int status { get; set; }
+        public DateTime? date_of_birth { get; set; }
+        public int? status { get; set; }
         public string? lawyer_office_name { get; set; }
         public int? lawyer_office_id { get; set; }
         public string? level { get; set; }

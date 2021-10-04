@@ -36,6 +36,7 @@ namespace AdvisoryLawyer.Business.Services
             {
                     new Claim(JwtRegisteredClaimNames.Sub, _config["Jwt:Subject"]),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    new Claim("Id", account.id.ToString()),
                     new Claim("Email", account.username),
                     new Claim(ClaimTypes.Role, account.role)
             };

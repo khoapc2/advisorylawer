@@ -19,8 +19,8 @@ namespace AdvisoryLawyer.Business.Requests.UserAccountsRequest
         public string website { get; set; }
         public string email { get; set; }
         public UserAccountSex? sex { get; set; }
-        public string? date_of_birth { get; set; }
-        public int status { get; set; }
+        public DateTime? date_of_birth { get; set; }
+        public int? status { get; set; }
         public int? lawyer_office_id { get; set; }
         public int? level_id { get; set; }
     }

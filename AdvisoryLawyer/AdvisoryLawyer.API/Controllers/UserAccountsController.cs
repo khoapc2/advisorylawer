@@ -43,6 +43,23 @@ namespace AdvisoryLawyer.API.Controllers
         }
 
         [Authorize]
+        [HttpGet("profile")]
+        public async Task<IActionResult> GetProfileByID([FromHeader] string authorization)
+        {
+            try
+            {
+                var userProfile = await _service.GetProfileByID(authorization.Substring(7));
+                if(userProfile != null) return Ok(userProfile);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                //logging
+                return BadRequest();
+            }
+        }
+
+        [Authorize]
         [HttpGet]
         public IActionResult GetAllProfiles([FromQuery] UserAccountRequest request, UserAccountSortBy sort_by, OrderBy order_by, int page_index = 1, int page_size = 5)
         {
@@ -73,6 +90,7 @@ namespace AdvisoryLawyer.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
 
 
     }

@@ -8,7 +8,7 @@ namespace AdvisoryLawyer.Business.Enum
 {
     public enum UserAccountSex
     {
-        Femail,
+        Female,
         Male
     }
 }
