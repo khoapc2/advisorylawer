@@ -7,6 +7,8 @@ import Login from './pages/Login.vue';
 import MainNavbar from './layout/MainNavbar.vue';
 import MainFooter from './layout/MainFooter.vue';
 
+
+import NotFound from "@/pages/NotFoundPage.vue";
 import TableList from "@/pages/TableList.vue";
 import UserProfile from "@/pages/UserProfile.vue";
 import DashboardLayout from "@/layout/dashboard/DashboardLayout.vue";
@@ -94,6 +96,7 @@ export default new Router({
     //     footer: { backgroundColor: 'black' }
     //   }
     // }
+    { path: "*", component: NotFound }
   ],
   scrollBehavior: to => {
     if (to.hash) {

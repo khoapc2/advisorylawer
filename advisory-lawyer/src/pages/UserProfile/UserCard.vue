@@ -34,6 +34,7 @@
 </template>
 <script>
 import firebase from 'firebase'
+import {mapState} from 'vuex'
 
 export default {
   data() {
@@ -64,9 +65,12 @@ export default {
         this.name = this.user.displayName;
         this.email = this.user.email;
         this.photo = this.user.photoURL;
-        // this.userId = vm.user.uid;
       }
     });
+
+
+
+
   },  
   methods: {
     getClasses(index) {
@@ -79,10 +83,13 @@ export default {
         return "col-lg-3";
       }
     },
-  },
-  // computed: {
-  //   return this.$store.state.user.userToken;
-  // }
+  },  
+  computed: 
+  mapState([])
+  
+
+
+
 };
 </script>
 <style>

@@ -12,7 +12,7 @@
               <img v-lazy="'img/now-logo.png'" alt="" />
             </div> -->
 
-          <section id="firebaseui-auth-container" ></section>
+          <section id="firebaseui-auth-container"></section>
 
           <!-- <fg-input
               class="no-border input-lg"
@@ -60,84 +60,95 @@
 import { Card, Button, FormGroupInput } from "@/components";
 // import firebase from "firebase/compat/app";
 // import "firebase/compat/auth";
-import {firebaseConfig} from '../components/helpers/firebaseConfig';
+import { firebaseConfig } from "../components/helpers/firebaseConfig";
 import firebase from "firebase";
 import firebaseui from "firebaseui";
 import "firebaseui/dist/firebaseui.css";
 
 import axios from "axios";
 
-// 
+//
 
 // import MainFooter from '@/layout/MainFooter';
 export default {
   data() {
     return {
-      user : null,
+      user: null,
+      ui: '',
     };
   },
   mounted() {
     var uiConfig = {
       signInSuccessUrl: "/",
-      signInOptions: [
-        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-      ],
+      signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
     };
-    var ui = new firebaseui.auth.AuthUI(firebase.auth());
-    ui.start("#firebaseui-auth-container", uiConfig);
 
+    if (firebaseui.auth.AuthUI.getInstance()) {
+      this.ui = firebaseui.auth.AuthUI.getInstance();
+      ui.start("#firebaseui-auth-container", uiConfig);
+    } else {
+      this.ui = new firebaseui.auth.AuthUI(firebase.auth());
+      ui.start("#firebaseui-auth-container", uiConfig);
+    }
   },
+  unmounted() {
+     this.ui.delete()
+  },
+  created() {
+    if (firebase.apps.length === 0) {
+      firebase.initializeApp(firebaseConfig);
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          user
+            .getIdToken()
+            .then(async (idTokenn) => {
+              console.log("ID Token: ", idTokenn);
+              await Promise.resolve(
+                axios({
+                  method: "POST",
+                  url: "https://104.215.186.78/api/v1/authentications/login",
+                  data: {
+                    id_token: `${idTokenn}`,
+                  },
+                  headers: {
+                    "Content-Type": "application/json; charset=utf-8",
+                  },
+                })
+              )
+                .then((res) => {
+                  console.log("Res: " + res);
+                  const data = res.data;
+                  (this.user = this.$store.state.users),
+                    (this.user = {
+                      role: data.role,
+                      userToken: data.token,
+                    });
 
-   created() {
-    firebase.initializeApp(firebaseConfig);
-    firebase.auth().onAuthStateChanged((user) => {
-      if(user) {
-        user.getIdToken().then(async(idTokenn) => {
-          console.log('ID Token: ', idTokenn);
-          await Promise.resolve(axios({
-                method: 'POST',
-                url:'https://104.215.186.78/api/v1/authentications/login', 
-                data: {
-                  'id_token' : `${idTokenn}`
-                }, 
-                headers:{'Content-Type': 'application/json; charset=utf-8'}
-            })).then((res) => {
-              console.log('Res: ' + res)
-              const data = res.data;
-              this.user = this.$store.state.users,
+                  console.log(this.user.role), console.log(this.user.userToken);
 
-              this.user = {
-                role : data.role,
-                userToken : data.token
-              }
-
-              console.log(user.role),
-              console.log(user.userToken)
-
-              if(this.user.role === 'admin'){
-                  this.$router.push('/stats')
-              }else {
-                // this.$router.push('/')
-              }
-            }
-            ).catch(error => console.log('There was an error: ' + error))
-        }).catch((error) => {
-          console.log(error)
-        }) 
-        
-      }
-     });
-    },
+                  if (this.user.role === "admin") {
+                    this.$router.push("/stats");
+                  } else {
+                    // this.$router.push('/')
+                  }
+                })
+                .catch((error) => console.log("There was an error: " + error));
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
+      });
+    }
+  },
   mounted() {
     var uiConfig = {
       signInSuccessUrl: "/",
-      signInOptions: [
-        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-      ],
+      signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
     };
     var ui = new firebaseui.auth.AuthUI(firebase.auth());
     ui.start("#firebaseui-auth-container", uiConfig);
-    },
+  },
 };
 </script>
 <style></style>
