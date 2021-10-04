@@ -73,7 +73,7 @@ import axios from "axios";
 export default {
   data() {
     return {
-      userFullname : null,
+      user : null,
     };
   },
   mounted() {
@@ -84,15 +84,6 @@ export default {
       ],
     };
     var ui = new firebaseui.auth.AuthUI(firebase.auth());
-
-    // firebase.auth().currentUser.getIdToken(true).then(function(idToken) {
-    //                 console.log('ID Tokennnn: ', idToken);
-    //             }).catch(function(error) {
-
-    //             });
-
-
-
     ui.start("#firebaseui-auth-container", uiConfig);
 
   },
@@ -110,24 +101,31 @@ export default {
                   'id_token' : `${idTokenn}`
                 }, 
                 headers:{'Content-Type': 'application/json; charset=utf-8'}
-            })).then(async(res) => {
-              console.log('Res' + res)
-              const data = res.data
-              const users = {
-                displayName: data.displayName,
-                token: data.token
+            })).then((res) => {
+              console.log('Res: ' + res)
+              const data = res.data;
+              this.user = this.$store.state.users,
+
+              this.user = {
+                role : data.role,
+                userToken : data.token
               }
-              await Promise.resolve(this.$store.state.users = users)
-               console.log('state nè: ' + this.$store.state.users.displayName)
+
+              console.log(user.role),
+              console.log(user.userToken)
+
+              if(this.user.role === 'admin'){
+                  this.$router.push('/stats')
+              }else {
+                // this.$router.push('/')
+              }
             }
             ).catch(error => console.log('There was an error: ' + error))
         }).catch((error) => {
           console.log(error)
         }) 
-        this.$router.push('/stats')
-      } else {
-        // this.$router.push('/')
-      }      
+        
+      }
      });
     },
   mounted() {

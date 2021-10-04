@@ -81,7 +81,7 @@ export default {
     },
   },
   // computed: {
-  //   return this.$store.state.users.displayName
+  //   return this.$store.state.user.userToken;
   // }
 };
 </script>

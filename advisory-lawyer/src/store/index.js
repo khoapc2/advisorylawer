@@ -9,7 +9,10 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
     state: { 
-        users: null,
+        user: {
+            role:'',
+            userToken:''
+        },
     },
     getters,
     mutations,
