@@ -103,15 +103,15 @@ export default {
       if(user) {
         user.getIdToken().then(async(idTokenn) => {
           console.log('ID Token: ', idTokenn);
-          
           await Promise.resolve(axios({
                 method: 'POST',
-                url:'https://104.215.186.78/api/authentications/login', 
+                url:'https://104.215.186.78/api/v1/authentications/login', 
                 data: {
-                  'idToken' : `${idTokenn}`
+                  'id_token' : `${idTokenn}`
                 }, 
                 headers:{'Content-Type': 'application/json; charset=utf-8'}
             })).then(async(res) => {
+              console.log('Res' + res)
               const data = res.data
               const users = {
                 displayName: data.displayName,
@@ -126,7 +126,7 @@ export default {
         }) 
         this.$router.push('/stats')
       } else {
-        this.$router.push('/')
+        // this.$router.push('/')
       }      
      });
     },
