@@ -1,4 +1,5 @@
 import 'package:advisories_lawyer/provider/google_sign_in.dart';
+import 'package:advisories_lawyer/views/navbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +10,7 @@ class LoggedIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavBar(),
       appBar: AppBar(
         title: Text('Logged In'),
         backgroundColor: Colors.black,

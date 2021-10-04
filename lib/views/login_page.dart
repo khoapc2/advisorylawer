@@ -7,18 +7,17 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget titileSection = Container(
-      padding: const EdgeInsets.all(8.0),
       child: Row(
         children: [
           Expanded(
               child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 50, 0, 20),
+                padding: const EdgeInsets.fromLTRB(170, 35, 0, 0),
                 child: Text(
-                  "Welcome to our app",
+                  "Welcome back",
                   style: TextStyle(
-                      color: Colors.black,
+                      color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 30),
                 ),
@@ -34,9 +33,9 @@ class LoginPage extends StatelessWidget {
       child:
           //Button
           Padding(
-        padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+        padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
         child: SizedBox(
-            width: double.infinity,
+            width: 200,
             height: 56,
             child: ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
@@ -58,21 +57,36 @@ class LoginPage extends StatelessWidget {
 
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
-        color: Colors.cyan[50],
-        constraints: BoxConstraints.expand(),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('assets/theme1.png'), fit: BoxFit.cover),
+        ),
         child: ListView(
           children: [
-            titileSection,
-            Center(
-              child: Image.asset(
-                'judge.png',
-                width: 400,
-                height: 200,
-                fit: BoxFit.cover,
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
+              child: Container(
+                child: Text(
+                  "LOGIN",
+                  style: TextStyle(
+                      fontSize: 60,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700),
+                ),
               ),
             ),
-            buttonSection,
+            titileSection,
+            Column(
+              children: [
+                Image.asset(
+                  'customer.png',
+                  fit: BoxFit.fill,
+                ),
+                Center(
+                  child: buttonSection,
+                ),
+              ],
+            ),
           ],
         ),
       ),

@@ -14,7 +14,31 @@
       },
       "oauth_client": [
         {
-          "client_id": "advisory-lawyer",
+          "client_id": "71355061912-cda0vfgc2um91e09kgescsevbt2tm65u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.advisories_lawyer",
+            "certificate_hash": "781ba0bb9cca50a32e4c2a3c02d223ee523397f9"
+          }
+        },
+        {
+          "client_id": "71355061912-mpjb059rdqnmn0cm3mdf7fp82gfocsu2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.advisories_lawyer",
+            "certificate_hash": "df56976ec71f496a0621203ff301da2c1e979b0f"
+          }
+        },
+        {
+          "client_id": "71355061912-vc9lckoesj4il5aev952b3ncai862sjk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.advisories_lawyer",
+            "certificate_hash": "0f13697540348795a6d8bb247e7330ae4a1f0ddb"
+          }
+        },
+        {
+          "client_id": "71355061912-7icu8bptfn0emnqoaidhealpknkuru3r.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
