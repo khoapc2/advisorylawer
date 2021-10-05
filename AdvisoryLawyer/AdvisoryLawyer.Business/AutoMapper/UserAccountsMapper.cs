@@ -32,8 +32,8 @@ namespace AdvisoryLawyer.Business.AutoMapper
                 .ForMember(d => d.level_id, s => s.MapFrom(s => s.LevelId))
                 .ForMember(d => d.lawyer_office_name, s => s.MapFrom(s => s.LawyerOffice.Name))
                 .ForMember(d => d.lawyer_office_id, s => s.MapFrom(s => s.LawyerOfficeId))
-                .ForMember(d => d.date_of_birth, s => s.MapFrom(s => s.DateOfBirth))
-                .ForMember(d => d.date_of_birth_formated, s => s.MapFrom(s => ConvertDateTimeToString(s.DateOfBirth)));
+                .ForMember(d => d.date_of_birth, s => s.MapFrom(s => s.DateOfBirth));
+                //.ForMember(d => d.date_of_birth_formated, s => s.MapFrom(s => ConvertDateTimeToString(s.DateOfBirth)));
 
             CreateMap<UserAccountRequest, UserAccount>()
                 .ForMember(d => d.Username, s => s.MapFrom(s => s.username))
