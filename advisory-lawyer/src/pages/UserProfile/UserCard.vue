@@ -1,7 +1,7 @@
 <template>
   <card class="card-user">
     <div slot="image">
-      <img src="@/assets/img/background.jpg" alt="...">
+      <img src="@/assets/img/background_user.jpg" alt="...">
     </div>
     <div>
       <div class="author">
@@ -93,4 +93,5 @@ export default {
 };
 </script>
 <style>
+  
 </style>

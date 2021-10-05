@@ -56,7 +56,7 @@ export default new Router({
         // },
         {
           path: "/stats",
-          name: "stats",
+          name: "Your Profile",
           component: UserProfile
         },
         // {
@@ -81,7 +81,7 @@ export default new Router({
         // },
         {
           path: "/table-list",
-          name: "table-list",
+          name: "Users",
           component: TableList
         }
       ]
