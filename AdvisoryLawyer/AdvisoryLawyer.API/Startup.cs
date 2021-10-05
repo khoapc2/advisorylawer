@@ -68,12 +68,12 @@ namespace AdvisoryLawyer.API
                 {
                     ValidateIssuer = true,                     
                     ValidateAudience = true,                    
-                    ValidateLifetime = true,                    
-                    //ValidateIssuerSigningKey = true,            
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
                     ValidIssuer = Configuration["Jwt:Issuer"],
                     ValidAudience = Configuration["Jwt:Audience"],
-                    //IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
-                };
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+               };
             });
 
             var connectionString = Configuration.GetConnectionString("AdvisoryConnectionString");
