@@ -21,6 +21,7 @@ namespace AdvisoryLawyer.Business.ViewModel
         public string email { get; set; }
         public UserAccountSex? sex { get; set; }
         public DateTime? date_of_birth { get; set; }
+        public string? date_of_birth_formated { get; set; }
         public int? status { get; set; }
         public string? lawyer_office_name { get; set; }
         public int? lawyer_office_id { get; set; }

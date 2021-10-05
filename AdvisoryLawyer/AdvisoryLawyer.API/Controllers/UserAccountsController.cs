@@ -91,7 +91,20 @@ namespace AdvisoryLawyer.API.Controllers
             }
         }
 
-
+        [Authorize]
+        [HttpPut]
+        public async Task<IActionResult> UpdateProfile([FromHeader] string authorization, [FromBody] UserAccountRequest request)
+        {
+            try
+            {
+                var profile = await _service.UpdateProfile(authorization.Substring(7), request);
+                return Ok(profile);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
     }
 }
