@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Reso.Core.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ namespace AdvisoryLawyer.Business.ViewModel
     public class CategoryModel
     {
         public int? Id { get; set; }
+        [String]
         public string? CategoryName { get; set; }
     }
 }
