@@ -8,7 +8,7 @@ namespace AdvisoryLawyer.Data.Models
     public partial class Slot
     {
         public int Id { get; set; }
-        public int BookingId { get; set; }
+        public int? BookingId { get; set; }
         public DateTime StartAt { get; set; }
         public DateTime EndAt { get; set; }
         public int Price { get; set; }
