@@ -4,6 +4,7 @@ using AdvisoryLawyer.Business.Requests.CategoryRequest;
 using AdvisoryLawyer.Business.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,20 +14,20 @@ namespace AdvisoryLawyer.API.Controllers
 {
     [Route("api/v1/categories")]
     [ApiController]
-    public class CategoryController : ControllerBase
+    public class CategoriesController : ControllerBase
     {
         private readonly ICategoryService _service;
-        public CategoryController(ICategoryService service)
+        public CategoriesController(ICategoryService service)
         {
             _service = service;
         }
 
         //GET api/categories
         [HttpGet]
-        public IActionResult GetAllCategories([FromQuery] CategoryRequest filter, CategorySortBy sortBy, 
-            OrderBy order, int pageIndex = 1, int pageSize = 1)
+        public IActionResult GetAllCategories([FromQuery] CategoryRequest filter, CategorySortBy sort_by, 
+            OrderBy order_by, int page_index = 1, int page_size = 1)
         {
-            return Ok(_service.GetAllCategories(filter, sortBy, order, pageIndex, pageSize));
+            return Ok(_service.GetAllCategories(filter, sort_by, order_by, page_index, page_size));
         }
 
         //GET api/categories/{id}

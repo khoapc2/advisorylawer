@@ -24,9 +24,9 @@ namespace AdvisoryLawyer.API.Controllers
         //GET api/customer-cases
         [HttpGet]
         public ActionResult<IEnumerable<CustomerCaseModel>> GetAllCustomerCases([FromQuery] CustomerCaseRequest filter,
-            CustomerCaseSortBy sortBy, OrderBy order, int pageIndex = 1, int pageSize = 1)
+            CustomerCaseSortBy sort_by, OrderBy order_by, int page_index = 1, int page_size = 1)
         {
-            return Ok(_service.GetAllCustomerCases(filter, sortBy, order, pageIndex, pageSize));
+            return Ok(_service.GetAllCustomerCases(filter, sort_by, order_by, page_index, page_size));
         }
 
         //GET api/customer-cases/{id}

@@ -23,10 +23,10 @@ namespace AdvisoryLawyer.API.Controllers
 
         //GET api/documents
         [HttpGet]
-        public ActionResult<IEnumerable<DocumentModel>> GetAllDocuments([FromQuery] DocumentRequest filter, DocumentSortBy sortBy,
-            OrderBy order, int pageIndex = 1, int pageSize = 1)
+        public ActionResult<IEnumerable<DocumentModel>> GetAllDocuments([FromQuery] DocumentRequest filter, DocumentSortBy sort_by,
+            OrderBy order_by, int page_index = 1, int page_size = 1)
         {
-            return Ok(_service.GetAllDocuments(filter, sortBy, order, pageIndex, pageSize));
+            return Ok(_service.GetAllDocuments(filter, sort_by, order_by, page_index, page_size));
         }
 
         //GET api/documents/{id}

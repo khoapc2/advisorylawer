@@ -21,6 +21,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -95,15 +96,28 @@ namespace AdvisoryLawyer.API
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IUserAccountRepository, UserAccountRepository>();
             
+            //services.AddControllersWithViews()
+            //    .AddJsonOptions(options =>
+            //    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+
             services.AddControllersWithViews()
-                .AddJsonOptions(options =>
-                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+                .AddNewtonsoftJson(option => {
+
+                    option.SerializerSettings.ContractResolver = new DefaultContractResolver()
+                    {
+                        NamingStrategy = new SnakeCaseNamingStrategy(),                                             
+                    };
+
+                    option.SerializerSettings.Converters.Add(new StringEnumConverter());
+                });
+
 
             services.AddScoped<AdvisoryLawyerContext>();
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AdvisoryLawyer.API", Version = "v1" });
+
 
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
@@ -134,6 +148,8 @@ namespace AdvisoryLawyer.API
                       }
                     });
             });
+
+            services.AddSwaggerGenNewtonsoftSupport();
             
       
         }
