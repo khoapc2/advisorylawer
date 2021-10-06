@@ -13,11 +13,11 @@ namespace AdvisoryLawyer.API.Controllers
 {
     [Route("api/v1/case-items")]
     [ApiController]
-    public class Case_ItemsController : ControllerBase
+    public class CaseItemsController : ControllerBase
     {
         private readonly ICaseItemService _CaseItemService;
 
-        public Case_ItemsController(ICaseItemService CaseItemService)
+        public CaseItemsController(ICaseItemService CaseItemService)
         {
             _CaseItemService = CaseItemService;
         }

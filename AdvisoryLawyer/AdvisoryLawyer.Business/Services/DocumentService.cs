@@ -1,9 +1,14 @@
-﻿using AdvisoryLawyer.Business.IServices;
+﻿using AdvisoryLawyer.Business.Enum;
+using AdvisoryLawyer.Business.IServices;
+using AdvisoryLawyer.Business.Requests;
 using AdvisoryLawyer.Business.Requests.DocumentRequest;
 using AdvisoryLawyer.Business.ViewModel;
 using AdvisoryLawyer.Data.IRepositories;
 using AdvisoryLawyer.Data.Models;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using PagedList;
+using Reso.Core.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,10 +49,36 @@ namespace AdvisoryLawyer.Business.Services
             return false;
         }
 
-        public async Task<IEnumerable<DocumentModel>> GetAllDocuments()
+        public IPagedList<DocumentModel> GetAllDocuments(DocumentRequest filter,
+            DocumentSortBy sortBy, OrderBy order, int pageIndex, int pageSize)
         {
-            var documents = await _genericRepository.GetAllAsync();
-            return _mapper.Map<IEnumerable<DocumentModel>>(documents);
+            var listDocuments = _genericRepository.FindBy(x => x.Status == (int)DocumentStatus.Active);
+            var listDocumentsModel = (listDocuments.ProjectTo<DocumentModel>
+                (_mapper.ConfigurationProvider)).DynamicFilter(_mapper.Map<DocumentModel>(filter));
+            switch (sortBy.ToString())
+            {
+                case "Name":
+                    if ("Asc".Equals(order.ToString()))
+                    {
+                        listDocumentsModel = listDocumentsModel.OrderBy(x => x.Name);
+                    }
+                    else
+                    {
+                        listDocumentsModel = listDocumentsModel.OrderByDescending(x => x.Name);
+                    }
+                    break;
+                case "Description":
+                    if ("Asc".Equals(order.ToString()))
+                    {
+                        listDocumentsModel = listDocumentsModel.OrderBy(x => x.Description);
+                    }
+                    else
+                    {
+                        listDocumentsModel = listDocumentsModel.OrderByDescending(x => x.Description);
+                    }
+                    break;
+            }
+            return PagedListExtensions.ToPagedList(listDocumentsModel, pageIndex, pageSize);
         }
 
         public async Task<DocumentModel> GetDocumentById(int id)

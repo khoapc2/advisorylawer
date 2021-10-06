@@ -5,11 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AdvisoryLawyer.Business.ViewModel
+namespace AdvisoryLawyer.Business.Requests.UserAccountsRequest
 {
-    public class UserAccountModel
+    public class UserAccountRequest
     {
-        public int? id { get; set; }
         public string username { get; set; }
         public string role { get; set; }
         public string name { get; set; }
@@ -22,9 +21,7 @@ namespace AdvisoryLawyer.Business.ViewModel
         public UserAccountSex? sex { get; set; }
         public DateTime? date_of_birth { get; set; }
         public int? status { get; set; }
-        public string? lawyer_office_name { get; set; }
         public int? lawyer_office_id { get; set; }
-        public string? level { get; set; }
         public int? level_id { get; set; }
     }
 }

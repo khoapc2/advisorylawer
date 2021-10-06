@@ -36,7 +36,9 @@ namespace AdvisoryLawyer.Business.Services
             {
                     new Claim(JwtRegisteredClaimNames.Sub, _config["Jwt:Subject"]),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim(ClaimTypes.Role, account.Role)
+                    new Claim("Id", account.id.ToString()),
+                    new Claim("Email", account.username),
+                    new Claim(ClaimTypes.Role, account.role)
             };
 
             var token = new JwtSecurityToken(_config["Jwt:Issuer"],
@@ -70,7 +72,7 @@ namespace AdvisoryLawyer.Business.Services
 
             var token = GenerateJSONWebToken(account);
 
-            return new AuthenticationModel { token = token, displayName = decodedToken.Claims.GetValueOrDefault("name").ToString() };
+            return new AuthenticationModel { token = token, display_name = decodedToken.Claims.GetValueOrDefault("name").ToString(), role = account.role };
         }
     }
 }

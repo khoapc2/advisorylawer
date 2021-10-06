@@ -41,7 +41,7 @@ namespace AdvisoryLawyer.Business.Services
 
         public async Task<bool> DeleteAdvisory(int id)
         {
-            var advisory = (await _res.FindByAsync(x => x.Id == id && x.Status == (int)AdvisoryStatus.Active)).FirstOrDefault();
+            var advisory = (await _res.FindAsync(x => x.Id == id && x.Status == (int)AdvisoryStatus.Active));
             if (advisory == null)
             {
                 return false;
@@ -54,7 +54,7 @@ namespace AdvisoryLawyer.Business.Services
 
         public async Task<AdvisoryModel> GetAdvisoryById(int id)
         {
-            var advisory = (await _res.FindByAsync(x => x.Id == id && x.Status == (int)AdvisoryStatus.Active)).FirstOrDefault();
+            var advisory = await _res.FindAsync(x => x.Id == id && x.Status == (int)AdvisoryStatus.Active);
             if (advisory == null)
                 return null;
             var advisoryModel = _mapper.Map<AdvisoryModel>(advisory);
@@ -63,13 +63,13 @@ namespace AdvisoryLawyer.Business.Services
             return advisoryModel;
         }
 
-        public IPagedList<AdvisoryModel> GetAllAdvisory(AdvisoryModel flitter, int pageIndex,
+        public IPagedList<AdvisoryModel> GetAllAdvisory(AdvisoryModel filter, int pageIndex,
             int pageSize, AdvisorySortBy sortBy, OrderBy order)
         {
             var listAdvisory =  _res.FindBy(x => x.Status == (int)AdvisoryStatus.Active);
           
             var listAdvisoryModel = (listAdvisory.ProjectTo<AdvisoryModel>
-                (_mapper.ConfigurationProvider)).DynamicFilter(flitter);
+                (_mapper.ConfigurationProvider)).DynamicFilter(filter);
             switch (sortBy.ToString())
             {
                 case "QuestionAnswer":
@@ -100,8 +100,7 @@ namespace AdvisoryLawyer.Business.Services
 
         public async Task<AdvisoryModel> UpdateAdvisory(int id, UpdateAdvisoryRequest request)
         {
-            var listadvisory = await _res.FindByAsync(x => x.Id == id && x.Status == (int)AdvisoryStatus.Active);
-            var advisory = listadvisory.FirstOrDefault();
+            var advisory = await _res.FindAsync(x => x.Id == id && x.Status == (int)AdvisoryStatus.Active);
             if (advisory == null)
             {
                 return null;

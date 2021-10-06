@@ -16,6 +16,7 @@ namespace AdvisoryLawyer.Business.AutoMapper
         {
             CreateMap<CustomerCase, CustomerCaseModel>();
             CreateMap<CustomerCaseRequest, CustomerCase>();
+            CreateMap<CustomerCaseRequest, CustomerCaseModel>();
         }
     }
 }

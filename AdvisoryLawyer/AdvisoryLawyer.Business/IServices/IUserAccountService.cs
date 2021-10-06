@@ -1,4 +1,7 @@
-﻿using AdvisoryLawyer.Business.ViewModel;
+﻿using AdvisoryLawyer.Business.Requests;
+using AdvisoryLawyer.Business.Requests.UserAccountsRequest;
+using AdvisoryLawyer.Business.ViewModel;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +13,9 @@ namespace AdvisoryLawyer.Business.IServices
     public interface IUserAccountService
     {
         public Task<UserAccountModel> CheckGmail(string gmail, string fullname);
-        public UserAccountModel GetProfileByID(string token);
-        public IEnumerable<UserAccountModel> GetAllProfiles();
-        public bool ChangeAccountStatus(int id);
+        public Task<UserAccountModel> GetProfileByID(int id);
+        public Task<UserAccountModel> GetProfileByID(string token);
+        public IPagedList<UserAccountModel> GetAllProfiles(UserAccountRequest request, UserAccountSortBy sortBy, OrderBy orderBy, int pageIndex, int pageSize);
+        public Task ChangeAccountStatus(int id);
     }
 }

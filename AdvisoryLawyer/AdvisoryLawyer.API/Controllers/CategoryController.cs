@@ -1,4 +1,5 @@
 ﻿using AdvisoryLawyer.Business.IServices;
+using AdvisoryLawyer.Business.Requests;
 using AdvisoryLawyer.Business.Requests.CategoryRequest;
 using AdvisoryLawyer.Business.ViewModel;
 using Microsoft.AspNetCore.Http;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AdvisoryLawyer.API.Controllers
 {
-    [Route("api/categories")]
+    [Route("api/v1/categories")]
     [ApiController]
     public class CategoryController : ControllerBase
     {
@@ -22,9 +23,10 @@ namespace AdvisoryLawyer.API.Controllers
 
         //GET api/categories
         [HttpGet]
-        public async Task<ActionResult <IEnumerable<CategoryModel>>> GetAllCategories()
+        public IActionResult GetAllCategories([FromQuery] CategoryRequest filter, CategorySortBy sortBy, 
+            OrderBy order, int pageIndex = 1, int pageSize = 1)
         {
-            return Ok(await _service.GetAllCategories());
+            return Ok(_service.GetAllCategories(filter, sortBy, order, pageIndex, pageSize));
         }
 
         //GET api/categories/{id}

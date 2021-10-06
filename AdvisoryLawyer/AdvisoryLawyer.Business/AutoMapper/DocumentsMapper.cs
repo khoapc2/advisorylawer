@@ -1,4 +1,5 @@
-﻿using AdvisoryLawyer.Business.ViewModel;
+﻿using AdvisoryLawyer.Business.Requests.DocumentRequest;
+using AdvisoryLawyer.Business.ViewModel;
 using AdvisoryLawyer.Data.Models;
 using AutoMapper;
 using System;
@@ -14,7 +15,8 @@ namespace AdvisoryLawyer.Business.AutoMapper
         public DocumentsMapper()
         {
             CreateMap<Document, DocumentModel>();
-            CreateMap<DocumentModel, Document>();
+            CreateMap<DocumentRequest, Document>();
+            CreateMap<DocumentRequest, DocumentModel>();
         }
     }
 }

@@ -15,7 +15,8 @@ namespace AdvisoryLawyer.Business.AutoMapper
         public CategoriesMapper()
         {
             CreateMap<Category, CategoryModel>();
-            CreateMap<CategoryRequest, Category>();            
+            CreateMap<CategoryRequest, Category>();
+            CreateMap<CategoryRequest, CategoryModel>();
         }
     }
 }

@@ -9,9 +9,8 @@ namespace AdvisoryLawyer.Business.ViewModel
 {
     public class CategoryModel
     {
-        public int Id { get; set; }
-        [Contain]
-        public List<int> LawyerIds { get; set; }
-        public string CategoryName { get; set; }
+        public int? Id { get; set; }
+        [String]
+        public string? CategoryName { get; set; }
     }
 }

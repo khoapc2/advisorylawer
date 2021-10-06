@@ -8,10 +8,10 @@ namespace AdvisoryLawyer.Business.ViewModel
 {
     public class LevelModel
     {
-        public int Id { get; set; }
-        public string LevelName { get; set; }
-        public int MinPrice { get; set; }
-        public int MaxPrice { get; set; }
-        public int Status { get; set; }
+        public int? id { get; set; }
+        public string level_name { get; set; }
+        public int? min_price { get; set; }
+        public int? max_price { get; set; }
+        public int? status { get; set; }
     }
 }

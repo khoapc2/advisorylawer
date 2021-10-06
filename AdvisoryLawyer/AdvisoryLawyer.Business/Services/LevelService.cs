@@ -1,9 +1,14 @@
-﻿using AdvisoryLawyer.Business.IServices;
+﻿using AdvisoryLawyer.Business.Enum;
+using AdvisoryLawyer.Business.IServices;
+using AdvisoryLawyer.Business.Requests;
 using AdvisoryLawyer.Business.Requests.LevelRequest;
 using AdvisoryLawyer.Business.ViewModel;
 using AdvisoryLawyer.Data.IRepositories;
 using AdvisoryLawyer.Data.Models;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using PagedList;
+using Reso.Core.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,84 +28,65 @@ namespace AdvisoryLawyer.Business.Services
             _mapper = mapper;
         }
 
-        public LevelModel CreateLevel(LevelRequest level)
+        public async Task<LevelModel> CreateLevel(LevelRequest level)
         {
-            try
-            {
-                var newLevel = _mapper.Map<Level>(level);
-                _genericRepository.Insert(newLevel);
-                _genericRepository.Save();
-                return _mapper.Map<LevelModel>(newLevel);
-            }
-            catch (Exception ex)
-            {
-                //logging
-                return null;
-            }
+            var newLevel = _mapper.Map<Level>(level);
+            await _genericRepository.InsertAsync(newLevel);
+            await _genericRepository.SaveAsync();
+            return _mapper.Map<LevelModel>(newLevel);
         }
 
-        public bool DeleteLevel(int id)
+        public async Task DeleteLevel(int id)
         {
-            try
-            {
-                _genericRepository.Delete(id);
-                _genericRepository.Save();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                //logging
-                return false;
-            }
+            await _genericRepository.DeleteAsync(id);
+            await _genericRepository.SaveAsync();
         }
 
-        public IEnumerable<LevelModel> GetAllLevels()
+        public IPagedList<LevelModel> GetAllLevels(LevelRequest request, LevelSortBy sortBy, OrderBy orderBy, int pageIndex, int pageSize)
         {
-            try
+            var levelList = _genericRepository.FindBy(l => l.Status == (int)LevelStatus.Active);
+            if (levelList == null) return null;
+
+            var levelModelList = levelList.ProjectTo<LevelModel>(_mapper.ConfigurationProvider).DynamicFilter(_mapper.Map<LevelModel>(request));
+
+            switch (sortBy.ToString())
             {
-                var levelList = _genericRepository.GetAll();
-                if(levelList != null)
-                {
-                    return _mapper.Map<IEnumerable<LevelModel>>(levelList).ToList();
-                }
-                return null;
+                case "MinPrice":
+                    if ("Asc".Equals(orderBy.ToString()))
+                    {
+                        levelModelList = levelModelList.OrderBy(l => l.min_price);
+                    }
+                    else
+                    {
+                        levelModelList = levelModelList.OrderByDescending(l => l.min_price);
+                    }
+                    break;
+                case "MaxPrice":
+                    if ("Asc".Equals(orderBy.ToString()))
+                    {
+                        levelModelList = levelModelList.OrderBy(l => l.max_price);
+                    }
+                    else
+                    {
+                        levelModelList = levelModelList.OrderByDescending(l => l.max_price);
+                    }
+                    break;
             }
-            catch (Exception ex)
-            {
-                //logging
-                return null;
-            }
+            return PagedListExtensions.ToPagedList(levelModelList, pageIndex, pageSize);
         }
 
-        public LevelModel GetLevelByID(int id)
+        public async Task<LevelModel> GetLevelByID(int id)
         {
-            try
-            {
-                var level = _genericRepository.GetByID(id);
-                return _mapper.Map<LevelModel>(level);
-            }
-            catch (Exception ex) 
-            {
-                //logging
-                return null;
-            }
+            var level = await _genericRepository.GetByIDAsync(id);
+            return _mapper.Map<LevelModel>(level);
         }
 
-        public LevelModel UpdateLevel(int id, LevelRequest level)
+        public async Task<LevelModel> UpdateLevel(int id, LevelRequest level)
         {
-            try
-            {
-                var newLevel = _mapper.Map<Level>(level);
-                newLevel.Id = id;
-                _genericRepository.Update(newLevel);
-                _genericRepository.Save();
-                return _mapper.Map<LevelModel>(newLevel);
-            }
-            catch (Exception ex)
-            {
-                //logging
-                return null;
-            }
+            var newLevel = _mapper.Map<Level>(level);
+            newLevel.Id = id;
+            await _genericRepository.UpdateAsync(newLevel);
+            return _mapper.Map<LevelModel>(newLevel);
         }
     }
 }

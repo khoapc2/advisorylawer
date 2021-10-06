@@ -1,9 +1,14 @@
-﻿using AdvisoryLawyer.Business.IServices;
+﻿using AdvisoryLawyer.Business.Enum;
+using AdvisoryLawyer.Business.IServices;
+using AdvisoryLawyer.Business.Requests;
 using AdvisoryLawyer.Business.Requests.SlotRequest;
 using AdvisoryLawyer.Business.ViewModel;
 using AdvisoryLawyer.Data.IRepositories;
 using AdvisoryLawyer.Data.Models;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using PagedList;
+using Reso.Core.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,40 +28,74 @@ namespace AdvisoryLawyer.Business.Services
             _mapper = mapper;
         }
 
-        public SlotModel CreateSlot(SlotRequest slot)
+        public async Task<SlotModel> CreateSlot(SlotRequest slot)
         {
             var newSlot = _mapper.Map<Slot>(slot);
-            _genericRepository.Insert(newSlot);
-            _genericRepository.Save();
+            await _genericRepository.InsertAsync(newSlot);
+            await _genericRepository.SaveAsync();
             return _mapper.Map<SlotModel>(newSlot);
         }
 
-        public bool DeleteSlot(int id)
+        public async Task DeleteSlot(int id)
         {
-            _genericRepository.Delete(id);
-            _genericRepository.Save();
-            return true;
+            await _genericRepository.DeleteAsync(id);
+            await _genericRepository.SaveAsync();
         }
 
-        public IEnumerable<SlotModel> GetAllSlot()
+        public IPagedList<SlotModel> GetAllSlot(SlotRequest request, SlotSortBy sortBy, OrderBy orderBy, int pageIndex, int pageSize)
         {
-            var slotList = _genericRepository.GetAll();
-            if (slotList != null) return _mapper.Map<IEnumerable<SlotModel>>(slotList).ToList();
-            return null;
+            var slotList = _genericRepository.FindBy(s => s.Status == (int)SlotStatus.Active);
+            if (slotList == null) return null;
+
+            var slotModelList = slotList.ProjectTo<SlotModel>(_mapper.ConfigurationProvider).DynamicFilter(_mapper.Map<SlotModel>(request));
+
+            switch (sortBy.ToString())
+            {
+                case "StartAt":
+                    if ("Asc".Equals(orderBy.ToString()))
+                    {
+                        slotModelList = slotModelList.OrderBy(s => s.start_at);
+                    }
+                    else
+                    {
+                        slotModelList = slotModelList.OrderByDescending(s => s.start_at);
+                    }
+                    break;
+                case "EndAt":
+                    if ("Asc".Equals(orderBy.ToString()))
+                    {
+                        slotModelList = slotModelList.OrderBy(s => s.end_at);
+                    }
+                    else
+                    {
+                        slotModelList = slotModelList.OrderByDescending(s => s.end_at);
+                    }
+                    break;
+                case "Price":
+                    if ("Asc".Equals(orderBy.ToString()))
+                    {
+                        slotModelList = slotModelList.OrderBy(s => s.price);
+                    }
+                    else
+                    {
+                        slotModelList = slotModelList.OrderByDescending(s => s.price);
+                    }
+                    break;
+            }
+            return PagedListExtensions.ToPagedList(slotModelList, pageIndex, pageSize);
         }
 
-        public SlotModel GetSlotByID(int id)
+        public async Task<SlotModel> GetSlotByID(int id)
         {
-            var slot = _genericRepository.GetByID(id);
+            var slot = await _genericRepository.GetByIDAsync(id);
             return _mapper.Map<SlotModel>(slot);
         }
 
-        public SlotModel UpdateSlot(int id, SlotRequest slot)
+        public async Task<SlotModel> UpdateSlot(int id, SlotRequest slot)
         {
             var newSlot = _mapper.Map<Slot>(slot);
             newSlot.Id = id;
-            _genericRepository.Update(newSlot);
-            _genericRepository.Save();
+            await _genericRepository.UpdateAsync(newSlot);
             return _mapper.Map<SlotModel>(newSlot);
         }
     }

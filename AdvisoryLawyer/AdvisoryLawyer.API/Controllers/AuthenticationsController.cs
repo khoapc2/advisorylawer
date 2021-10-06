@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace AdvisoryLawyer.API.Controllers
 {
-    [Route("api/authentications")]
+    [Route("api/v1/authentications")]
     [ApiController]
     public class AuthenticationsController : ControllerBase
     {
@@ -28,7 +28,7 @@ namespace AdvisoryLawyer.API.Controllers
         {
             try
             {
-                var data = await _service.LoginWithGmail(request.IdToken);
+                var data = await _service.LoginWithGmail(request.id_token);
                 if(data == null) return BadRequest();
                 return Ok(data);
             }

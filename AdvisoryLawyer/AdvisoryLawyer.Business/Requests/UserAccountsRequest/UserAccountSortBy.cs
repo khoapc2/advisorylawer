@@ -6,9 +6,15 @@ using System.Threading.Tasks;
 
 namespace AdvisoryLawyer.Business.Requests.UserAccountsRequest
 {
-    public class LoginRequest
+    public enum UserAccountSortBy
     {
-        public string Username { get; set; }
-        //public string Password { get; set; }
+        Username,
+        Role,
+        Name,
+        Address,
+        Location,
+        Sex,
+        DateOfBirth,
+        Level
     }
 }

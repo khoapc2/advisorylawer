@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace AdvisoryLawyer.API.Controllers
 {
-    [Route("api/v1/[controller]")]
+    [Route("api/v1/advisories")]
     [ApiController]
     public class AdvisoriesController : ControllerBase
     {
@@ -36,10 +36,10 @@ namespace AdvisoryLawyer.API.Controllers
             return Ok(advisoryModel);
         }
         [HttpGet]
-        public IActionResult GetAllAdvisory([FromQuery]  AdvisoryModel fillter, AdvisorySortBy sortBy, OrderBy order,
-            int pageIndex =1 , int pageSize = 1)
+        public IActionResult GetAllAdvisory([FromQuery]  AdvisoryModel filter, AdvisorySortBy sortBy, OrderBy order,
+            int pageIndex = 1 , int pageSize = 1)
         {
-            var listAdvisoryModel = _advisoryService.GetAllAdvisory(fillter, pageIndex,pageSize, sortBy, order);
+            var listAdvisoryModel = _advisoryService.GetAllAdvisory(filter, pageIndex,pageSize, sortBy, order);
             return Ok(listAdvisoryModel);
         }
 

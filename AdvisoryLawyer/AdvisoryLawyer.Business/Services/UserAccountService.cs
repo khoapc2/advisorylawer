@@ -11,6 +11,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FirebaseAdmin.Auth;
+using PagedList;
+using AdvisoryLawyer.Business.Requests.UserAccountsRequest;
+using AdvisoryLawyer.Business.Requests;
+using AdvisoryLawyer.Business.Enum;
+using AutoMapper.QueryableExtensions;
+using Reso.Core.Utilities;
 
 namespace AdvisoryLawyer.Business.Services
 {
@@ -52,70 +58,133 @@ namespace AdvisoryLawyer.Business.Services
             }
         }
 
-        public UserAccountModel GetProfileByID(string token)
+        public async Task<UserAccountModel> GetProfileByID(int id)
         {
-            try
-            {
-                var decode = new JwtSecurityTokenHandler().ReadToken(token) as JwtSecurityToken;
-                var id = Convert.ToInt32(decode.Claims.FirstOrDefault(claim => claim.Type == "Id").Value);
+            var userProfile = await _genericRepository.GetByIDAsync(id);
+            return _mapper.Map<UserAccountModel>(userProfile);
+        }
 
-                if(id > 0)
-                {
-                    var userProfile = _genericRepository.GetByID(id);
-                    if (userProfile != null)
+        public IPagedList<UserAccountModel> GetAllProfiles(UserAccountRequest request, UserAccountSortBy sortBy, OrderBy orderBy, int pageIndex, int pageSize)
+        {
+            var userList = _genericRepository.FindBy(u => u.Status == (int)UserAccountStatus.Active);
+            if (userList == null) return null;
+
+            var slotModelList = userList.ProjectTo<UserAccountModel>(_mapper.ConfigurationProvider).DynamicFilter(_mapper.Map<UserAccountModel>(request));
+
+            switch (sortBy.ToString())
+            {
+                case "Username":
+                    if ("Asc".Equals(orderBy.ToString()))
                     {
-                        return _mapper.Map<UserAccountModel>(userProfile);
+                        slotModelList = slotModelList.OrderBy(u => u.username);
                     }
-                }
-                return null;
+                    else
+                    {
+                        slotModelList = slotModelList.OrderByDescending(u => u.username);
+                    }
+                    break;
+                case "Role":
+                    if ("Asc".Equals(orderBy.ToString()))
+                    {
+                        slotModelList = slotModelList.OrderBy(u => u.role);
+                    }
+                    else
+                    {
+                        slotModelList = slotModelList.OrderByDescending(u => u.role);
+                    }
+                    break;
+                case "Name":
+                    if ("Asc".Equals(orderBy.ToString()))
+                    {
+                        slotModelList = slotModelList.OrderBy(u => u.name);
+                    }
+                    else
+                    {
+                        slotModelList = slotModelList.OrderByDescending(u => u.name);
+                    }
+                    break;
+                case "Address":
+                    if ("Asc".Equals(orderBy.ToString()))
+                    {
+                        slotModelList = slotModelList.OrderBy(u => u.address);
+                    }
+                    else
+                    {
+                        slotModelList = slotModelList.OrderByDescending(u => u.address);
+                    }
+                    break;
+                case "Location":
+                    if ("Asc".Equals(orderBy.ToString()))
+                    {
+                        slotModelList = slotModelList.OrderBy(u => u.location);
+                    }
+                    else
+                    {
+                        slotModelList = slotModelList.OrderByDescending(u => u.location);
+                    }
+                    break;
+                case "Sex":
+                    if ("Asc".Equals(orderBy.ToString()))
+                    {
+                        slotModelList = slotModelList.OrderBy(u => u.sex);
+                    }
+                    else
+                    {
+                        slotModelList = slotModelList.OrderByDescending(u => u.sex);
+                    }
+                    break;
+                case "DateOfBirth":
+                    if ("Asc".Equals(orderBy.ToString()))
+                    {
+                        slotModelList = slotModelList.OrderBy(u => Convert.ToDateTime(u.date_of_birth));
+                    }
+                    else
+                    {
+                        slotModelList = slotModelList.OrderByDescending(u => Convert.ToDateTime(u.date_of_birth));
+                    }
+                    break;
+                case "Level":
+                    if ("Asc".Equals(orderBy.ToString()))
+                    {
+                        slotModelList = slotModelList.OrderBy(u => u.level);
+                    }
+                    else
+                    {
+                        slotModelList = slotModelList.OrderByDescending(u => u.level);
+                    }
+                    break;
             }
-            catch (Exception ex)
-            {
-                //logging
-                return null;
-            }
+            return PagedListExtensions.ToPagedList(slotModelList, pageIndex, pageSize);
         }
 
-        public IEnumerable<UserAccountModel> GetAllProfiles()
+        public async Task ChangeAccountStatus(int id)
         {
-            try
+            var account = await _genericRepository.GetByIDAsync(id);
+            if(account.Status == (int)UserAccountStatus.Active)
             {
-                var profiles = _genericRepository.GetAll();
-                if (profiles != null)
-                {
-                    return _mapper.Map<IEnumerable<UserAccountModel>>(profiles).ToList();
-                }
-                return null;
+                account.Status = (int)UserAccountStatus.InActive;
             }
-            catch (Exception ex)
+            else
             {
-                //logging
-                return null;
+                account.Status = (int)UserAccountStatus.Active;
             }
+            await _genericRepository.UpdateAsync(account);
         }
 
-        public bool ChangeAccountStatus(int id)
+        public async Task<UserAccountModel> GetProfileByID(string token)
         {
-            try
+            var decode = new JwtSecurityTokenHandler().ReadToken(token) as JwtSecurityToken;
+            var id = Convert.ToInt32(decode.Claims.FirstOrDefault(claim => claim.Type == "Id").Value);
+
+            if (id > 0)
             {
-                var account = _genericRepository.GetByID(id);
-                if(account.Status == 1)
+                var userProfile = await _genericRepository.GetByIDAsync(id);
+                if (userProfile != null)
                 {
-                    account.Status = 0;
+                    return _mapper.Map<UserAccountModel>(userProfile);
                 }
-                else
-                {
-                    account.Status = 1;
-                }
-                _genericRepository.Update(account);
-                _genericRepository.Save();
-                return true;
             }
-            catch (Exception ex)
-            {
-                //logging
-                return false;
-            }
+            return null;
         }
     }
 }

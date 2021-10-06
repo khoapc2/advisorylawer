@@ -1,9 +1,14 @@
-﻿using AdvisoryLawyer.Business.IServices;
+﻿using AdvisoryLawyer.Business.Enum;
+using AdvisoryLawyer.Business.IServices;
+using AdvisoryLawyer.Business.Requests;
 using AdvisoryLawyer.Business.Requests.CategoryRequest;
 using AdvisoryLawyer.Business.ViewModel;
 using AdvisoryLawyer.Data.IRepositories;
 using AdvisoryLawyer.Data.Models;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using PagedList;
+using Reso.Core.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,10 +28,27 @@ namespace AdvisoryLawyer.Business.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<CategoryModel>> GetAllCategories()
+        public IPagedList<CategoryModel> GetAllCategories(CategoryRequest filter, CategorySortBy sortBy, 
+            OrderBy order, int pageIndex, int pageSize)
         {
-            var categories = await _genericRepository.GetAllAsync();
-            return _mapper.Map<IEnumerable<CategoryModel>>(categories);
+            var listCategories = _genericRepository.FindBy(x => x.Status == (int)CategoryStatus.Active);
+
+            var listCategoriesModel = (listCategories.ProjectTo<CategoryModel>
+                (_mapper.ConfigurationProvider)).DynamicFilter(_mapper.Map<CategoryModel>(filter));
+            switch (sortBy.ToString())
+            {
+                case "Name":
+                    if ("Asc".Equals(order.ToString()))
+                    {
+                        listCategoriesModel = listCategoriesModel.OrderBy(x => x.CategoryName);
+                    }
+                    else
+                    {
+                        listCategoriesModel = listCategoriesModel.OrderByDescending(x => x.CategoryName);
+                    }
+                    break;
+            }
+            return PagedListExtensions.ToPagedList(listCategoriesModel, pageIndex, pageSize);
         }
 
         public async Task<CategoryModel> GetCategoryById(int id)
@@ -72,6 +94,6 @@ namespace AdvisoryLawyer.Business.Services
             return null;
         }
 
-
+        
     }
 }
