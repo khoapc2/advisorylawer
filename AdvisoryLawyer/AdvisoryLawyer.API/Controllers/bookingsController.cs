@@ -57,7 +57,7 @@ namespace BookingLawyer.API.Controllers
             return Ok(BookingModel);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBooking(int id)
         {
             var rs = await _BookingService.DeleteBooking(id);

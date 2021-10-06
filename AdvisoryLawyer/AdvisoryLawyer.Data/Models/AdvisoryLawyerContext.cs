@@ -75,8 +75,7 @@ namespace AdvisoryLawyer.Data.Models
                 entity.Property(e => e.PayDate).HasColumnType("datetime");
 
                 entity.Property(e => e.PaymentMethod)
-                    .IsRequired()
-                    .HasMaxLength(1)
+                    .HasMaxLength(20)
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.CustomerCase)
@@ -226,7 +225,6 @@ namespace AdvisoryLawyer.Data.Models
                 entity.HasOne(d => d.Booking)
                     .WithMany(p => p.Slots)
                     .HasForeignKey(d => d.BookingId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Slot__BookingId__2D27B809");
 
                 entity.HasOne(d => d.Lawyer)
