@@ -38,7 +38,7 @@ namespace AdvisoryLawyer.Business.Services
 
         public async Task<UserAccountModel> CheckGmail(string email, string fullname)
         {
-            var account = await _genericRepository.FindAsync(u => u.Username.Equals(email) && u.Status == 1);
+            var account = await _genericRepository.FindAsync(u => u.Username.Equals(email));
             if (account == null)
             {
                 var newAccount = new UserAccount
@@ -54,6 +54,7 @@ namespace AdvisoryLawyer.Business.Services
             }
             else
             {
+                if (account.Status != (int)UserAccountStatus.Active) return null;
                 return _mapper.Map<UserAccountModel>(account);
             }
         }
@@ -136,11 +137,11 @@ namespace AdvisoryLawyer.Business.Services
                 case "DateOfBirth":
                     if ("Asc".Equals(orderBy.ToString()))
                     {
-                        slotModelList = slotModelList.OrderBy(u => Convert.ToDateTime(u.date_of_birth));
+                        slotModelList = slotModelList.OrderBy(u => u.date_of_birth);
                     }
                     else
                     {
-                        slotModelList = slotModelList.OrderByDescending(u => Convert.ToDateTime(u.date_of_birth));
+                        slotModelList = slotModelList.OrderByDescending(u => u.date_of_birth);
                     }
                     break;
                 case "Level":
@@ -185,6 +186,37 @@ namespace AdvisoryLawyer.Business.Services
                 }
             }
             return null;
+        }
+
+        public async Task<UserAccountModel> UpdateProfile(string token, UserAccountRequest request)
+        {
+            var decode = new JwtSecurityTokenHandler().ReadToken(token) as JwtSecurityToken;
+            var id = Convert.ToInt32(decode.Claims.FirstOrDefault(claim => claim.Type == "Id").Value);
+
+            if (id > 0)
+            {
+                var newProfile = _mapper.Map<UserAccount>(request);
+                newProfile.Id = id;
+                await _genericRepository.UpdateAsync(newProfile);
+                return _mapper.Map<UserAccountModel>(newProfile);
+            }
+            return null;
+        }
+
+        public async Task<bool> RemoveAccount(string token)
+        {
+            var decode = new JwtSecurityTokenHandler().ReadToken(token) as JwtSecurityToken;
+            var id = Convert.ToInt32(decode.Claims.FirstOrDefault(claim => claim.Type == "Id").Value);
+
+            if (id > 0)
+            {
+                var account = await _genericRepository.GetByIDAsync(id);
+                account.Id = id;
+                account.Status = (int)UserAccountStatus.InActive;
+                await _genericRepository.UpdateAsync(account);
+                return true;
+            }
+            return false;
         }
     }
 }

@@ -69,6 +69,7 @@ namespace AdvisoryLawyer.Business.Services
             if (decodedToken == null) return null;
 
             var account = await _userAccountService.CheckGmail(decodedToken.Claims.GetValueOrDefault("email").ToString(), decodedToken.Claims.GetValueOrDefault("name").ToString());
+            if (account == null) return null;
 
             var token = GenerateJSONWebToken(account);
 

@@ -59,7 +59,7 @@ namespace AdvisoryLawyer.API.Controllers
             }
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         public IActionResult GetAllProfiles([FromQuery] UserAccountRequest request, UserAccountSortBy sort_by, OrderBy order_by, int page_index = 1, int page_size = 5)
         {
@@ -91,7 +91,36 @@ namespace AdvisoryLawyer.API.Controllers
             }
         }
 
+        [Authorize]
+        [HttpPut]
+        public async Task<IActionResult> UpdateProfile([FromHeader] string authorization, [FromBody] UserAccountRequest request)
+        {
+            try
+            {
+                var profile = await _service.UpdateProfile(authorization.Substring(7), request);
+                return Ok(profile);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
+        [Authorize]
+        [HttpDelete]
+        public async Task<IActionResult> RemoveAccount([FromHeader] string authorization)
+        {
+            try
+            {
+                var isDelete = await _service.RemoveAccount(authorization.Substring(7));
+                if(isDelete) return Ok();
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
     }
 }
