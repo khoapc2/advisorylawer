@@ -66,7 +66,7 @@ import firebaseui from "firebaseui";
 import "firebaseui/dist/firebaseui.css";
 
 import axios from "axios";
-
+import {mapActions,mapGetters} from 'vuex'
 //
 
 // import MainFooter from '@/layout/MainFooter';
@@ -82,18 +82,27 @@ export default {
       signInSuccessUrl: "/",
       signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
     };
-
     if (firebaseui.auth.AuthUI.getInstance()) {
       this.ui = firebaseui.auth.AuthUI.getInstance();
-      ui.start("#firebaseui-auth-container", uiConfig);
+      this.ui.start("#firebaseui-auth-container", uiConfig);
     } else {
       this.ui = new firebaseui.auth.AuthUI(firebase.auth());
-      ui.start("#firebaseui-auth-container", uiConfig);
+      this.ui.start("#firebaseui-auth-container", uiConfig);
     }
   },
-  unmounted() {
-     this.ui.delete()
+  computed: {
+    ...mapGetters({
+      _getUser: 'getUser'
+    }
+      
+    )
   },
+  methods: {
+    ...mapActions({
+      userInfor: 'getUserInfo'
+      })
+  },
+  
   created() {
     if (firebase.apps.length === 0) {
       firebase.initializeApp(firebaseConfig);
@@ -118,14 +127,21 @@ export default {
                 .then((res) => {
                   console.log("Res: " + res);
                   const data = res.data;
-                  (this.user = this.$store.state.users),
                     (this.user = {
                       role: data.role,
-                      userToken: data.token,
                     });
+                    localStorage.setItem("tokenID",  data.token);
+                    localStorage.setItem("displayName",  user.displayName);
+                    localStorage.setItem("email",  user.email);
+                    localStorage.setItem("photoURL",  user.photoURL);
 
-                  console.log(this.user.role), console.log(this.user.userToken);
+                    console.log("LocalStorage  " + localStorage.getItem("tokenID"))
 
+                  
+
+                  this.userInfor(this.user);
+
+                  // console.log(this.user.role), console.log(this.user.userToken);
                   if (this.user.role === "admin") {
                     this.$router.push("/stats");
                   } else {
@@ -141,14 +157,14 @@ export default {
       });
     }
   },
-  mounted() {
-    var uiConfig = {
-      signInSuccessUrl: "/",
-      signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
-    };
-    var ui = new firebaseui.auth.AuthUI(firebase.auth());
-    ui.start("#firebaseui-auth-container", uiConfig);
-  },
+  // mounted() {
+  //   var uiConfig = {
+  //     signInSuccessUrl: "/",
+  //     signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
+  //   };
+  //   var ui = new firebaseui.auth.AuthUI(firebase.auth());
+  //   ui.start("#firebaseui-auth-container", uiConfig);
+  // },
 };
 </script>
 <style></style>

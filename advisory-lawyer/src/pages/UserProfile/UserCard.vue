@@ -1,15 +1,16 @@
 <template>
   <card class="card-user">
     <div slot="image">
-      <img src="@/assets/img/background_user.jpg" alt="...">
+      <img src="@/assets/img/background_user.jpg" alt="..." />
     </div>
     <div>
       <div class="author">
-        <img class="avatar border-white" :src="photo" alt="...">
-        <h4 class="title"> {{name}}
-          <br>
+        <img class="avatar border-white" :src="photo" alt="..." />
+        <h4 class="title">
+          {{ name }}
+          <br />
           <!-- <a href="#"> -->
-            <small>Admin</small>
+          <small>Admin</small>
           <!-- </a> -->
         </h4>
       </div>
@@ -19,13 +20,18 @@
         <br> I wanna bag it up"
       </p> -->
     </div>
-    <hr>
+    <hr />
     <div class="text-center">
       <div class="row">
-        <div v-for="(info, index) in details" :key="index" :class="getClasses(index)">
-          <h5>{{info.title}}
-            <br>
-            <small>{{info.subTitle}}</small>
+        <div
+          v-for="(info, index) in details"
+          :key="index"
+          :class="getClasses(index)"
+        >
+          <h5>
+            {{ info.title }}
+            <br />
+            <small>{{ info.subTitle }}</small>
           </h5>
         </div>
       </div>
@@ -33,45 +39,46 @@
   </card>
 </template>
 <script>
-import firebase from 'firebase'
-import {mapState} from 'vuex'
 
 export default {
   data() {
     return {
-      name: '',
-      photo: '',
-      email: '',
+      
+      idToken: "",
+      name: "",
+      photo: "",
+      email: "",
       details: [
         {
           title: "",
-          subTitle: ""
+          subTitle: "",
         },
         {
           title: "",
-          subTitle: ""
+          subTitle: "",
         },
         {
           title: "",
-          subTitle: ""
-        }
-      ]
+          subTitle: "",
+        },
+      ],
     };
   },
   created() {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        this.user = user;
-        this.name = this.user.displayName;
-        this.email = this.user.email;
-        this.photo = this.user.photoURL;
-      }
-    });
+        this.name = localStorage.getItem("displayName");
+        this.photo = localStorage.getItem("photoURL");
+        this.email = localStorage.getItem("email");
 
-
-
-
-  },  
+    // firebase.auth().onAuthStateChanged((user) => {
+    //   if (user) {
+    //     console.log("User" + user);
+    //     this.user = user;
+    //     this.name = this.user.displayName;
+    //     this.email = this.user.email;
+    //     this.photo = this.user.photoURL;
+    //   }
+    // });
+  },
   methods: {
     getClasses(index) {
       var remainder = index % 3;
@@ -83,15 +90,7 @@ export default {
         return "col-lg-3";
       }
     },
-  },  
-  computed: 
-  mapState([])
-  
-
-
-
+  },
 };
 </script>
-<style>
-  
-</style>
+<style></style>

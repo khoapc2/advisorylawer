@@ -13,13 +13,13 @@
       </button>
       <div class="collapse navbar-collapse">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="ti-panel"></i>
               <p>Stats</p>
             </a>
-          </li>
-          <drop-down class="nav-item"
+          </li> -->
+          <!-- <drop-down class="nav-item"
                      title="5 Notifications"
                      title-classes="nav-link"
                      icon="ti-bell">
@@ -28,7 +28,7 @@
             <a class="dropdown-item" href="#">Notification 3</a>
             <a class="dropdown-item" href="#">Notification 4</a>
             <a class="dropdown-item" href="#">Another notification</a>
-          </drop-down>
+          </drop-down> -->
           <li class="nav-item">
             <a href="/" class="nav-link" @click='logOut'>
               <i class="ti-shift-left"></i>
@@ -75,6 +75,7 @@ export default {
     },
     logOut(){
       firebase.auth().signOut();
+      localStorage.clear
     }
   }
 };
