@@ -5,6 +5,7 @@ using AdvisoryLawyer.Data.Models;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,8 +33,8 @@ namespace AdvisoryLawyer.Business.AutoMapper
                 .ForMember(d => d.level_id, s => s.MapFrom(s => s.LevelId))
                 .ForMember(d => d.lawyer_office_name, s => s.MapFrom(s => s.LawyerOffice.Name))
                 .ForMember(d => d.lawyer_office_id, s => s.MapFrom(s => s.LawyerOfficeId))
-                .ForMember(d => d.date_of_birth, s => s.MapFrom(s => s.DateOfBirth));
-                //.ForMember(d => d.date_of_birth_formated, s => s.MapFrom(s => ConvertDateTimeToString(s.DateOfBirth)));
+                .ForMember(d => d.date_of_birth, s => s.MapFrom(s => s.DateOfBirth))
+                .ForMember(d => d.date_of_birth_formated, s => s.MapFrom(s => ConvertDateTimeToString(s.DateOfBirth)));
 
             CreateMap<UserAccountRequest, UserAccount>()
                 .ForMember(d => d.Username, s => s.MapFrom(s => s.username))
@@ -49,14 +50,15 @@ namespace AdvisoryLawyer.Business.AutoMapper
                 .ForMember(d => d.Status, s => s.MapFrom(s => s.status))
                 .ForMember(d => d.LevelId, s => s.MapFrom(s => s.level_id))
                 .ForMember(d => d.LawyerOfficeId, s => s.MapFrom(s => s.lawyer_office_id))
-                .ForMember(d => d.DateOfBirth, s => s.MapFrom(s => s.date_of_birth ?? Convert.ToDateTime(s.date_of_birth_formated)));
+                .ForMember(d => d.DateOfBirth, s => s.MapFrom(s => s.date_of_birth ?? DateTime.ParseExact(s.date_of_birth_formated, "yyyy-MM-dd", CultureInfo.InvariantCulture)));
 
             CreateMap<UserAccountRequest, UserAccountModel>();
         }
 
-        private string ConvertDateTimeToString(DateTime? date)
+        private static string ConvertDateTimeToString(DateTime? date)
         {
-            return date?.ToString("dd/MM/yyyy");
+            if(date != null) return date?.ToString("yyyy-MM-dd");
+            return null;
         }
     }
 }
