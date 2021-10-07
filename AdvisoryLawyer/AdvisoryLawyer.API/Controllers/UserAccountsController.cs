@@ -59,7 +59,7 @@ namespace AdvisoryLawyer.API.Controllers
             }
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet]
         public IActionResult GetAllProfiles([FromQuery] UserAccountRequest request, UserAccountSortBy sort_by, OrderBy order_by, int page_index = 1, int page_size = 5)
         {
@@ -91,7 +91,7 @@ namespace AdvisoryLawyer.API.Controllers
             }
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPut]
         public async Task<IActionResult> UpdateProfile([FromHeader] string authorization, [FromBody] UserAccountRequest request)
         {

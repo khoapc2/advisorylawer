@@ -55,7 +55,7 @@ namespace AdvisoryLawyer.API.Controllers
             }
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateSlot([FromBody] SlotRequest newSlot)
         {
