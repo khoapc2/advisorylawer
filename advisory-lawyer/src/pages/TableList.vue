@@ -123,7 +123,7 @@
       </card>
     </div> -->
 
-     <!-- <div slot="raw-content" class="table-responsive">
+    <!-- <div slot="raw-content" class="table-responsive">
           <paper-table :data="table1.data" :columns="table1.columns">
           </paper-table>
       </div> -->
@@ -148,22 +148,30 @@
         <tr>
           <th scope="col">Name</th>
           <th scope="col">Address</th>
-          <th scope="col">Country</th>
           <th scope="col">Phone</th>
+          <th scope="col">Sex</th>
           <th scope="col">Email</th>
-          <th scope="col">Action</th>
+          <th scope="col">Role</th>
+          <th scope="col">Status</th>
+          <th scope="col" colspan="2" style="text-align:center">Action</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="user in tableData" :key="user.id">
+        <tr v-for="user in customerList" :key="user.id">
           <!-- <th scope="row">1</th> -->
+          <td style="display:none">{{user.id}}</td>
           <td>{{ user.name }}</td>
-          <td>{{ user.city }}</td>
-          <td>{{ user.country }}</td>
-          <td>{{ user.salary }}</td>
-          <td>vl@gmail.com</td>
+          <td>{{ user.address }}</td>
+          <td>{{ user.phone_number}}</td>
+          <td>{{ user.sex }}</td>
+          <td>{{ user.username}}</td>
+          <td>{{ user.role}}</td>
+          <td v-if="user.status === 1">Active</td>
+          <td v-else>Inactive</td>
           <td>
-            <button type="button" class="btn btn-outline-danger">Ban</button>
+            <button type="button" class="btn btn-warning" style="float: left" >Update</button>
+            <button v-if="user.status === 1" type="button" class="btn btn-outline-danger" style="float: right" @click="banUser(user.id)">Ban</button>
+             <button v-else-if="user.status === 0" type="button" class="btn btn-outline-danger" style="float: right"  @click="banUser(user.id)">Unbanned</button>
           </td>
         </tr>
         <!-- <tr>
@@ -183,117 +191,95 @@
   </div>
 </template>
 <script>
-// import { PaperTable } from "@/components";
-const tableColumns = ["Id", "Name", "Salary", "Country", "City", "Button"];
-const tableData = [
-  {
-    id: 1,
-    name: "Dakota Rice",
-    salary: "$36.738",
-    country: "Niger",
-    city: "Oud-Turnhout",
-    button: "Danger",
-  },
-  {
-    id: 2,
-    name: "Minerva Hooper",
-    salary: "$23,789",
-    country: "Curaçao",
-    city: "Sinaai-Waas",
-  },
-  {
-    id: 3,
-    name: "Sage Rodriguez",
-    salary: "$56,142",
-    country: "Netherlands",
-    city: "Baileux",
-  },
-  {
-    id: 4,
-    name: "Philip Chaney",
-    salary: "$38,735",
-    country: "Korea, South",
-    city: "Overland Park",
-  },
-  {
-    id: 5,
-    name: "Doris Greene",
-    salary: "$63,542",
-    country: "Malawi",
-    city: "Feldkirchen in Kärnten",
-  },
-];
+import { mapActions, mapGetters, mapState } from "vuex";
+import axios from "axios";
 
 export default {
-  components: {
-    // PaperTable,
-  },
+  components: {},
   data() {
     return {
-      tableData: [
-        {
-          id: 1,
-          name: "Dakota Rice",
-          salary: "$36.738",
-          country: "Niger",
-          city: "Oud-Turnhout",
-          button: "Danger",
-        },
-        {
-          id: 2,
-          name: "Minerva Hooper",
-          salary: "$23,789",
-          country: "Curaçao",
-          city: "Sinaai-Waas",
-        },
-        {
-          id: 3,
-          name: "Sage Rodriguez",
-          salary: "$56,142",
-          country: "Netherlands",
-          city: "Baileux",
-        },
-        {
-          id: 4,
-          name: "Philip Chaney",
-          salary: "$38,735",
-          country: "Korea, South",
-          city: "Overland Park",
-        },
-        {
-          id: 5,
-          name: "Doris Greene",
-          salary: "$63,542",
-          country: "Malawi",
-          city: "Feldkirchen in Kärnten",
-        },
-      ],
-
-      user: {
-        company: "Paper Dashboard",
-        username: "michael23",
-        email: "",
-        firstName: "Chet",
-        lastName: "Faker",
-        address: "Melbourne, Australia",
-        city: "Melbourne",
-        postalCode: "",
-        aboutMe: `We must accept finite disappointment, but hold on to infinite hope.`,
-      },
-      table1: {
-        title: "Stripped Table",
-        subTitle: "Here is a subtitle for this table",
-        columns: [...tableColumns],
-        data: [...tableData],
-      },
-      table2: {
-        title: "Table on Plain Background",
-        subTitle: "Here is a subtitle for this table",
-        columns: [...tableColumns],
-        data: [...tableData],
-      },
+      listUser: [],
     };
   },
+  created() {
+    // this.getListUserApi;
+    // this.getListUserApi();
+    this.$store.dispatch('getUserListApi');
+
+
+
+    // this.listUser = this._getUserList
+    // listUser = _getUserList
+  },
+  computed: {
+    ...mapGetters({
+      _getUserList: "GET_LIST_USER",
+    }),
+    ...mapActions({
+      // userList: "getUserList",
+      // getUserListApi: "getUserListApi",
+    }),
+    ...mapState({
+      customerList: "listUser",
+    })
+  },
+  methods: {
+    banUser(id){
+      console.log(id)
+      this.$store.dispatch('changeStatusUser',id)
+    },
+    // getListUserApi() {
+    //   axios({
+    //     method: "GET",
+    //     url: "https://104.215.186.78/api/v1/user-accounts",
+    //     headers: {
+    //       // "Content-Type": "application/json; charset=utf-8",
+    //       Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
+    //     },
+    //   })
+    //     .then((response) => {
+    //       Object.keys(response).forEach((property) => {
+    //           // Access each object here by using response[property]...
+    //           console.log(response[data])
+    //       })
+          // const data = response.data;
+          //  userList(data)
+          
+          
+          // const customer = {
+          //   id: data.id,
+          //   name: data.name,
+          //   phone: data.phone_number,
+          //   sex: data.sex,
+          //   email: data.email,
+          //   address: data.address,
+
+            //   location: data.location,
+            //   username: data.username,
+            //   description: data.description,
+            //   birthday: data.date_of_birth,
+            
+          // };
+          // console.log(this.listUser);
+
+          // _userList(this.listUser)
+          // console.log('userList: ' + _getUserList);
+    //     })
+    //     .catch((error) => console.log(error));
+    // },
+   
+  },
+  mounted() {
+    // _getBanUser,
+    this.$store.dispatch('getUserListApi');
+
+    console.log(this.$store.state.listUser)
+    // this.listUser = this._getUserList;
+    // console.log("Mount " + this.listUser.role)
+  },
+  watch:{
+    
+  }
 };
 </script>
 <style lang="scss" scoped></style>>

@@ -146,6 +146,7 @@ export default {
             birthday: data.date_of_birth,
             phone: data.phone_number,
             address: data.address,
+
           }
           _userProfile(this.userProfile)
         })

@@ -21,25 +21,19 @@
       </p> -->
     </div>
     <hr />
-    <div class="text-center">
+    <!-- <div class="text-center">
       <div class="row">
         <div
           v-for="(info, index) in details"
           :key="index"
           :class="getClasses(index)"
         >
-          <h5>
-            {{ info.title }}
-            <br />
-            <small>{{ info.subTitle }}</small>
-          </h5>
         </div>
       </div>
-    </div>
+    </div> -->
   </card>
 </template>
 <script>
-
 export default {
   data() {
     return {
@@ -48,36 +42,12 @@ export default {
       name: "",
       photo: "",
       email: "",
-      details: [
-        {
-          title: "",
-          subTitle: "",
-        },
-        {
-          title: "",
-          subTitle: "",
-        },
-        {
-          title: "",
-          subTitle: "",
-        },
-      ],
     };
   },
   created() {
         this.name = localStorage.getItem("displayName");
         this.photo = localStorage.getItem("photoURL");
         this.email = localStorage.getItem("email");
-
-    // firebase.auth().onAuthStateChanged((user) => {
-    //   if (user) {
-    //     console.log("User" + user);
-    //     this.user = user;
-    //     this.name = this.user.displayName;
-    //     this.email = this.user.email;
-    //     this.photo = this.user.photoURL;
-    //   }
-    // });
   },
   methods: {
     getClasses(index) {
