@@ -16,7 +16,7 @@ namespace AdvisoryLawyer.Business.IServices
         public Task<UserAccountModel> GetProfileByID(int id);
         public Task<UserAccountModel> GetProfileByID(string token);
         public IPagedList<UserAccountModel> GetAllProfiles(UserAccountRequest request, UserAccountSortBy sortBy, OrderBy orderBy, int pageIndex, int pageSize);
-        public Task ChangeAccountStatus(int id);
+        public Task<int> ChangeAccountStatus(int id);
         public Task<UserAccountModel> UpdateProfile(string token, UserAccountRequest request);
         public Task<bool> RemoveAccount(string token);
 

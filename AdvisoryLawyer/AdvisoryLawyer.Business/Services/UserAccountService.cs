@@ -67,7 +67,8 @@ namespace AdvisoryLawyer.Business.Services
 
         public IPagedList<UserAccountModel> GetAllProfiles(UserAccountRequest request, UserAccountSortBy sortBy, OrderBy orderBy, int pageIndex, int pageSize)
         {
-            var userList = _genericRepository.FindBy(u => u.Status == (int)UserAccountStatus.Active);
+            //var userList = _genericRepository.FindBy(u => u.Status == (int)UserAccountStatus.Active);
+            var userList = _genericRepository.GetAllByIQueryable();
             if (userList == null) return null;
 
             var slotModelList = userList.ProjectTo<UserAccountModel>(_mapper.ConfigurationProvider).DynamicFilter(_mapper.Map<UserAccountModel>(request));
@@ -158,7 +159,7 @@ namespace AdvisoryLawyer.Business.Services
             return PagedListExtensions.ToPagedList(slotModelList, pageIndex, pageSize);
         }
 
-        public async Task ChangeAccountStatus(int id)
+        public async Task<int> ChangeAccountStatus(int id)
         {
             var account = await _genericRepository.GetByIDAsync(id);
             if(account.Status == (int)UserAccountStatus.Active)
@@ -170,6 +171,7 @@ namespace AdvisoryLawyer.Business.Services
                 account.Status = (int)UserAccountStatus.Active;
             }
             await _genericRepository.UpdateAsync(account);
+            return account.Status;
         }
 
         public async Task<UserAccountModel> GetProfileByID(string token)
