@@ -65,7 +65,7 @@ export default {
     labelClasses: String,
     inputClasses: String,
     value: {
-      type: [String, Number],
+      type: [String, Number, Date],
       default: ''
     },
     addonRightIcon: String,
