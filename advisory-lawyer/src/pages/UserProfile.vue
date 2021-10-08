@@ -25,7 +25,13 @@ export default {
     EditProfileForm,
     UserCard,
     // MembersCard
+  },
+  created(){
+    if(localStorage.getItem('role') !== 'admin'){
+      this.$router.push("/");
+    }
   }
+
 };
 </script>
 <style>

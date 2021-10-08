@@ -75,7 +75,7 @@ export default {
     },
     logOut(){
       firebase.auth().signOut();
-      localStorage.clear
+      localStorage.clear();
     }
   }
 };

@@ -202,9 +202,12 @@ export default {
     };
   },
   created() {
-    // this.getListUserApi;
-    // this.getListUserApi();
-    this.$store.dispatch('getUserListApi');
+    if(localStorage.getItem('role') !== 'admin'){
+      this.$router.push("/");
+    }else {
+      this.$store.dispatch('getUserListApi');
+    }
+    
 
 
 

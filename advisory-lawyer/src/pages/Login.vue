@@ -13,6 +13,7 @@
             </div> -->
 
           <section id="firebaseui-auth-container"></section>
+          <p v-if="checkAuth">Tài Khoản của bạn không được phép vào hệ thống</p>
 
           <!-- <fg-input
               class="no-border input-lg"
@@ -75,6 +76,7 @@ export default {
     return {
       user: null,
       ui: '',
+      checkAuth: false,
     };
   },
   mounted() {
@@ -102,6 +104,7 @@ export default {
       userInfor: 'getUserInfo'
       })
   },
+ 
   
   created() {
     if (firebase.apps.length === 0) {
@@ -134,21 +137,19 @@ export default {
                     localStorage.setItem("displayName",  user.displayName);
                     localStorage.setItem("email",  user.email);
                     localStorage.setItem("photoURL",  user.photoURL);
+                    localStorage.setItem("role", this.user.role);
 
                     console.log("LocalStorage  " + localStorage.getItem("tokenID"))
-
-                  
-
                   this.userInfor(this.user);
-
                   // console.log(this.user.role), console.log(this.user.userToken);
                   if (this.user.role === "admin") {
                     this.$router.push("/stats");
                   } else {
+                    this.checkAuth = true;
                     // this.$router.push('/')
                   }
                 })
-                .catch((error) => console.log("There was an error: " + error));
+                .catch((error) => console.log("There was an error: " + error), this.checkAuth = true);
             })
             .catch((error) => {
               console.log(error);
