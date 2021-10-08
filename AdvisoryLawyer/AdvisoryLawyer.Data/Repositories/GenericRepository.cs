@@ -55,7 +55,7 @@ namespace AdvisoryLawyer.Data.Repositories
 
         public async Task InsertAsync(T obj)
         {
-             await _dbSet.AddAsync(obj);
+            await _dbSet.AddAsync(obj);
         }
 
         public void Update(T obj)
@@ -116,6 +116,12 @@ namespace AdvisoryLawyer.Data.Repositories
       public IQueryable<T> sortAsc<TResult>(Expression<Func<T, TResult>> match, IQueryable<T> list)
         {
             return list.Select(x => x).OrderBy(match);
+        }
+
+        public async Task DeleteSpecificFieldByAsync(Expression<Func<T, bool>> prematch)
+        {
+            var rowDeleted =  await FindByAsync(prematch);
+            _dbSet.RemoveRange(rowDeleted);
         }
     }
 }

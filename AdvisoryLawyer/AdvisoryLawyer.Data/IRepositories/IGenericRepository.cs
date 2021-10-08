@@ -27,5 +27,7 @@ namespace AdvisoryLawyer.Data.IRepositories
         T Find(Expression<Func<T, bool>> match);
         Task<T> FindAsync(Expression<Func<T, bool>> match);
         IQueryable<T> sortAsc<TResult>(Expression<Func<T, TResult>> match, IQueryable<T> list);
+
+        Task DeleteSpecificFieldByAsync(Expression<Func<T, bool>> prematch);
     }
 }

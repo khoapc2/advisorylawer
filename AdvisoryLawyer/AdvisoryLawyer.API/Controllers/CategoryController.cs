@@ -23,7 +23,7 @@ namespace AdvisoryLawyer.API.Controllers
 
         //GET api/categories
         [HttpGet]
-        public IActionResult GetAllCategories([FromQuery] CategoryRequest filter, CategorySortBy sortBy, 
+        public IActionResult GetAllCategories([FromQuery] CategoryModel filter, CategorySortBy sortBy, 
             OrderBy order, int pageIndex = 1, int pageSize = 1)
         {
             return Ok(_service.GetAllCategories(filter, sortBy, order, pageIndex, pageSize));
