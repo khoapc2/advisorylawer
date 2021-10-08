@@ -1,4 +1,5 @@
-﻿using AdvisoryLawyer.Business.Requests.DocumentRequest;
+﻿using AdvisoryLawyer.Business.Enum;
+using AdvisoryLawyer.Business.Requests.DocumentRequest;
 using AdvisoryLawyer.Business.ViewModel;
 using AdvisoryLawyer.Data.Models;
 using AutoMapper;
@@ -15,7 +16,8 @@ namespace AdvisoryLawyer.Business.AutoMapper
         public DocumentsMapper()
         {
             CreateMap<Document, DocumentModel>();
-            CreateMap<DocumentRequest, Document>();
+            CreateMap<DocumentRequest, Document>().ForMember(des
+                => des.Status, opt => opt.MapFrom(src => (int)DocumentStatus.Active)); ;
             CreateMap<DocumentRequest, DocumentModel>();
         }
     }

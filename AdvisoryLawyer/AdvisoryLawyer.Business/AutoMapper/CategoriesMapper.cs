@@ -3,6 +3,7 @@ using AdvisoryLawyer.Business.Requests.CategoryRequest;
 using AdvisoryLawyer.Business.ViewModel;
 using AdvisoryLawyer.Data.Models;
 using AutoMapper;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,8 @@ namespace AdvisoryLawyer.Business.AutoMapper
                 src => src.CategoryLawyers.Where(clo => clo.Status == (int)CategoryLawyerStatus.Active).Select(x => x.LawyerId)));
             CreateMap<CategoryRequest, Category>();
             CreateMap<CategoryRequest, CategoryModel>();
+
+
         }
     }
 }

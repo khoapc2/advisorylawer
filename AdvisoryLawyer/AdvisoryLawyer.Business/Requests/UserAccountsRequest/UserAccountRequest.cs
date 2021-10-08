@@ -1,4 +1,5 @@
 ﻿using AdvisoryLawyer.Business.Enum;
+using Reso.Core.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace AdvisoryLawyer.Business.Requests.UserAccountsRequest
 {
     public class UserAccountRequest
     {
+        [String]
         public string username { get; set; }
         public string role { get; set; }
         public string name { get; set; }

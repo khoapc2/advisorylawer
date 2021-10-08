@@ -67,98 +67,99 @@ namespace AdvisoryLawyer.Business.Services
 
         public IPagedList<UserAccountModel> GetAllProfiles(UserAccountRequest request, UserAccountSortBy sortBy, OrderBy orderBy, int pageIndex, int pageSize)
         {
-            var userList = _genericRepository.FindBy(u => u.Status == (int)UserAccountStatus.Active);
+            //var userList = _genericRepository.FindBy(u => u.Status == (int)UserAccountStatus.Active);
+            var userList = _genericRepository.GetAllByIQueryable();
             if (userList == null) return null;
 
-            var slotModelList = userList.ProjectTo<UserAccountModel>(_mapper.ConfigurationProvider).DynamicFilter(_mapper.Map<UserAccountModel>(request));
+            var userModelList = userList.ProjectTo<UserAccountModel>(_mapper.ConfigurationProvider).DynamicFilter(_mapper.Map<UserAccountModel>(request));
 
             switch (sortBy.ToString())
             {
                 case "Username":
                     if ("Asc".Equals(orderBy.ToString()))
                     {
-                        slotModelList = slotModelList.OrderBy(u => u.username);
+                        userModelList = userModelList.OrderBy(u => u.username);
                     }
                     else
                     {
-                        slotModelList = slotModelList.OrderByDescending(u => u.username);
+                        userModelList = userModelList.OrderByDescending(u => u.username);
                     }
                     break;
                 case "Role":
                     if ("Asc".Equals(orderBy.ToString()))
                     {
-                        slotModelList = slotModelList.OrderBy(u => u.role);
+                        userModelList = userModelList.OrderBy(u => u.role);
                     }
                     else
                     {
-                        slotModelList = slotModelList.OrderByDescending(u => u.role);
+                        userModelList = userModelList.OrderByDescending(u => u.role);
                     }
                     break;
                 case "Name":
                     if ("Asc".Equals(orderBy.ToString()))
                     {
-                        slotModelList = slotModelList.OrderBy(u => u.name);
+                        userModelList = userModelList.OrderBy(u => u.name);
                     }
                     else
                     {
-                        slotModelList = slotModelList.OrderByDescending(u => u.name);
+                        userModelList = userModelList.OrderByDescending(u => u.name);
                     }
                     break;
                 case "Address":
                     if ("Asc".Equals(orderBy.ToString()))
                     {
-                        slotModelList = slotModelList.OrderBy(u => u.address);
+                        userModelList = userModelList.OrderBy(u => u.address);
                     }
                     else
                     {
-                        slotModelList = slotModelList.OrderByDescending(u => u.address);
+                        userModelList = userModelList.OrderByDescending(u => u.address);
                     }
                     break;
                 case "Location":
                     if ("Asc".Equals(orderBy.ToString()))
                     {
-                        slotModelList = slotModelList.OrderBy(u => u.location);
+                        userModelList = userModelList.OrderBy(u => u.location);
                     }
                     else
                     {
-                        slotModelList = slotModelList.OrderByDescending(u => u.location);
+                        userModelList = userModelList.OrderByDescending(u => u.location);
                     }
                     break;
                 case "Sex":
                     if ("Asc".Equals(orderBy.ToString()))
                     {
-                        slotModelList = slotModelList.OrderBy(u => u.sex);
+                        userModelList = userModelList.OrderBy(u => u.sex);
                     }
                     else
                     {
-                        slotModelList = slotModelList.OrderByDescending(u => u.sex);
+                        userModelList = userModelList.OrderByDescending(u => u.sex);
                     }
                     break;
                 case "DateOfBirth":
                     if ("Asc".Equals(orderBy.ToString()))
                     {
-                        slotModelList = slotModelList.OrderBy(u => u.date_of_birth);
+                        userModelList = userModelList.OrderBy(u => u.date_of_birth);
                     }
                     else
                     {
-                        slotModelList = slotModelList.OrderByDescending(u => u.date_of_birth);
+                        userModelList = userModelList.OrderByDescending(u => u.date_of_birth);
                     }
                     break;
                 case "Level":
                     if ("Asc".Equals(orderBy.ToString()))
                     {
-                        slotModelList = slotModelList.OrderBy(u => u.level);
+                        userModelList = userModelList.OrderBy(u => u.level);
                     }
                     else
                     {
-                        slotModelList = slotModelList.OrderByDescending(u => u.level);
+                        userModelList = userModelList.OrderByDescending(u => u.level);
                     }
                     break;
             }
-            return PagedListExtensions.ToPagedList(slotModelList, pageIndex, pageSize);
+            return PagedListExtensions.ToPagedList(userModelList, pageIndex, pageSize);
         }
 
-        public async Task ChangeAccountStatus(int id)
+        public async Task<int> ChangeAccountStatus(int id)
         {
             var account = await _genericRepository.GetByIDAsync(id);
             if(account.Status == (int)UserAccountStatus.Active)
@@ -170,6 +171,7 @@ namespace AdvisoryLawyer.Business.Services
                 account.Status = (int)UserAccountStatus.Active;
             }
             await _genericRepository.UpdateAsync(account);
+            return account.Status;
         }
 
         public async Task<UserAccountModel> GetProfileByID(string token)
