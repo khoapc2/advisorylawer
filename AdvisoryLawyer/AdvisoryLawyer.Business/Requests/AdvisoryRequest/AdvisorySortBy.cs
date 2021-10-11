@@ -9,7 +9,7 @@ namespace AdvisoryLawyer.Business.Requests.AdvisoryRequest
 {
     public enum AdvisorySortBy
     {
-        QuestionAnswer,
-        StartAdvisory
+        Question,
+        Answer
     }
 }

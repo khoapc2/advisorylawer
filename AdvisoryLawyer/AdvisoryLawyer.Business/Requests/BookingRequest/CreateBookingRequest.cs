@@ -9,6 +9,7 @@ namespace AdvisoryLawyer.Business.Requests.BookingRequest
     public class CreateBookingRequest
     {
         public int CustomerId { get; set; }
+        public int LawyerId { get; set; }
         public DateTime BookingDate { get; set; }
         public string PaymentMethod { get; set; }
         public int TotalPrice { get; set; }

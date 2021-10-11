@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace AdvisoryLawyer.Business.Requests.CustomerRequest
 {
-    class CustomerModelSortBy
+    public enum CustomerModelSortBy
     {
+        Name,
+        Address,
+        Email
     }
 }
