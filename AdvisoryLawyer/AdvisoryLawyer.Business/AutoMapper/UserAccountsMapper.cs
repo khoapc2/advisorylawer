@@ -18,9 +18,11 @@ namespace AdvisoryLawyer.Business.AutoMapper
         {
             CreateMap<UserAccount, UserAccountModel>(); ;
 
-            CreateMap<UserAccountRequest, UserAccount>();
+            CreateMap<UserAccountRequest, UserAccount>()
+                .ForMember(d => d.Status, s => s.MapFrom(s => (int)UserAccountStatus.Active)); 
 
             CreateMap<UserAccountRequest, UserAccountModel>();
+
         }
 
         private static string ConvertDateTimeToString(DateTime? date)

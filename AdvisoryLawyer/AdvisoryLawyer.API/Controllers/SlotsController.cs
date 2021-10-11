@@ -40,12 +40,12 @@ namespace AdvisoryLawyer.API.Controllers
         }
 
         [Authorize]
-        [HttpGet("{id}", Name = "GetSlotByID")]
-        public async Task<IActionResult> GetSlotByID(int id)
+        [HttpGet("slot", Name = "GetSlotByID")]
+        public async Task<IActionResult> GetSlotByID([FromBody] ID request)
         {
             try
             {
-                var slot = await _service.GetSlotByID(id);
+                var slot = await _service.GetSlotByID(request.Id);
                 return Ok(slot);
             }
             catch (Exception ex)
@@ -55,7 +55,7 @@ namespace AdvisoryLawyer.API.Controllers
             }
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateSlot([FromBody] SlotRequest newSlot)
         {
@@ -72,12 +72,12 @@ namespace AdvisoryLawyer.API.Controllers
         }
 
         [Authorize]
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateSlot(int id, [FromBody] SlotRequest newSlot)
+        [HttpPut]
+        public async Task<IActionResult> UpdateSlot([FromBody] SlotRequest newSlot)
         {
             try
             {
-                var slot = await _service.UpdateSlot(id, newSlot);
+                var slot = await _service.UpdateSlot(newSlot);
                 return Ok(slot);
             }
             catch (Exception ex)
@@ -88,12 +88,12 @@ namespace AdvisoryLawyer.API.Controllers
         }
 
         [Authorize]
-        [HttpDelete("{id}")] 
-        public async Task<IActionResult> DeleteSlot(int id)
+        [HttpDelete] 
+        public async Task<IActionResult> DeleteSlot([FromBody] ID request)
         {
             try
             {
-                await _service.DeleteSlot(id);
+                await _service.DeleteSlot(request.Id);
                 return Ok();
             }
             catch (Exception ex)
