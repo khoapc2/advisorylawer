@@ -9,7 +9,7 @@ namespace AdvisoryLawyer.Data.Models
     {
         public Level()
         {
-            UserAccounts = new HashSet<UserAccount>();
+            Lawyers = new HashSet<Lawyer>();
         }
 
         public int Id { get; set; }
@@ -18,6 +18,6 @@ namespace AdvisoryLawyer.Data.Models
         public int MaxPrice { get; set; }
         public int Status { get; set; }
 
-        public virtual ICollection<UserAccount> UserAccounts { get; set; }
+        public virtual ICollection<Lawyer> Lawyers { get; set; }
     }
 }

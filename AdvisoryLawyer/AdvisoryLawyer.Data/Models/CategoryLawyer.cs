@@ -13,6 +13,6 @@ namespace AdvisoryLawyer.Data.Models
         public int Status { get; set; }
 
         public virtual Category Category { get; set; }
-        public virtual UserAccount Lawyer { get; set; }
+        public virtual Lawyer Lawyer { get; set; }
     }
 }

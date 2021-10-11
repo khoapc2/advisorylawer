@@ -13,9 +13,9 @@ namespace AdvisoryLawyer.Data.Models
         public DateTime EndAt { get; set; }
         public int Price { get; set; }
         public int LawyerId { get; set; }
-        public int? Status { get; set; }
+        public int Status { get; set; }
 
         public virtual Booking Booking { get; set; }
-        public virtual UserAccount Lawyer { get; set; }
+        public virtual Lawyer Lawyer { get; set; }
     }
 }
