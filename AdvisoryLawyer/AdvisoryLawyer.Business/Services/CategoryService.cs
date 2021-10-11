@@ -73,11 +73,7 @@ namespace AdvisoryLawyer.Business.Services
             category.Status = (int)CategoryStatus.Active;
             await _genericRepository.InsertAsync(category);
             await _genericRepository.SaveAsync();
-            await _categoryLawyerOfficeService.CreateCategoryLawyerOffice(category.Id, categoryRequest.LawyerOfficeIds);
-            await _categoryLawyerService.CreateCategoryLawyer(category.Id, categoryRequest.LawyerIds);
             var categoryModel = _mapper.Map<CategoryModel>(category);
-            categoryModel.LawyerOfficeIds = categoryRequest.LawyerOfficeIds;
-            categoryModel.LawyerIds = categoryRequest.LawyerIds;
             return categoryModel;
         }
 
@@ -104,13 +100,8 @@ namespace AdvisoryLawyer.Business.Services
             if (category != null)
             {
                 category = _mapper.Map(categoryRequest, category);
-                await _genericRepository.SaveAsync();
-                await _categoryLawyerOfficeService.UpdateCategoryLawyerOffice(id, categoryRequest.LawyerOfficeIds);
-                await _categoryLawyerService.UpdateCategoryLawyer(id, categoryRequest.LawyerIds);
-                
+                await _genericRepository.SaveAsync();               
                 var categoryModel = _mapper.Map<CategoryModel>(category); 
-                categoryModel.LawyerOfficeIds = categoryRequest.LawyerOfficeIds;
-                categoryModel.LawyerIds = categoryRequest.LawyerIds;
                 return categoryModel;
             }
             return null;
