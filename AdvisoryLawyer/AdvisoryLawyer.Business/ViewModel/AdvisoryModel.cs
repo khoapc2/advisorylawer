@@ -15,8 +15,9 @@ namespace AdvisoryLawyer.Business.ViewModel
         public int? Id { get; set; }
         public int? CustomerId { get; set; }
         public int? LawyerId { get; set; }
-        public string QuestionAnswer { get; set; }
-        public DateTime? StartAdvisory { get; set; }
-        public TimeSpan? TimeAdvisory { get; set; }
+        public string Question { get; set; }
+        public string Answer { get; set; }
+        public int? BookingId { get; set; }
+        public int? Status { get; set; }
     }
 }

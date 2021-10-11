@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Linq;
 using AdvisoryLawyer.Business.IServices;
 using AdvisoryLawyer.Data.IRepositories;
 using AdvisoryLawyer.Data.Models;

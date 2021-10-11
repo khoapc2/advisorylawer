@@ -72,24 +72,24 @@ namespace AdvisoryLawyer.Business.Services
                 (_mapper.ConfigurationProvider)).DynamicFilter(filter);
             switch (sortBy.ToString())
             {
-                case "QuestionAnswer":
+                case "Question":
                     if (order.ToString() == "Asc")
                     {
-                        listAdvisoryModel = (IQueryable<AdvisoryModel>)listAdvisoryModel.OrderBy(x => x.QuestionAnswer);
+                        listAdvisoryModel = (IQueryable<AdvisoryModel>)listAdvisoryModel.OrderBy(x => x.Question);
                     }
                     else
                     {
-                        listAdvisoryModel = (IQueryable<AdvisoryModel>)listAdvisoryModel.OrderByDescending(x => x.QuestionAnswer);
+                        listAdvisoryModel = (IQueryable<AdvisoryModel>)listAdvisoryModel.OrderByDescending(x => x.Question);
                     }
                     break;
-                case "StartAdvisory":
+                case "Answer":
                     if (order.ToString() == "Asc")
                     {
-                        listAdvisoryModel = (IQueryable<AdvisoryModel>)listAdvisoryModel.OrderBy(x => x.StartAdvisory);
+                        listAdvisoryModel = (IQueryable<AdvisoryModel>)listAdvisoryModel.OrderBy(x => x.Answer);
                     }
                     else
                     {
-                        listAdvisoryModel = (IQueryable<AdvisoryModel>)listAdvisoryModel.OrderByDescending(x => x.StartAdvisory);
+                        listAdvisoryModel = (IQueryable<AdvisoryModel>)listAdvisoryModel.OrderByDescending(x => x.Answer);
                     }
                     break;
             }

@@ -10,8 +10,8 @@ namespace AdvisoryLawyer.Business.Requests.AdvisoryRequest
     {
         public int CustomerId { get; set; }
         public int LawyerId { get; set; }
-        public string QuestionAnswer { get; set; }
-        public DateTime? StartAdvisory { get; set; }
-        public TimeSpan? TimeAdvisory { get; set; }
+        public string Question { get; set; }
+        public string Answer { get; set; }
+        public int BookingId { get; set; }
     }
 }
