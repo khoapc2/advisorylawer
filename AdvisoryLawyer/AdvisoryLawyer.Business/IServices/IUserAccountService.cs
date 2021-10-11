@@ -13,12 +13,10 @@ namespace AdvisoryLawyer.Business.IServices
     public interface IUserAccountService
     {
         public Task<UserAccountModel> CheckGmail(string gmail, string fullname);
-        public Task<UserAccountModel> GetProfileByID(int id);
-        public Task<UserAccountModel> GetProfileByID(string token);
-        public IPagedList<UserAccountModel> GetAllProfiles(UserAccountRequest request, UserAccountSortBy sortBy, OrderBy orderBy, int pageIndex, int pageSize);
+        public Task<UserAccountModel> GetAccountByID(int id);
+        public IPagedList<UserAccountModel> GetListAccount(UserAccountRequest request, UserAccountSortBy sortBy, OrderBy orderBy, int pageIndex, int pageSize);
         public Task<int> ChangeAccountStatus(int id);
-        public Task<UserAccountModel> UpdateProfile(string token, UserAccountRequest request);
         public Task<bool> RemoveAccount(string token);
-
+        public Task<UserAccountModel> UpdateRole(int id, string role);
     }
 }

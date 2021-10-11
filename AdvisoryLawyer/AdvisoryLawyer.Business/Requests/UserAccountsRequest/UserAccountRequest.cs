@@ -1,4 +1,5 @@
 ﻿using AdvisoryLawyer.Business.Enum;
+using Microsoft.AspNetCore.Mvc;
 using Reso.Core.Attributes;
 using System;
 using System.Collections.Generic;
@@ -10,21 +11,17 @@ namespace AdvisoryLawyer.Business.Requests.UserAccountsRequest
 {
     public class UserAccountRequest
     {
+        [FromQuery(Name = "id")]
+        public int? Id { get; set; }
         [String]
-        public string username { get; set; }
-        public string role { get; set; }
-        public string name { get; set; }
-        public string address { get; set; }
-        public string location { get; set; }
-        public string description { get; set; }
-        public string phone_number { get; set; }
-        public string website { get; set; }
-        public string email { get; set; }
-        public UserAccountSex? sex { get; set; }
-        public DateTime? date_of_birth { get; set; }
-        public string date_of_birth_formated { get; set; }
-        public int? status { get; set; }
-        public int? lawyer_office_id { get; set; }
-        public int? level_id { get; set; }
+        [FromQuery(Name = "name")]
+        public string? Name { get; set; }
+        [String]
+        [FromQuery(Name = "email")]
+        public string Email { get; set; }
+        [FromQuery(Name = "role")]
+        public string Role { get; set; }
+        [FromQuery(Name = "status")]
+        public int? Status { get; set; }
     }
 }

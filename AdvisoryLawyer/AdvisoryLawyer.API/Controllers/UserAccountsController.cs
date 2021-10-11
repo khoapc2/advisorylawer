@@ -27,12 +27,12 @@ namespace AdvisoryLawyer.API.Controllers
         }
 
         [Authorize]
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetProfileByID(int id)
+        [HttpGet("account")]
+        public async Task<IActionResult> GetAccountByID([FromBody] ID request)
         {
             try
             {
-                var userProfile = await _service.GetProfileByID(id);
+                var userProfile = await _service.GetAccountByID(request.Id);
                 return Ok(userProfile);
             }
             catch (Exception ex)
@@ -43,46 +43,13 @@ namespace AdvisoryLawyer.API.Controllers
         }
 
         [Authorize]
-        [HttpGet("profile")]
-        public async Task<IActionResult> GetProfileByID([FromHeader] string authorization)
-        {
-            try
-            {
-                var userProfile = await _service.GetProfileByID(authorization.Substring(7));
-                if(userProfile != null) return Ok(userProfile);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                //logging
-                return BadRequest();
-            }
-        }
-
-        [Authorize]
         [HttpGet]
-        public IActionResult GetAllProfiles([FromQuery] UserAccountRequest request, UserAccountSortBy sort_by, OrderBy order_by, int page_index = 1, int page_size = 5)
+        public IActionResult GetListAccount([FromQuery] UserAccountRequest request, UserAccountSortBy sort_by, OrderBy order_by, int page_index = 1, int page_size = 5)
         {
             try
             {
-                var profiles = _service.GetAllProfiles(request, sort_by, order_by, page_index, page_size);
-                return Ok(profiles);
-            }
-            catch (Exception ex)
-            {
-                //logging
-                return BadRequest();
-            }
-        }
-
-        [Authorize(Roles = "admin")]
-        [HttpPut("change-status/{id}")]
-        public async Task<IActionResult> ChangeAccountStatus(int id)
-        {
-            try
-            {
-                var currentStatus = await _service.ChangeAccountStatus(id);
-                return Ok(new { current_status = currentStatus });
+                var listAccount = _service.GetListAccount(request, sort_by, order_by, page_index, page_size);
+                return Ok(listAccount);
             }
             catch (Exception ex)
             {
@@ -91,17 +58,18 @@ namespace AdvisoryLawyer.API.Controllers
             }
         }
 
-        [Authorize]
-        [HttpPut]
-        public async Task<IActionResult> UpdateProfile([FromHeader] string authorization, [FromBody] UserAccountRequest request)
+        [Authorize(Roles = "admin")]
+        [HttpPut("change-status")]
+        public async Task<IActionResult> ChangeAccountStatus([FromBody] ID request)
         {
             try
             {
-                var profile = await _service.UpdateProfile(authorization.Substring(7), request);
-                return Ok(profile);
+                var currentStatus = await _service.ChangeAccountStatus(request.Id);
+                return Ok(new { current_status = currentStatus });
             }
             catch (Exception ex)
             {
+                //logging
                 return BadRequest(ex.Message);
             }
         }
@@ -115,6 +83,21 @@ namespace AdvisoryLawyer.API.Controllers
                 var isDelete = await _service.RemoveAccount(authorization.Substring(7));
                 if(isDelete) return Ok();
                 return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Authorize]
+        [HttpPut]
+        public async Task<IActionResult> UpdateRole([FromBody] UpdateRoleRequest request)
+        {
+            try
+            {
+                var account = await _service.UpdateRole(request.Id, request.Role);
+                return Ok(account);
             }
             catch (Exception ex)
             {

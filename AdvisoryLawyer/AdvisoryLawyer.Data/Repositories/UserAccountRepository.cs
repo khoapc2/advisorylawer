@@ -24,18 +24,18 @@ namespace AdvisoryLawyer.Data.Repositories
             _logger = logger;
         }
 
-        public UserAccount CheckLogin(string username)
-        {
-            try
-            {
-                var userInfo = _dbSet.FirstOrDefault(u => u.Username.Equals(username) && u.Status == 1);
-                return userInfo;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("UserAccountRepository_CheckLogin: " + ex.Message);
-                return null;
-            }
-        }
+        //public UserAccount CheckLogin(string username)
+        //{
+        //    try
+        //    {
+        //        var userInfo = _dbSet.FirstOrDefault(u => u.Username.Equals(username) && u.Status == 1);
+        //        return userInfo;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError("UserAccountRepository_CheckLogin: " + ex.Message);
+        //        return null;
+        //    }
+        //}
     }
 }

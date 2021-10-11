@@ -38,12 +38,12 @@ namespace AdvisoryLawyer.Business.Services
 
         public async Task<UserAccountModel> CheckGmail(string email, string fullname)
         {
-            var account = await _genericRepository.FindAsync(u => u.Username.Equals(email));
+            var account = await _genericRepository.FindAsync(u => u.Email.Equals(email));
             if (account == null)
             {
                 var newAccount = new UserAccount
                 {
-                    Username = email,
+                    Email = email,
                     Name = fullname,
                     Role = "customer",
                     Status = 1
@@ -59,104 +59,43 @@ namespace AdvisoryLawyer.Business.Services
             }
         }
 
-        public async Task<UserAccountModel> GetProfileByID(int id)
+        public async Task<UserAccountModel> GetAccountByID(int id)
         {
-            var userProfile = await _genericRepository.GetByIDAsync(id);
-            return _mapper.Map<UserAccountModel>(userProfile);
+            var account = await _genericRepository.GetByIDAsync(id);
+            return _mapper.Map<UserAccountModel>(account);
         }
 
-        public IPagedList<UserAccountModel> GetAllProfiles(UserAccountRequest request, UserAccountSortBy sortBy, OrderBy orderBy, int pageIndex, int pageSize)
+        public IPagedList<UserAccountModel> GetListAccount(UserAccountRequest request, UserAccountSortBy sortBy, OrderBy orderBy, int pageIndex, int pageSize)
         {
-            //var userList = _genericRepository.FindBy(u => u.Status == (int)UserAccountStatus.Active);
-            var userList = _genericRepository.GetAllByIQueryable();
-            if (userList == null) return null;
+            var accountList = _genericRepository.GetAllByIQueryable();
+            if (accountList == null) return null;
 
-            var userModelList = userList.ProjectTo<UserAccountModel>(_mapper.ConfigurationProvider).DynamicFilter(_mapper.Map<UserAccountModel>(request));
+            var accountModelList = accountList.ProjectTo<UserAccountModel>(_mapper.ConfigurationProvider).DynamicFilter(_mapper.Map<UserAccountModel>(request));
 
             switch (sortBy.ToString())
             {
-                case "Username":
-                    if ("Asc".Equals(orderBy.ToString()))
-                    {
-                        userModelList = userModelList.OrderBy(u => u.username);
-                    }
-                    else
-                    {
-                        userModelList = userModelList.OrderByDescending(u => u.username);
-                    }
-                    break;
-                case "Role":
-                    if ("Asc".Equals(orderBy.ToString()))
-                    {
-                        userModelList = userModelList.OrderBy(u => u.role);
-                    }
-                    else
-                    {
-                        userModelList = userModelList.OrderByDescending(u => u.role);
-                    }
-                    break;
                 case "Name":
                     if ("Asc".Equals(orderBy.ToString()))
                     {
-                        userModelList = userModelList.OrderBy(u => u.name);
+                        accountModelList = accountModelList.OrderBy(u => u.Name);
                     }
                     else
                     {
-                        userModelList = userModelList.OrderByDescending(u => u.name);
+                        accountModelList = accountModelList.OrderByDescending(u => u.Name);
                     }
                     break;
-                case "Address":
+                case "Email":
                     if ("Asc".Equals(orderBy.ToString()))
                     {
-                        userModelList = userModelList.OrderBy(u => u.address);
+                        accountModelList = accountModelList.OrderBy(u => u.Email);
                     }
                     else
                     {
-                        userModelList = userModelList.OrderByDescending(u => u.address);
-                    }
-                    break;
-                case "Location":
-                    if ("Asc".Equals(orderBy.ToString()))
-                    {
-                        userModelList = userModelList.OrderBy(u => u.location);
-                    }
-                    else
-                    {
-                        userModelList = userModelList.OrderByDescending(u => u.location);
-                    }
-                    break;
-                case "Sex":
-                    if ("Asc".Equals(orderBy.ToString()))
-                    {
-                        userModelList = userModelList.OrderBy(u => u.sex);
-                    }
-                    else
-                    {
-                        userModelList = userModelList.OrderByDescending(u => u.sex);
-                    }
-                    break;
-                case "DateOfBirth":
-                    if ("Asc".Equals(orderBy.ToString()))
-                    {
-                        userModelList = userModelList.OrderBy(u => u.date_of_birth);
-                    }
-                    else
-                    {
-                        userModelList = userModelList.OrderByDescending(u => u.date_of_birth);
-                    }
-                    break;
-                case "Level":
-                    if ("Asc".Equals(orderBy.ToString()))
-                    {
-                        userModelList = userModelList.OrderBy(u => u.level);
-                    }
-                    else
-                    {
-                        userModelList = userModelList.OrderByDescending(u => u.level);
+                        accountModelList = accountModelList.OrderByDescending(u => u.Email);
                     }
                     break;
             }
-            return PagedListExtensions.ToPagedList(userModelList, pageIndex, pageSize);
+            return PagedListExtensions.ToPagedList(accountModelList, pageIndex, pageSize);
         }
 
         public async Task<int> ChangeAccountStatus(int id)
@@ -174,37 +113,6 @@ namespace AdvisoryLawyer.Business.Services
             return account.Status;
         }
 
-        public async Task<UserAccountModel> GetProfileByID(string token)
-        {
-            var decode = new JwtSecurityTokenHandler().ReadToken(token) as JwtSecurityToken;
-            var id = Convert.ToInt32(decode.Claims.FirstOrDefault(claim => claim.Type == "Id").Value);
-
-            if (id > 0)
-            {
-                var userProfile = await _genericRepository.GetByIDAsync(id);
-                if (userProfile != null)
-                {
-                    return _mapper.Map<UserAccountModel>(userProfile);
-                }
-            }
-            return null;
-        }
-
-        public async Task<UserAccountModel> UpdateProfile(string token, UserAccountRequest request)
-        {
-            var decode = new JwtSecurityTokenHandler().ReadToken(token) as JwtSecurityToken;
-            var id = Convert.ToInt32(decode.Claims.FirstOrDefault(claim => claim.Type == "Id").Value);
-
-            if (id > 0)
-            {
-                var newProfile = _mapper.Map<UserAccount>(request);
-                newProfile.Id = id;
-                await _genericRepository.UpdateAsync(newProfile);
-                return _mapper.Map<UserAccountModel>(newProfile);
-            }
-            return null;
-        }
-
         public async Task<bool> RemoveAccount(string token)
         {
             var decode = new JwtSecurityTokenHandler().ReadToken(token) as JwtSecurityToken;
@@ -219,6 +127,14 @@ namespace AdvisoryLawyer.Business.Services
                 return true;
             }
             return false;
+        }
+
+        public async Task<UserAccountModel> UpdateRole(int id, string role)
+        {
+            var account = await _genericRepository.GetByIDAsync(id);
+            account.Role = role;
+            await _genericRepository.UpdateAsync(account);
+            return _mapper.Map<UserAccountModel>(account);
         }
     }
 }

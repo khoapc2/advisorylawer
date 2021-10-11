@@ -8,13 +8,7 @@ namespace AdvisoryLawyer.Business.Requests.UserAccountsRequest
 {
     public enum UserAccountSortBy
     {
-        Username,
-        Role,
         Name,
-        Address,
-        Location,
-        Sex,
-        DateOfBirth,
-        Level
+        Email
     }
 }
