@@ -19,8 +19,7 @@ namespace AdvisoryLawyer.Business.Services
             _res = res;
         }
         public async Task<bool> CreateCategoryLawyerOffice(int categoryId, List<int> LawyerOfficeIds)
-        {
-          
+        {       
             foreach(var lawyerofficeId in LawyerOfficeIds)
             {
                 var CategoryLawyerOffice = new CategoryLawyerOffice()
