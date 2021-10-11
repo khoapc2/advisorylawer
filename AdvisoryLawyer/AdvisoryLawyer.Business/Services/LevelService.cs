@@ -81,10 +81,9 @@ namespace AdvisoryLawyer.Business.Services
             return _mapper.Map<LevelModel>(level);
         }
 
-        public async Task<LevelModel> UpdateLevel(int id, LevelRequest level)
+        public async Task<LevelModel> UpdateLevel(LevelRequest level)
         {
             var newLevel = _mapper.Map<Level>(level);
-            newLevel.Id = id;
             await _genericRepository.UpdateAsync(newLevel);
             return _mapper.Map<LevelModel>(newLevel);
         }

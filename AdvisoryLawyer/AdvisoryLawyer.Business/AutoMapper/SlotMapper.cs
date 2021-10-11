@@ -1,4 +1,5 @@
-﻿using AdvisoryLawyer.Business.Requests.SlotRequest;
+﻿using AdvisoryLawyer.Business.Enum;
+using AdvisoryLawyer.Business.Requests.SlotRequest;
 using AdvisoryLawyer.Business.ViewModel;
 using AdvisoryLawyer.Data.Models;
 using AutoMapper;
@@ -23,12 +24,13 @@ namespace AdvisoryLawyer.Business.AutoMapper
                 .ForMember(d => d.status, s => s.MapFrom(s => s.Status));
 
             CreateMap<SlotRequest, Slot>()
+                .ForMember(d => d.Id, s => s.MapFrom(s => s.id))
                 .ForMember(d => d.BookingId, s => s.MapFrom(s => s.booking_id))
                 .ForMember(d => d.StartAt, s => s.MapFrom(s => DateTime.ParseExact(s.start_at_formatted, "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture)))
                 .ForMember(d => d.EndAt, s => s.MapFrom(s => DateTime.ParseExact(s.end_at_formatted, "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture)))
                 .ForMember(d => d.Price, s => s.MapFrom(s => s.price))
                 .ForMember(d => d.LawyerId, s => s.MapFrom(s => s.lawyer_id))
-                .ForMember(d => d.Status, s => s.MapFrom(s => s.status));
+                .ForMember(d => d.Status, s => s.MapFrom(s => (int)SlotStatus.Active));
 
             CreateMap<SlotRequest, SlotModel>();
         }

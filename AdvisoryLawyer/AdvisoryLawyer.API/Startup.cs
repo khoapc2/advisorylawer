@@ -95,6 +95,7 @@ namespace AdvisoryLawyer.API
             services.AddScoped<ICategoryLawyerOfficeService, CategoryLawyerOfficeService>();
             services.AddScoped<ICategoryLawyerService, CategoryLawyerService>();
             services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<ILawyerOfficeService, LawyerOfficeService>();
             services.AddScoped<ILawyerService, LawyerService>();
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));

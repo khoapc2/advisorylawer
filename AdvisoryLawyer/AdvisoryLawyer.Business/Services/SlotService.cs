@@ -91,10 +91,9 @@ namespace AdvisoryLawyer.Business.Services
             return _mapper.Map<SlotModel>(slot);
         }
 
-        public async Task<SlotModel> UpdateSlot(int id, SlotRequest slot)
+        public async Task<SlotModel> UpdateSlot(SlotRequest slot)
         {
             var newSlot = _mapper.Map<Slot>(slot);
-            newSlot.Id = id;
             await _genericRepository.UpdateAsync(newSlot);
             return _mapper.Map<SlotModel>(newSlot);
         }

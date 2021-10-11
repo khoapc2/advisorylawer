@@ -8,6 +8,7 @@ namespace AdvisoryLawyer.Business.Requests.SlotRequest
 {
     public class SlotRequest
     {
+        public int id { get; set; }
         public int? booking_id { get; set; }
         public DateTime? start_at { get; set; }
         public string? start_at_formatted { get; set; }

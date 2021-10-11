@@ -43,12 +43,12 @@ namespace AdvisoryLawyer.API.Controllers
         }
 
         [Authorize]
-        [HttpGet("{id}", Name = "GetLevelByID")]
-        public async Task<IActionResult> GetLevelByID(int id)
+        [HttpGet("level", Name = "GetLevelByID")]
+        public async Task<IActionResult> GetLevelByID([FromBody] ID request)
         {
             try
             {
-                var level = await _service.GetLevelByID(id);
+                var level = await _service.GetLevelByID(request.Id);
                 return Ok(level);
             }
             catch (Exception ex)
@@ -75,12 +75,12 @@ namespace AdvisoryLawyer.API.Controllers
         }
 
         [Authorize]
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateLevel(int id, [FromBody] LevelRequest newLevel)
+        [HttpPut]
+        public async Task<IActionResult> UpdateLevel([FromBody] LevelRequest newLevel)
         {
             try
             {
-                var level = await _service.UpdateLevel(id, newLevel);
+                var level = await _service.UpdateLevel(newLevel);
                 return Ok();
             }
             catch (Exception ex)
@@ -91,12 +91,12 @@ namespace AdvisoryLawyer.API.Controllers
         }
 
         [Authorize]
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteLevel(int id)
+        [HttpDelete]
+        public async Task<IActionResult> DeleteLevel([FromBody] ID request)
         {
             try
             {
-                await _service.DeleteLevel(id);
+                await _service.DeleteLevel(request.Id);
                 return Ok();
             }
             catch (Exception ex)
