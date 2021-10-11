@@ -19,6 +19,8 @@ namespace AdvisoryLawyer.Business.AutoMapper
             CreateMap<CustomerCaseRequest, CustomerCase>().ForMember(des
                 => des.Status, opt => opt.MapFrom(src => (int)CustomerCaseStatus.Active)); ;
             CreateMap<CustomerCaseRequest, CustomerCaseModel>();
+
+            CreateMap<CustomerCaseUpdate, CustomerCase>();
         }
     }
 }

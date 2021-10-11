@@ -33,13 +33,13 @@ namespace AdvisoryLawyer.Business.Services
             _categoryLawyerService = categoryLawyerService;
         }
 
-        public IPagedList<CategoryModel> GetAllCategories(CategoryModel filter, CategorySortBy sortBy, 
+        public IPagedList<CategoryModel> GetAllCategories(CategoryRequest filter, CategorySortBy sortBy, 
             OrderBy order, int pageIndex, int pageSize)
         {
             var listCategories = _genericRepository.FindBy(x => x.Status == (int)CategoryStatus.Active);
 
             var listCategoriesModel = (listCategories.ProjectTo<CategoryModel>
-                (_mapper.ConfigurationProvider)).DynamicFilter(filter);
+                (_mapper.ConfigurationProvider)).DynamicFilter(_mapper.Map<CategoryModel>(filter));
             switch (sortBy.ToString())
             {
                 case "Name":
@@ -56,9 +56,9 @@ namespace AdvisoryLawyer.Business.Services
             return PagedListExtensions.ToPagedList(listCategoriesModel, pageIndex, pageSize);
         }
 
-        public async Task<CategoryModel> GetCategoryById(int id)
+        public async Task<CategoryModel> GetCategoryById(ID ID)
         {
-            var category = await _genericRepository.FindAsync(x => x.Id == id 
+            var category = await _genericRepository.FindAsync(x => x.Id == ID.Id 
             && x.Status == (int)CategoryStatus.Active);
             if(category != null) 
             {
@@ -93,13 +93,13 @@ namespace AdvisoryLawyer.Business.Services
             return false;
         }
 
-        public async Task<CategoryModel> UpdateCategory(int id, CategoryRequest categoryRequest)
+        public async Task<CategoryModel> UpdateCategory(CategoryUpdate categoryUpdate)
         {
-            var category = await _genericRepository.FindAsync(x => x.Id == id && 
+            var category = await _genericRepository.FindAsync(x => x.Id == categoryUpdate.Id && 
             x.Status == (int)CategoryStatus.Active);
             if (category != null)
             {
-                category = _mapper.Map(categoryRequest, category);
+                category = _mapper.Map(categoryUpdate, category);
                 await _genericRepository.SaveAsync();               
                 var categoryModel = _mapper.Map<CategoryModel>(category); 
                 return categoryModel;

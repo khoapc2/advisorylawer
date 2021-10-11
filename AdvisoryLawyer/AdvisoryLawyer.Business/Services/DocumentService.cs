@@ -39,7 +39,8 @@ namespace AdvisoryLawyer.Business.Services
 
         public async Task<bool> DeleteDocument(int id)
         {
-            var document = await _genericRepository.GetByIDAsync(id);
+            var document = await _genericRepository.FindAsync(x => x.Id == id &&
+            x.Status == (int)DocumentStatus.Active);
             if (document != null)
             {
                 await _genericRepository.DeleteAsync(id);
@@ -83,7 +84,8 @@ namespace AdvisoryLawyer.Business.Services
 
         public async Task<DocumentModel> GetDocumentById(int id)
         {
-            var document = await _genericRepository.GetByIDAsync(id);
+            var document = await _genericRepository.FindAsync(x => x.Id == id &&
+            x.Status == (int)DocumentStatus.Active);
             if (document != null)
             {
                 return _mapper.Map<DocumentModel>(document);
@@ -91,12 +93,13 @@ namespace AdvisoryLawyer.Business.Services
             return null;
         }
 
-        public async Task<DocumentModel> UpdateDocument(int id, DocumentRequest documentRequest)
+        public async Task<DocumentModel> UpdateDocument(DocumentUpdate documentUpdate)
         {
-            var document = await _genericRepository.GetByIDAsync(id);
+            var document = await _genericRepository.FindAsync(x => x.Id == documentUpdate.Id &&
+            x.Status == (int)DocumentStatus.Active);
             if (document != null)
             {
-                document = _mapper.Map(documentRequest, document);
+                document = _mapper.Map(documentUpdate, document);
                 await _genericRepository.SaveAsync();
                 return _mapper.Map<DocumentModel>(document);
             }

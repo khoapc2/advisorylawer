@@ -55,10 +55,10 @@ namespace AdvisoryLawyer.API.Controllers
         }
 
         //PUT api/documents/{id}
-        [HttpPut("{id}")]
-        public async Task<ActionResult<DocumentModel>> UpdateDocument(int id, DocumentRequest documentRequest)
+        [HttpPut("update-document")]
+        public async Task<ActionResult<DocumentModel>> UpdateDocument(DocumentUpdate documentUpdate)
         {
-            var documentModel = await _service.UpdateDocument(id, documentRequest);
+            var documentModel = await _service.UpdateDocument(documentUpdate);
             if (documentModel != null)
             {
                 return Ok(documentModel);

@@ -12,11 +12,11 @@ namespace AdvisoryLawyer.Business.IServices
 {
     public interface ICategoryService
     {
-        IPagedList<CategoryModel> GetAllCategories(CategoryModel filter,
+        IPagedList<CategoryModel> GetAllCategories(CategoryRequest filter,
             CategorySortBy sortBy, OrderBy order, int pageIndex, int pageSize);
-        Task<CategoryModel> GetCategoryById(int id);
+        Task<CategoryModel> GetCategoryById(ID ID);
         Task<CategoryModel> CreateCategory(CategoryRequest categoryRequest);
-        Task<CategoryModel> UpdateCategory(int id, CategoryRequest categoryRequest);
+        Task<CategoryModel> UpdateCategory(CategoryUpdate categoryUpdate);
         Task<bool> DeleteCategory(int id);
     }
 }

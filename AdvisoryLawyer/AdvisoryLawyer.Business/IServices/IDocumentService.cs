@@ -16,7 +16,7 @@ namespace AdvisoryLawyer.Business.IServices
             DocumentSortBy sortBy, OrderBy order, int pageIndex, int pageSize);
         Task<DocumentModel> GetDocumentById(int id);
         Task<DocumentModel> CreateDocument(DocumentRequest documentRequest);
-        Task<DocumentModel> UpdateDocument(int id, DocumentRequest documentRequest);
+        Task<DocumentModel> UpdateDocument(DocumentUpdate documentUpdate);
         Task<bool> DeleteDocument(int id);
     }
 }

@@ -19,6 +19,8 @@ namespace AdvisoryLawyer.Business.AutoMapper
             CreateMap<DocumentRequest, Document>().ForMember(des
                 => des.Status, opt => opt.MapFrom(src => (int)DocumentStatus.Active)); ;
             CreateMap<DocumentRequest, DocumentModel>();
+
+            CreateMap<DocumentUpdate, Document>();
         }
     }
 }

@@ -39,7 +39,8 @@ namespace AdvisoryLawyer.Business.Services
 
         public async Task<bool> DeleteCustomerCase(int id)
         {
-            var customerCase = await _genericRepository.GetByIDAsync(id);
+            var customerCase = await _genericRepository.FindAsync(x => x.Id == id &&
+            x.Status == (int)CustomerCaseStatus.Active);
             if (customerCase != null)
             {
                 await _genericRepository.DeleteAsync(id);
@@ -81,9 +82,10 @@ namespace AdvisoryLawyer.Business.Services
             return PagedListExtensions.ToPagedList(listCustomerCasesModel, pageIndex, pageSize);
         }
 
-        public async Task<CustomerCaseModel> GetCustomerCaseById(int id)
+        public async Task<CustomerCaseModel> GetCustomerCaseById(ID ID)
         {
-            var customerCase = await _genericRepository.GetByIDAsync(id);
+            var customerCase = await _genericRepository.FindAsync(x => x.Id == ID.Id &&
+            x.Status == (int)CustomerCaseStatus.Active);
             if (customerCase != null)
             {
                 return _mapper.Map<CustomerCaseModel>(customerCase);
@@ -91,12 +93,13 @@ namespace AdvisoryLawyer.Business.Services
             return null;
         }
 
-        public async Task<CustomerCaseModel> UpdateCustomerCase(int id, CustomerCaseRequest customerCaseRequest)
+        public async Task<CustomerCaseModel> UpdateCustomerCase(CustomerCaseUpdate customerCaseUpdate)
         {
-            var customerCase = await _genericRepository.GetByIDAsync(id);
+            var customerCase = await _genericRepository.FindAsync(x => x.Id == customerCaseUpdate.Id &&
+            x.Status == (int)CustomerCaseStatus.Active);
             if (customerCase != null)
             {
-                customerCase = _mapper.Map(customerCaseRequest, customerCase);
+                customerCase = _mapper.Map(customerCaseUpdate, customerCase);
                 await _genericRepository.SaveAsync();
                 return _mapper.Map<CustomerCaseModel>(customerCase);
             }

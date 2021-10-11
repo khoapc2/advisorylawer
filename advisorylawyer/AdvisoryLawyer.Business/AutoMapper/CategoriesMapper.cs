@@ -23,6 +23,7 @@ namespace AdvisoryLawyer.Business.AutoMapper
 
             CreateMap<CategoryRequest, CategoryModel>();
 
+            CreateMap<CategoryUpdate, Category>();
 
         }
     }

@@ -25,17 +25,17 @@ namespace AdvisoryLawyer.API.Controllers
         //GET api/categories
         [HttpGet]
 
-        public IActionResult GetAllCategories([FromQuery] CategoryModel filter, CategorySortBy sort_by, 
+        public IActionResult GetAllCategories([FromQuery] CategoryRequest filter, CategorySortBy sort_by, 
             OrderBy order_by, int page_index = 1, int page_size = 1)
         {
             return Ok(_service.GetAllCategories(filter, sort_by, order_by, page_index, page_size));
         }
 
         //GET api/categories/{id}
-        [HttpGet("{id}", Name = "GetCategoryById")]
-        public async Task<ActionResult <CategoryModel>> GetCategoryById(int id)
+        [HttpGet("get-category-by-id", Name = "GetCategoryById")]
+        public async Task<ActionResult <CategoryModel>> GetCategoryById(ID ID)
         {
-            var categoryModel = await _service.GetCategoryById(id);
+            var categoryModel = await _service.GetCategoryById(ID);
             if(categoryModel == null)
             {
                 return BadRequest();
@@ -57,10 +57,10 @@ namespace AdvisoryLawyer.API.Controllers
         }
 
         //PUT api/categories/{id}
-        [HttpPut("{id}")]
-        public async Task<ActionResult<CategoryModel>> UpdateCategory(int id, CategoryRequest categoryRequest)
+        [HttpPut("update-category")]
+        public async Task<ActionResult<CategoryModel>> UpdateCategory(CategoryUpdate categoryUpdate)
         {
-            var categoryModel = await _service.UpdateCategory(id, categoryRequest);
+            var categoryModel = await _service.UpdateCategory(categoryUpdate);
             if (categoryModel != null)
             {
                 return Ok(categoryModel);

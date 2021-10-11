@@ -30,38 +30,38 @@ namespace AdvisoryLawyer.API.Controllers
         }
 
         //GET api/customer-cases/{id}
-        [HttpGet("{id}", Name = "GetCustomerCaseById")]
-        public async Task<ActionResult<CustomerCaseModel>> GetCustomerCaseById(int id)
+        [HttpGet("get-customer-case-by-id", Name = "GetCustomerCaseById")]
+        public async Task<ActionResult<CustomerCaseModel>> GetCustomerCaseById(ID ID)
         {
-            var categoryModel = await _service.GetCustomerCaseById(id);
-            if (categoryModel == null)
+            var customerCaseModel = await _service.GetCustomerCaseById(ID);
+            if (customerCaseModel == null)
             {
                 return BadRequest();
             }
-            return Ok(categoryModel);
+            return Ok(customerCaseModel);
         }
 
         //POST api/customer-cases
         [HttpPost]
-        public async Task<ActionResult<CustomerCaseModel>> CreateCustomerCase(CustomerCaseRequest categoryRequest)
+        public async Task<ActionResult<CustomerCaseModel>> CreateCustomerCase(CustomerCaseRequest customerCaseRequest)
         {
-            var categoryModel = await _service.CreateCustomerCase(categoryRequest);
-            if (categoryModel != null)
+            var customerCaseModel = await _service.CreateCustomerCase(customerCaseRequest);
+            if (customerCaseModel != null)
             {
                 return CreatedAtRoute(nameof(GetCustomerCaseById)
-                    , new { Id = categoryModel.Id }, categoryModel);
+                    , new { Id = customerCaseModel.Id }, customerCaseModel);
             }
             return BadRequest();
         }
 
         //PUT api/customer-cases/{id}
-        [HttpPut("{id}")]
-        public async Task<ActionResult<CustomerCaseModel>> UpdateCustomerCase(int id, CustomerCaseRequest categoryRequest)
+        [HttpPut("update-customer-case")]
+        public async Task<ActionResult<CustomerCaseModel>> UpdateCustomerCase(CustomerCaseUpdate customerCaseUpdate)
         {
-            var categoryModel = await _service.UpdateCustomerCase(id, categoryRequest);
-            if (categoryModel != null)
+            var customerCaseModel = await _service.UpdateCustomerCase(customerCaseUpdate);
+            if (customerCaseModel != null)
             {
-                return Ok(categoryModel);
+                return Ok(customerCaseModel);
             }
             return BadRequest();
         }
