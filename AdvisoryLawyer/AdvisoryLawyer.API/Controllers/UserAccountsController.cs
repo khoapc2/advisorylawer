@@ -96,7 +96,7 @@ namespace AdvisoryLawyer.API.Controllers
         {
             try
             {
-                var account = await _service.UpdateRole(request.Id, request.Role);
+                var account = await _service.UpdateRole(request);
                 return Ok(account);
             }
             catch (Exception ex)

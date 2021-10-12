@@ -180,7 +180,6 @@ namespace AdvisoryLawyer.Data.Models
                     .HasMaxLength(50);
 
                 entity.Property(e => e.PhoneNumber)
-                    .IsRequired()
                     .HasMaxLength(20)
                     .IsUnicode(false);
             });
@@ -254,7 +253,6 @@ namespace AdvisoryLawyer.Data.Models
                     .HasMaxLength(50);
 
                 entity.Property(e => e.PhoneNumber)
-                    .IsRequired()
                     .HasMaxLength(20)
                     .IsUnicode(false);
 
@@ -293,7 +291,6 @@ namespace AdvisoryLawyer.Data.Models
                     .HasMaxLength(50);
 
                 entity.Property(e => e.PhoneNumber)
-                    .IsRequired()
                     .HasMaxLength(20)
                     .IsUnicode(false);
 

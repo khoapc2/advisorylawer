@@ -17,6 +17,6 @@ namespace AdvisoryLawyer.Business.IServices
         public IPagedList<UserAccountModel> GetListAccount(UserAccountRequest request, UserAccountSortBy sortBy, OrderBy orderBy, int pageIndex, int pageSize);
         public Task<int> ChangeAccountStatus(int id);
         public Task<bool> RemoveAccount(string token);
-        public Task<UserAccountModel> UpdateRole(int id, string role);
+        public Task<UserAccountModel> UpdateRole(UpdateRoleRequest request);
     }
 }

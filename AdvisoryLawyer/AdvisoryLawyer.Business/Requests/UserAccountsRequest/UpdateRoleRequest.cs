@@ -11,6 +11,10 @@ namespace AdvisoryLawyer.Business.Requests.UserAccountsRequest
     {
         [FromQuery(Name = "id")]
         public int Id { get; set; }
+        [FromQuery(Name = "name")]
+        public string Name { get; set; }
+        [FromQuery(Name = "email")]
+        public string Email { get; set; }
         [FromQuery(Name = "role")]
         public string Role { get; set; }
     }

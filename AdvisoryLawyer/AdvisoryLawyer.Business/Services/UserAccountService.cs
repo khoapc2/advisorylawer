@@ -17,23 +17,28 @@ using AdvisoryLawyer.Business.Requests;
 using AdvisoryLawyer.Business.Enum;
 using AutoMapper.QueryableExtensions;
 using Reso.Core.Utilities;
+using AdvisoryLawyer.Business.Requests.CustomerRequest;
+using AdvisoryLawyer.Business.Requests.LawyerRequest;
+using AdvisoryLawyer.Business.Requests.LawyerOfficeRequest;
 
 namespace AdvisoryLawyer.Business.Services
 {
     public class UserAccountService : IUserAccountService
     {
         private readonly IGenericRepository<UserAccount> _genericRepository;
-        private readonly IUserAccountRepository _userAccountRepository;
-        private readonly ILogger<UserAccountService> _logger;
         private readonly IMapper _mapper;
+        private readonly ILawyerOfficeService _lawyerOfficeService;
+        private readonly ILawyerService _lawyerService;
+        private readonly ICustomerService _customerService;
 
-        public UserAccountService(IGenericRepository<UserAccount> genericRepository, 
-                                IUserAccountRepository userAccountRepository, ILogger<UserAccountService> logger, IMapper mapper)
+        public UserAccountService(IGenericRepository<UserAccount> genericRepository, IMapper mapper,
+            ILawyerOfficeService lawyerOfficeService, ILawyerService lawyerService, ICustomerService customerService)
         {
             _genericRepository = genericRepository;
-            _userAccountRepository = userAccountRepository;
-            _logger = logger;
             _mapper = mapper;
+            _lawyerOfficeService = lawyerOfficeService;
+            _lawyerService = lawyerService;
+            _customerService = customerService;
         }
 
         public async Task<UserAccountModel> CheckGmail(string email, string fullname)
@@ -45,7 +50,7 @@ namespace AdvisoryLawyer.Business.Services
                 {
                     Email = email,
                     Name = fullname,
-                    Role = "customer",
+                    Role = "undefined",
                     Status = 1
                 };
                 await _genericRepository.InsertAsync(newAccount);
@@ -129,11 +134,37 @@ namespace AdvisoryLawyer.Business.Services
             return false;
         }
 
-        public async Task<UserAccountModel> UpdateRole(int id, string role)
+        public async Task<UserAccountModel> UpdateRole(UpdateRoleRequest request)
         {
-            var account = await _genericRepository.GetByIDAsync(id);
-            account.Role = role;
+            var account = await _genericRepository.GetByIDAsync(request.Id);
+            account.Role = request.Role;
             await _genericRepository.UpdateAsync(account);
+
+            if("customer".Equals(request.Role))
+            {
+                CreateCustomerModelRequest customer = new CreateCustomerModelRequest();
+                customer.Name = request.Name;
+                customer.Email = request.Email;
+                customer.Sex = Sex.Unknown;
+                await _customerService.CreateCustomerModel(customer);
+            } 
+            else if("lawyer".Equals(request.Role))
+            {
+                LawyerRequest lawyer = new LawyerRequest();
+                lawyer.Name = request.Name;
+                lawyer.Email = request.Email;
+                lawyer.Sex = Sex.Unknown;
+                lawyer.Status = 1;
+                await _lawyerService.CreateLawyer(lawyer);
+            }
+            else if ("lawyer_office".Equals(request.Role))
+            {
+                LawyerOfficeRequest lawyerOffice = new LawyerOfficeRequest();
+                lawyerOffice.Name = request.Name;
+                lawyerOffice.Email = request.Email;
+                lawyerOffice.Status = 1;
+                await _lawyerOfficeService.CreateLawyerOffice(lawyerOffice);
+            }
             return _mapper.Map<UserAccountModel>(account);
         }
     }

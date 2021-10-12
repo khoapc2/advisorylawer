@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AdvisoryLawyer.Business.Enum;
+using Microsoft.AspNetCore.Mvc;
 using Reso.Core.Attributes;
 using System;
 using System.Collections.Generic;
@@ -44,7 +45,7 @@ namespace AdvisoryLawyer.Business.Requests.LawyerRequest
 
         [FromQuery(Name = "sex")]
         [String]
-        public int? Sex { get; set; }
+        public Sex? Sex { get; set; }
 
         [FromQuery(Name = "date_of_birth")]
         [String]

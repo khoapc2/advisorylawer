@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AdvisoryLawyer.Business.Enum;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,7 @@ namespace AdvisoryLawyer.Business.Requests.CustomerRequest
         public string Location { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
-        public int? Sex { get; set; }
+        public Sex? Sex { get; set; }
         public DateTime? DateOfBirth { get; set; }
     }
 }

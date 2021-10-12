@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AdvisoryLawyer.Business.Enum
 {
-    public enum UserAccountSex
+    public enum Sex
     {
         Unknown,
         Female,
