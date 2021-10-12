@@ -16,5 +16,6 @@ namespace AdvisoryLawyer.Business.Requests.CustomerRequest
         public string Email { get; set; }
         public Sex? Sex { get; set; }
         public DateTime? DateOfBirth { get; set; }
+        public int Status { get; set; }
     }
 }

@@ -180,6 +180,7 @@ namespace AdvisoryLawyer.Business.Services
                 customer.Name = request.Name;
                 customer.Email = request.Email;
                 customer.Sex = Sex.Unknown;
+                customer.Status = 1;
                 await _customerService.CreateCustomerModel(customer);
             }
             else if("lawyer".Equals(account.Role))
