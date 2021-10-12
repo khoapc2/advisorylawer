@@ -80,7 +80,7 @@ namespace AdvisoryLawyer.Business.Services
             var account = await _userAccountService.CheckGmail(decodedToken.Claims.GetValueOrDefault("email").ToString(), decodedToken.Claims.GetValueOrDefault("name").ToString());
             if (account == null) return null;
             
-            if("undefined".Equals(account.Role))
+            if("undefined".Equals(account.Role) || "admin".Equals(account.Role))
             {
                 var token = GenerateJSONWebToken(account.Id.ToString(), account.Email, account.Role);
                 return new AuthenticationModel { token = token, display_name = account.Name, email = account.Email, role = account.Role };

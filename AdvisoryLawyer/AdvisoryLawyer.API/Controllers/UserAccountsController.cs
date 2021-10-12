@@ -105,5 +105,19 @@ namespace AdvisoryLawyer.API.Controllers
             }
         }
 
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> CreateAccount([FromBody] UserAccountRequest request)
+        {
+            try
+            {
+                var account = await _service.CreateAccount(request);
+                return Ok(account);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

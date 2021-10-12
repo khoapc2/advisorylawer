@@ -167,5 +167,39 @@ namespace AdvisoryLawyer.Business.Services
             }
             return _mapper.Map<UserAccountModel>(account);
         }
+
+        public async Task<UserAccountModel> CreateAccount(UserAccountRequest request)
+        {
+            var account = _mapper.Map<UserAccount>(request);
+            await _genericRepository.InsertAsync(account);
+            await _genericRepository.SaveAsync();
+
+            if ("customer".Equals(account.Role))
+            {
+                CreateCustomerModelRequest customer = new CreateCustomerModelRequest();
+                customer.Name = request.Name;
+                customer.Email = request.Email;
+                customer.Sex = Sex.Unknown;
+                await _customerService.CreateCustomerModel(customer);
+            }
+            else if("lawyer".Equals(account.Role))
+            {
+                LawyerRequest lawyer = new LawyerRequest();
+                lawyer.Name = request.Name;
+                lawyer.Email = request.Email;
+                lawyer.Sex = Sex.Unknown;
+                lawyer.Status = 1;
+                await _lawyerService.CreateLawyer(lawyer);
+            }
+            else if ("lawyer_office".Equals(account.Role))
+            {
+                LawyerOfficeRequest lawyerOffice = new LawyerOfficeRequest();
+                lawyerOffice.Name = request.Name;
+                lawyerOffice.Email = request.Email;
+                lawyerOffice.Status = 1;
+                await _lawyerOfficeService.CreateLawyerOffice(lawyerOffice);
+            }
+            return _mapper.Map<UserAccountModel>(account);
+        }
     }
 }
