@@ -39,11 +39,15 @@ dependencies:
 
   #StateManagement
   provider: ^6.0.1
+  
+  table_calendar: ^2.1.0
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+
+  http: ^0.13.4
 
 dev_dependencies:
   flutter_test:
@@ -71,8 +75,13 @@ flutter:
     - judge.png
     - theme.png
     - theme1.png
+    - theme2.png
     - customer.png
     - customer1.png
+    - document.png
+    - lawyer.jpg
+    - background.png
+    - loginCus.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

@@ -1,4 +1,7 @@
 import 'package:advisories_lawyer/provider/google_sign_in.dart';
+import 'package:advisories_lawyer/views/booking_page.dart';
+import 'package:advisories_lawyer/views/document_page.dart';
+import 'package:advisories_lawyer/views/lawyer_page.dart';
 import 'package:advisories_lawyer/views/navbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -9,10 +12,11 @@ class LoggedIn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       drawer: NavBar(),
       appBar: AppBar(
-        title: Text('Logged In'),
+        title: Text('Lawyer Page'),
         backgroundColor: Colors.black,
         centerTitle: true,
         actions: [
@@ -26,31 +30,124 @@ class LoggedIn extends StatelessWidget {
         ],
       ),
       body: Container(
-        alignment: Alignment.center,
-        color: Colors.cyan,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        decoration: BoxDecoration(
+            color: Colors.black87,
+            image: DecorationImage(
+                alignment: Alignment.centerLeft,
+                image: AssetImage("assets/background.png"))),
+        child: Stack(
           children: [
-            Text(
-              'Profile',
-              style: TextStyle(fontSize: 24, color: Colors.white),
-            ),
-            SizedBox(height: 32),
-            CircleAvatar(
-              radius: 40,
-              backgroundImage: NetworkImage(user.photoURL!),
-            ),
-            SizedBox(
-              height: 8,
-            ),
-            Text(
-              'Name: ' + user.displayName!,
-              style: TextStyle(fontSize: 24, color: Colors.white),
-            ),
-            Text(
-              'Email: ' + user.email!,
-              style: TextStyle(fontSize: 24, color: Colors.white),
-            ),
+            // Container(
+            //   height: size.height * .45,
+            //   decoration: BoxDecoration(
+            //       color: Colors.black87,
+            //       image: DecorationImage(
+            //           alignment: Alignment.centerLeft,
+            //           image: AssetImage("assets/background.png"))),
+            // ),
+            SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      height: 150,
+                      decoration: BoxDecoration(),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 30),
+                            child: Row(
+                              children: [
+                                Text(
+                                  "WELCOME",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 20),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(29.5),
+                      ),
+                      child: TextField(
+                        decoration: InputDecoration(
+                            hintText: "Search",
+                            icon: Icon(Icons.search),
+                            border: InputBorder.none),
+                      ),
+                    ),
+                    Expanded(
+                        child: GridView.count(
+                      crossAxisCount: 2,
+                      childAspectRatio: .85,
+                      crossAxisSpacing: 20,
+                      mainAxisSpacing: 20,
+                      children: [
+                        Container(
+                            child: ConstrainedBox(
+                                constraints: BoxConstraints.expand(),
+                                child: FlatButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => DocPage()));
+                                    },
+                                    padding: EdgeInsets.all(0.0),
+                                    child: Column(
+                                      children: [
+                                        Image.asset('assets/document.png'),
+                                        Text(
+                                          'Document List',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 25,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    )))),
+                        Container(
+                            child: ConstrainedBox(
+                                constraints: BoxConstraints.expand(),
+                                child: FlatButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  LawyerPage()));
+                                    },
+                                    padding: EdgeInsets.all(0.0),
+                                    child: Column(
+                                      children: [
+                                        Image.asset('assets/lawyer.jpg'),
+                                        Text(
+                                          'Lawyer List',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 25,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    )))),
+                      ],
+                    ))
+                  ],
+                ),
+              ),
+            )
           ],
         ),
       ),

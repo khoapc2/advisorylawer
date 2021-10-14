@@ -11,15 +11,32 @@ class LoginPage extends StatelessWidget {
         children: [
           Expanded(
               child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(170, 35, 0, 0),
-                child: Text(
-                  "Welcome back",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30),
+                padding: const EdgeInsets.only(top: 110),
+                child: Container(
+                  child: Text(
+                    "ADVISORIES LAWYER",
+                    style: TextStyle(
+                        color: Colors.yellowAccent,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 40),
+                  ),
+                ),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.only(top: 30, bottom: 100),
+                child: Container(
+                  child: Text(
+                    "WELCOME",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30),
+                  ),
                 ),
               ),
               //textfield
@@ -33,7 +50,7 @@ class LoginPage extends StatelessWidget {
       child:
           //Button
           Padding(
-        padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+        padding: const EdgeInsets.fromLTRB(0, 80, 0, 0),
         child: SizedBox(
             width: 200,
             height: 56,
@@ -59,27 +76,15 @@ class LoginPage extends StatelessWidget {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage('assets/theme1.png'), fit: BoxFit.cover),
+              image: AssetImage('assets/theme2.png'), fit: BoxFit.cover),
         ),
         child: ListView(
           children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 10, 0, 0),
-              child: Container(
-                child: Text(
-                  "LOGIN",
-                  style: TextStyle(
-                      fontSize: 60,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700),
-                ),
-              ),
-            ),
             titileSection,
             Column(
               children: [
                 Image.asset(
-                  'customer.png',
+                  'loginCus.png',
                   fit: BoxFit.fill,
                 ),
                 Center(
