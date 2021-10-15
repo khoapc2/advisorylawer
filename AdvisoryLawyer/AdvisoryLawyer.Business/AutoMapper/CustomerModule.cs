@@ -15,12 +15,23 @@ namespace AdvisoryLawyer.Business.AutoMapper
     {
         public CustomerModule()
         {
-            CreateMap<Customer, CustomerModel>().ReverseMap();
-            CreateMap<CreateCustomerModelRequest, Customer>().ForMember(des
-                => des.Status, opt => opt.MapFrom(src => (int)CustomerStatus.Active));
-            CreateMap<UpdateCustomerModelRequest, Customer>().ForMember(des
-                => des.Status, opt => opt.MapFrom(src => (int)CustomerStatus.Active));
+            CreateMap<Customer, CustomerModel>()
+                .ForMember(d => d.Sex, s => s.MapFrom(s => MappingSex(s.Sex)));
+            CreateMap<CustomerModel, Customer>()
+                .ForMember(d => d.Sex, s => s.MapFrom(s => (int)s.Sex));
+            CreateMap<CreateCustomerModelRequest, Customer>()
+                .ForMember(des => des.Status, opt => opt.MapFrom(src => (int)CustomerStatus.Active))
+                .ForMember(d => d.Sex, s => s.MapFrom(s => (int)s.Sex));
+            CreateMap<UpdateCustomerModelRequest, Customer>()
+                .ForMember(des => des.Status, opt => opt.MapFrom(src => (int)CustomerStatus.Active))
+                .ForMember(d => d.Sex, s => s.MapFrom(s => (int)s.Sex));
         }
 
+        private static Sex MappingSex(int? i)
+        {
+            if (i == 2) return Sex.Male;
+            else if (i == 1) return Sex.Female;
+            return Sex.Unknown;
+        }
     }
 }

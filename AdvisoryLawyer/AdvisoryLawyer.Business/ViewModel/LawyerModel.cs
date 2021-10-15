@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AdvisoryLawyer.Business.Enum;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,7 +17,7 @@ namespace AdvisoryLawyer.Business.ViewModel
         public string? Description { get; set; }
         public string? PhoneNumber { get; set; }
         public string? Website { get; set; }
-        public int? Sex { get; set; }
+        public Sex? Sex { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public int? Status { get; set; }
         public int? LawyerOfficeId { get; set; }

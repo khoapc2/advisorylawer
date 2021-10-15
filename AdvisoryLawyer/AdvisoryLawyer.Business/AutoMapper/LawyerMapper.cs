@@ -15,12 +15,21 @@ namespace AdvisoryLawyer.Business.AutoMapper
     {
         public LawyerMapper()
         {
-            CreateMap<Lawyer, LawyerModel>();
-            CreateMap<LawyerRequest, Lawyer>().ForMember(des
-                => des.Status, opt => opt.MapFrom(src => (int)LawyerStatus.Active)); ;
+            CreateMap<Lawyer, LawyerModel>()
+                .ForMember(d => d.Sex, s => s.MapFrom(s => MappingSex(s.Sex)));
+            CreateMap<LawyerRequest, Lawyer>()
+                .ForMember(des => des.Status, opt => opt.MapFrom(src => (int)LawyerStatus.Active))
+                .ForMember(d => d.Sex, s => s.MapFrom(s => (int)s.Sex));
             CreateMap<LawyerRequest, LawyerModel>();
+            CreateMap<LawyerUpdate, Lawyer>()
+                .ForMember(d => d.Sex, s => s.MapFrom(s => (int)s.Sex));
+        }
 
-            CreateMap<LawyerUpdate, Lawyer>();
+        private static Sex MappingSex(int? i)
+        {
+            if (i == 2) return Sex.Male;
+            else if (i == 1) return Sex.Female;
+            return Sex.Unknown;
         }
     }
 }
