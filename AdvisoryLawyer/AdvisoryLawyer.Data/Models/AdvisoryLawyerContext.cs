@@ -343,7 +343,7 @@ namespace AdvisoryLawyer.Data.Models
 
                 entity.Property(e => e.Role)
                     .IsRequired()
-                    .HasMaxLength(10)
+                    .HasMaxLength(20)
                     .IsUnicode(false);
             });
 
