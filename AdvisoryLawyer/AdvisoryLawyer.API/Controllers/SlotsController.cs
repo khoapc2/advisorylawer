@@ -40,12 +40,12 @@ namespace AdvisoryLawyer.API.Controllers
         }
 
         [Authorize]
-        [HttpGet("slot", Name = "GetSlotByID")]
-        public async Task<IActionResult> GetSlotByID([FromBody] ID request)
+        [HttpGet("{id}", Name = "GetSlotByID")]
+        public async Task<IActionResult> GetSlotByID(int id)
         {
             try
             {
-                var slot = await _service.GetSlotByID(request.Id);
+                var slot = await _service.GetSlotByID(id);
                 return Ok(slot);
             }
             catch (Exception ex)

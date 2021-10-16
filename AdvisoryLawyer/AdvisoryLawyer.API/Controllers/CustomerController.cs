@@ -65,5 +65,19 @@ namespace AdvisoryLawyer.API.Controllers
                 return BadRequest();
             return Ok();
         }
+
+        [HttpPost("details")]
+        public async Task<IActionResult> GetDetailByEmail([FromBody] EmailRequest request)
+        {
+            try
+            {
+                var customer = await _CustomerService.GetDetailByEmail(request.Email);
+                return Ok(customer);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

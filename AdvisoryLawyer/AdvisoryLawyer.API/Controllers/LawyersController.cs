@@ -76,5 +76,33 @@ namespace AdvisoryLawyer.API.Controllers
             }
             return BadRequest();
         }
+
+        [HttpPost("details")]
+        public async Task<IActionResult> GetDetailByEmail([FromBody] EmailRequest request)
+        {
+            try
+            {
+                var lawyer = await _service.GetDetailByEmail(request.Email);
+                return Ok(lawyer);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("remove-out-of-office")]
+        public async Task<IActionResult> RemoveLawyerOutOfOffice([FromBody] ID request)
+        {
+            try
+            {
+                await _service.RemoveLawyerOutOfOffice(request.Id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            } 
+        }
     }
 }

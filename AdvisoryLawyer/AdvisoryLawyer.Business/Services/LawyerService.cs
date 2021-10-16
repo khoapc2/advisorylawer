@@ -82,6 +82,12 @@ namespace AdvisoryLawyer.Business.Services
             return PagedListExtensions.ToPagedList(listLawyersModel, pageIndex, pageSize);
         }
 
+        public async Task<LawyerModel> GetDetailByEmail(string email)
+        {
+            var lawyer = await _genericRepository.FindByAsync(x => x.Email.Equals(email));
+            return _mapper.Map<LawyerModel>(lawyer);
+        }
+
         public async Task<LawyerModel> GetLawyerById(int id)
         {
             var lawyer = await _genericRepository.FindAsync(x => x.Id == id &&
@@ -91,6 +97,13 @@ namespace AdvisoryLawyer.Business.Services
                 return _mapper.Map<LawyerModel>(lawyer);
             }
             return null;
+        }
+
+        public async Task RemoveLawyerOutOfOffice(int id)
+        {
+            var lawyer = await _genericRepository.FindAsync(x => x.Id == id);
+            lawyer.LawyerOfficeId = null;
+            await _genericRepository.UpdateAsync(lawyer);
         }
 
         public async Task<LawyerModel> UpdateLawyer(LawyerUpdate lawyerUpdate)

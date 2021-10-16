@@ -38,12 +38,12 @@ namespace AdvisoryLawyer.API.Controllers
         }
 
         [Authorize]
-        [HttpGet("lawyer-office", Name = "GetLawyerOfficeByID")]
-        public async Task<IActionResult> GetLawyerOfficeByID([FromBody] ID request)
+        [HttpGet("{id}", Name = "GetLawyerOfficeByID")]
+        public async Task<IActionResult> GetLawyerOfficeByID(int id)
         {
             try
             {
-                var office = await _service.GetLawyerOfficeByID(request.Id);
+                var office = await _service.GetLawyerOfficeByID(id);
                 return Ok(office);
             }
             catch (Exception ex)
@@ -90,6 +90,21 @@ namespace AdvisoryLawyer.API.Controllers
             {
                 await _service.DeleteLawyerOffice(request.Id);
                 return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Authorize]
+        [HttpPost("details")]
+        public async Task<IActionResult> GetDetailByEmail([FromBody] EmailRequest request)
+        {
+            try
+            {
+                var office = await _service.GetDetailByEmail(request.Email);
+                return Ok(office);
             }
             catch (Exception ex)
             {

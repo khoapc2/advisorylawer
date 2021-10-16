@@ -43,12 +43,12 @@ namespace AdvisoryLawyer.API.Controllers
         }
 
         [Authorize]
-        [HttpGet("level", Name = "GetLevelByID")]
-        public async Task<IActionResult> GetLevelByID([FromBody] ID request)
+        [HttpGet("{id}", Name = "GetLevelByID")]
+        public async Task<IActionResult> GetLevelByID(int id)
         {
             try
             {
-                var level = await _service.GetLevelByID(request.Id);
+                var level = await _service.GetLevelByID(id);
                 return Ok(level);
             }
             catch (Exception ex)

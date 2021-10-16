@@ -118,5 +118,11 @@ namespace AdvisoryLawyer.Business.Services
 
             return _mapper.Map<CustomerModel>(Customer);
         }
+
+        public async Task<CustomerModel> GetDetailByEmail(string email)
+        {
+            var customer = await _res.FindByAsync(x => x.Email.Equals(email));
+            return _mapper.Map<CustomerModel>(customer);
+        }
     }
 }

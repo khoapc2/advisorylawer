@@ -18,5 +18,7 @@ namespace AdvisoryLawyer.Business.IServices
         Task<LawyerModel> CreateLawyer(LawyerRequest lawyerRequest);
         Task<LawyerModel> UpdateLawyer(LawyerUpdate lawyerUpdate);
         Task<bool> DeleteLawyer(int id);
+        Task<LawyerModel> GetDetailByEmail(string email);
+        Task RemoveLawyerOutOfOffice(int id);
     }
 }

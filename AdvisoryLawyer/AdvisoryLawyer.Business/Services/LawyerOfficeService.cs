@@ -43,6 +43,12 @@ namespace AdvisoryLawyer.Business.Services
             await _genericRepository.UpdateAsync(office);
         }
 
+        public async Task<LawyerOfficeModel> GetDetailByEmail(string email)
+        {
+            var office = await _genericRepository.FindByAsync(x => x.Email.Equals(email));
+            return _mapper.Map<LawyerOfficeModel>(office);
+        }
+
         public async Task<LawyerOfficeModel> GetLawyerOfficeByID(int id)
         {
             var lawyerOffice = await _genericRepository.GetByIDAsync(id);

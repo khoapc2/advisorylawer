@@ -27,12 +27,12 @@ namespace AdvisoryLawyer.API.Controllers
         }
 
         [Authorize]
-        [HttpGet("account")]
-        public async Task<IActionResult> GetAccountByID([FromBody] ID request)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetAccountByID(int id)
         {
             try
             {
-                var userProfile = await _service.GetAccountByID(request.Id);
+                var userProfile = await _service.GetAccountByID(id);
                 return Ok(userProfile);
             }
             catch (Exception ex)
@@ -112,7 +112,8 @@ namespace AdvisoryLawyer.API.Controllers
             try
             {
                 var account = await _service.CreateAccount(request);
-                return Ok(account);
+                if(account != null) return Ok(account);
+                return BadRequest("New account is existed!");
             }
             catch (Exception ex)
             {

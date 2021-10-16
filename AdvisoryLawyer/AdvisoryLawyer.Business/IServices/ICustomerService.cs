@@ -18,5 +18,6 @@ namespace AdvisoryLawyer.Business.IServices
         Task<CustomerModel> CreateCustomerModel(CreateCustomerModelRequest request);
         Task<CustomerModel> UpdateCustomerModel(int id, UpdateCustomerModelRequest request);
         Task<bool> DeleteCustomerModel(int id);
+        Task<CustomerModel> GetDetailByEmail(string email);
     }
 }

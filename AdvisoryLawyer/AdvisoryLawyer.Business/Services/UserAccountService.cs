@@ -171,6 +171,9 @@ namespace AdvisoryLawyer.Business.Services
         public async Task<UserAccountModel> CreateAccount(UserAccountRequest request)
         {
             var account = _mapper.Map<UserAccount>(request);
+            var isExistAccount = await _genericRepository.FindByAsync(a => a.Email.Equals(account.Email)) != null ? true : false;
+            if (isExistAccount) return null;
+
             await _genericRepository.InsertAsync(account);
             await _genericRepository.SaveAsync();
 

@@ -17,5 +17,6 @@ namespace AdvisoryLawyer.Business.IServices
         public Task<LawyerOfficeModel> CreateLawyerOffice(LawyerOfficeRequest request);
         public Task<LawyerOfficeModel> UpdateLawyerOffice(LawyerOfficeRequest request);
         public Task DeleteLawyerOffice(int id);
+        public Task<LawyerOfficeModel> GetDetailByEmail(string email);
     }
 }
