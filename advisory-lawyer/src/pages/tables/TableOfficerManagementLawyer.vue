@@ -1,13 +1,13 @@
 <template>
   <tbody>
-        <tr v-for="user in listLawyer" :key="user.id" style="text-align:center">
+        <tr v-for="user in listOfficeLawyer" :key="user.id" style="text-align:center">
           <td style="display:none">{{ user.id }}</td>
           <td>
             {{user.name}}
           </td>
           <td>{{ user.email }}</td>
           <td>
-            {{user.role}}
+            {{user.level_id}}
 
             <!-- <select class="form-control" v-model="user.role" :required="true">
               <option v-for="option in roleOption" :key="option.name">{{
@@ -19,9 +19,9 @@
           <td v-if="user.status === 1">Active</td>
           <td v-else>Inactive</td>
           <td>
-            <!-- <button type="button" class="btn btn-warning" style="float: left" @click="updateRole(user)">
+            <button type="button" class="btn btn-warning" style="float: left" @click="updateRole(user)">
               Update
-            </button> -->
+            </button>
             <button
               v-if="user.status === 1"
               type="button"
@@ -89,7 +89,7 @@ export default {
   },
   computed: {
     ...mapState({
-      listLawyer: "listLawyer",
+      listOfficeLawyer: "listOfficerManagementLawyer",
     }),
   },
   methods: {
@@ -104,7 +104,7 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch("getListLawyer");
+    this.$store.dispatch("getListLawyerOffice");
   },
 };
 </script>

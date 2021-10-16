@@ -198,4 +198,25 @@ export default {
       context.commit("UPDATE_UNROLE_USER", { data });
     });
   },
+
+
+
+  //role: Officer Management
+  getListLawyerOffice(context) {
+    const id = localStorage.getItem('id');
+    const pageSize = 10;
+    if(id !== null){
+      axios({
+        method: "GET",
+        url:
+          "https://104.215.186.78/api/v1/lawyers?lawyer_office_id="+ id + "&page_size=" + pageSize,
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
+        },
+      }).then((response) => {
+        context.commit("LIST_LAWYER_OFFICER", response.data);
+      });
+    }
+  },
 };

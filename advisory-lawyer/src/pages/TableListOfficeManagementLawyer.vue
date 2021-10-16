@@ -43,7 +43,7 @@
         <tr>
           <th scope="col" style="text-align:center">Name</th>
           <th scope="col" style="text-align:center">Email</th>
-          <th scope="col" style="text-align:center">Role</th>
+          <th scope="col" style="text-align:center">Level</th>
           <th scope="col" style="text-align:center">Status</th>
           <th scope="col" colspan="2" style="text-align:center">Action</th>
         </tr>

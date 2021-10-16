@@ -74,5 +74,8 @@ export default {
                 state.listUnroleUser.splice(i, 1);
             }
         }
+    },
+    LIST_LAWYER_OFFICER(state, data){
+        state.listOfficerManagementLawyer = data
     }
 };

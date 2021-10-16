@@ -91,6 +91,7 @@ export default {
                     (this.user = {
                       role: data.role,
                     });
+                    localStorage.setItem("id", data.id)
                     localStorage.setItem("tokenID",  data.token);
                     localStorage.setItem("displayName",  user.displayName);
                     localStorage.setItem("email",  user.email);
