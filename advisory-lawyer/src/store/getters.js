@@ -5,10 +5,10 @@ export default {
         return state.profile 
     },
     GET_LIST_USER(state) {
-        return state.listUser;
+        return state.listUser.filter(element => element.role === "customer");
     },
 
     GET_STATUS_BAN(state) {
         return state.listUser.role
-    }
+    }   
 }

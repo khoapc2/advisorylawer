@@ -10,6 +10,13 @@ import MainFooter from './layout/MainFooter.vue';
 
 import NotFound from "@/pages/NotFoundPage.vue";
 import TableList from "@/pages/TableList.vue";
+import TableListOfficer from "@/pages/TableListOfficer.vue";
+import TableListLawyer from "@/pages/TableListLawyer.vue";
+import TableListUnrole from "@/pages/TableListUnrole.vue";
+import TableListOfficeManagementLawyer from "@/pages/TableListOfficeManagementLawyer.vue";
+
+
+
 import UserProfile from "@/pages/UserProfile.vue";
 import DashboardLayout from "@/layout/dashboard/DashboardLayout.vue";
 
@@ -83,7 +90,28 @@ export default new Router({
           path: "/table-list",
           name: "Users",
           component: TableList
-        }
+        },
+        {
+          path: "/table-list-officer",
+          name: "Officers",
+          component: TableListOfficer
+        },
+        {
+          path: "/table-list-lawyer",
+          name: "Lawyers",
+          component: TableListLawyer
+        },
+        {
+          path: "/table-list-unrole",
+          name: "Unrole Users",
+          component: TableListUnrole
+        },
+        {
+          path: "/table-list-office-mangement-lawyer",
+          name: "Office Management Lawyer",
+          component: TableListOfficeManagementLawyer
+        },
+
       ]
     },
 

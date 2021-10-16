@@ -1,13 +1,13 @@
 <template>
   <div class="row">
     <div class="col-12">
-      <card title="Customer's Management" subTitle="">
+      <card title="Lawyer's Management" subTitle="">
         <form @submit.prevent>
           <div class="row">
             <div class="col-md-4">
               <fg-input
                 type="email"
-                label="Customer's Email"
+                label="Lawyer's Email"
                 placeholder="example@example.com"
                 v-model="inpEmail"
               >
@@ -16,8 +16,8 @@
             <div class="col-md-6">
               <fg-input
                 type="text"
-                label="Customer's Name"
-                placeholder="Customer's Full Name"
+                label="Lawyer's Name"
+                placeholder="Lawyer's Full Name"
                 v-model="inpName"
               >
               </fg-input>
@@ -79,9 +79,9 @@
           </td>
         </tr>
       </thead>
-      <table-customer>
+      <table-lawyer>
 
-      </table-customer>
+      </table-lawyer>
     </table>
 
     <ul class="pagination justify-content-center" style="margin:20px 0">
@@ -95,11 +95,11 @@
 </template>
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
-import TableCustomer from './tables/TableCustomer.vue'
+import TableLawyer from './tables/TableLawyer.vue'
 
 export default {
   components: {
-    TableCustomer
+    TableLawyer
     },
   data() {
     return {

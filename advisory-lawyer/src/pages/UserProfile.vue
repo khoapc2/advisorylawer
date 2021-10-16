@@ -26,10 +26,19 @@ export default {
     UserCard,
     // MembersCard
   },
-  created(){
-    if(localStorage.getItem('role') !== 'admin'){
-      this.$router.push("/");
+  data() {
+    return {
+      role: ''
     }
+  },
+  created(){
+    // this.role = localStorage.getItem('role')
+    // if((this.role !== 'admin')){
+    //   this.$router.push("/");
+    // }else if ((this.role !== "lawyer_office")){
+    //   this.$router.push("/");
+    //   console.log("UserProfile ELSE")
+    // }
   }
 
 };

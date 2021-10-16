@@ -15,52 +15,14 @@
           <section id="firebaseui-auth-container"></section>
           <p v-if="checkAuth">Tài Khoản của bạn không được phép vào hệ thống</p>
 
-          <!-- <fg-input
-              class="no-border input-lg"
-              addon-left-icon="now-ui-icons users_circle-08"
-              placeholder="First Name..."
-            >
-            </fg-input> -->
-          <!-- 
-            <fg-input
-              class="no-border input-lg"
-              addon-left-icon="now-ui-icons text_caps-small"
-              placeholder="Last Name..."
-            >
-            </fg-input> -->
-
-          <!-- <div id="firebaseui-auth-container"></div> -->
-
-          <!-- <template slot="raw-content">
-              <div class="card-footer text-center">
-                <a
-                  href="#/dashboard"
-                  class="btn btn-primary btn-round btn-lg btn-block"
-                  >Get Started</a>
-              </div> -->
-
-          <!-- <div class="pull-left">
-                <h6>
-                  <a href="#pablo" class="link footer-link">Create Account</a>
-                </h6>
-              </div>
-              <div class="pull-right"> -->
-          <!-- <h6>
-                  <a href="#pablo" class="link footer-link">Need Help?</a>
-                </h6> -->
-          <!-- </div> -->
-          <!-- </template> -->
-          <!-- </card> -->
+          
         </div>
       </div>
     </div>
-    <!-- <main-footer></main-footer> -->
   </div>
 </template>
 <script>
 import { Card, Button, FormGroupInput } from "@/components";
-// import firebase from "firebase/compat/app";
-// import "firebase/compat/auth";
 import { firebaseConfig } from "../components/helpers/firebaseConfig";
 import firebase from "firebase";
 import firebaseui from "firebaseui";
@@ -68,9 +30,6 @@ import "firebaseui/dist/firebaseui.css";
 
 import axios from "axios";
 import {mapActions,mapGetters} from 'vuex'
-//
-
-// import MainFooter from '@/layout/MainFooter';
 export default {
   data() {
     return {
@@ -128,7 +87,6 @@ export default {
                 })
               )
                 .then((res) => {
-                  console.log("Res: " + res);
                   const data = res.data;
                     (this.user = {
                       role: data.role,
@@ -138,18 +96,24 @@ export default {
                     localStorage.setItem("email",  user.email);
                     localStorage.setItem("photoURL",  user.photoURL);
                     localStorage.setItem("role", this.user.role);
+                    console.log(this.user.role)
+
 
                     console.log("LocalStorage  " + localStorage.getItem("tokenID"))
                   this.userInfor(this.user);
                   // console.log(this.user.role), console.log(this.user.userToken);
-                  if (this.user.role === "admin") {
+                  if ("admin" === this.user.role || "lawyer_office" === this.user.role) {
+                    console.log('Here')
                     this.$router.push("/stats");
-                  } else {
+                  // } else if ("lawyer_office" === this.user.role){
+                  //   this.$router.push("/stats-lawyer_office");
+                  }else {
+                    console.log('Here Else')
                     this.checkAuth = true;
-                    // this.$router.push('/')
+                    this.$router.push('/')
                   }
                 })
-                .catch((error) => console.log("There was an error: " + error), this.checkAuth = true);
+                .catch(error => {console.log(error), this.checkAuth = true});
             })
             .catch((error) => {
               console.log(error);
@@ -158,14 +122,6 @@ export default {
       });
     }
   },
-  // mounted() {
-  //   var uiConfig = {
-  //     signInSuccessUrl: "/",
-  //     signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
-  //   };
-  //   var ui = new firebaseui.auth.AuthUI(firebase.auth());
-  //   ui.start("#firebaseui-auth-container", uiConfig);
-  // },
 };
 </script>
 <style></style>

@@ -1,13 +1,13 @@
 <template>
   <div class="row">
     <div class="col-12">
-      <card title="Customer's Management" subTitle="">
+      <card title="Officer's Management" subTitle="">
         <form @submit.prevent>
           <div class="row">
             <div class="col-md-4">
               <fg-input
                 type="email"
-                label="Customer's Email"
+                label="Officer's Email"
                 placeholder="example@example.com"
                 v-model="inpEmail"
               >
@@ -16,8 +16,8 @@
             <div class="col-md-6">
               <fg-input
                 type="text"
-                label="Customer's Name"
-                placeholder="Customer's Full Name"
+                label="Officer's Name"
+                placeholder="Officer's Name"
                 v-model="inpName"
               >
               </fg-input>
@@ -79,9 +79,9 @@
           </td>
         </tr>
       </thead>
-      <table-customer>
+      <table-office>
 
-      </table-customer>
+      </table-office>
     </table>
 
     <ul class="pagination justify-content-center" style="margin:20px 0">
@@ -95,11 +95,11 @@
 </template>
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
-import TableCustomer from './tables/TableCustomer.vue'
+import TableOffice from './tables/TableOffice.vue'
 
 export default {
   components: {
-    TableCustomer
+    TableOffice
     },
   data() {
     return {
@@ -138,35 +138,28 @@ export default {
     if (localStorage.getItem("role") !== "admin") {
       this.$router.push("/");
     } else {
-      this.$store.dispatch("getUserListApi");
+      this.$store.dispatch("getListOfficer");
     }
-
-    // this.listUser = this._getUserList
-    // listUser = _getUserList
   },
   computed: {
     ...mapGetters({
       _getUserList: "GET_LIST_USER",
     }),
-    ...mapActions({
-      // userList: "getUserList",
-      // getUserListApi: "getUserListApi",
-    }),
     ...mapState({
-      customerList: "listUser",
+      officerList: "listOfficer",
     }),
   },
   methods: {
     onUpdate() {
      this.$refs.table.refresh();
     },
-    banUser(id) {
-      console.log(id);
-      this.$store.dispatch("changeStatusUser", id);
-    },
-    updateCustomerRole(id,role){
-      this.$store.dispatch("updateCustomerRole", {id,role})
-    },
+    // banUser(id) {
+    //   console.log(id);
+    //   this.$store.dispatch("changeStatusOfficer", id);
+    // },
+    // updateCustomerRole(id,role){
+    //   this.$store.dispatch("updateCustomerRole", {id,role})
+    // },
     createCustomerAccount(inpName, inpEmail){
       if(inpName.trim() !== '' && inpEmail.trim() !== ''){
         console.log(inpName, inpEmail);
@@ -178,7 +171,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch("getUserListApi");
+    this.$store.dispatch("getListOfficer");
   },
 };
 </script>

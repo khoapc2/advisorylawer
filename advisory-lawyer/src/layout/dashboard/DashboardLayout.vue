@@ -3,11 +3,16 @@
     <side-bar>
       <template slot="links">
         <!-- <sidebar-link to="/dashboard" name="Dashboard" icon="ti-panel"/> -->
+        
         <sidebar-link to="/stats" name="Your Profile" icon="ti-user"/>
-        <sidebar-link to="/table-list" name="User Management" icon="ti-view-list-alt"/>
-        <sidebar-link to="" name="Officer Management" icon="ti-view-list-alt"/>
-        <sidebar-link to="" name="Booking Management" icon="ti-pencil-alt2"/>
-        <sidebar-link to="" name="Lawyer Management" icon="ti-map"/>
+        <sidebar-link v-if="role === 'admin'" to="/table-list" name="User Management" icon="ti-folder"/>
+        <sidebar-link v-if="role === 'admin'" to="/table-list-officer" name="Officer Management" icon="ti-folder"/>
+        <sidebar-link v-if="role === 'admin'" to="/table-list-lawyer" name="Lawyer Management" icon="ti-folder"/>
+        <sidebar-link v-if="role === 'admin'" to="/table-list-unrole" name="Unrole Users" icon="ti-folder"/>
+        <sidebar-link v-if="role === 'admin'" to="" name="Booking Management" icon="ti-folder"/>
+
+        <sidebar-link v-if="role === 'lawyer_office'" to="/table-list-office-mangement-lawyer" name="Lawyer Mangement" icon="ti-folder"/>
+
         <!-- <sidebar-link to="/notifications" name="Notifications" icon="ti-bell"/> -->
       </template>
       <!-- <mobile-menu> -->
@@ -55,6 +60,14 @@ import ContentFooter from "./ContentFooter.vue";
 import DashboardContent from "./Content.vue";
 // import MobileMenu from "./MobileMenu.vue";
 export default {
+  data() {
+    return {
+      role: ''
+    }
+  },
+  created() {
+    this.role = localStorage.getItem('role')
+  },
   components: {
     TopNavbar,
     ContentFooter,

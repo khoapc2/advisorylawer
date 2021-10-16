@@ -10,7 +10,9 @@
           {{ name }}
           <br />
           <!-- <a href="#"> -->
-          <small>Admin</small>
+          <small v-if='role === "admin"' >Admin</small>
+          <small v-if='role === "lawyer_office"'>Officer</small>
+
           <!-- </a> -->
         </h4>
       </div>
@@ -37,17 +39,25 @@
 export default {
   data() {
     return {
-      
       idToken: "",
       name: "",
       photo: "",
       email: "",
+      role: "",
     };
   },
   created() {
-        this.name = localStorage.getItem("displayName");
-        this.photo = localStorage.getItem("photoURL");
-        this.email = localStorage.getItem("email");
+    this.role = localStorage.getItem("role");
+    if (
+       this.role === "admin" || this.role === "lawyer_office"
+    ) {
+       console.log("Come Here");
+      this.name = localStorage.getItem("displayName");
+      this.photo = localStorage.getItem("photoURL");
+      this.email = localStorage.getItem("email");
+    } else {
+      this.$router.push("/");
+    }
   },
   methods: {
     getClasses(index) {

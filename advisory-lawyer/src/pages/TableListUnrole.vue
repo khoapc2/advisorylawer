@@ -1,7 +1,7 @@
 <template>
   <div class="row">
-    <div class="col-12">
-      <card title="Customer's Management" subTitle="">
+    <!-- <div class="col-12"> -->
+      <!-- <card title="Unrole User's Management" subTitle="">
         <form @submit.prevent>
           <div class="row">
             <div class="col-md-4">
@@ -35,9 +35,9 @@
           <div class="clearfix"></div>
         </form>
       </card>
-    </div>
+    </div> -->
 
-    <h3>Customer's Detail</h3>
+    <h3>Unrole User's Detail</h3>
     <table class="table" ref="table">
       <thead class="thead-dark">
         <tr>
@@ -79,9 +79,9 @@
           </td>
         </tr>
       </thead>
-      <table-customer>
+      <table-unrole>
 
-      </table-customer>
+      </table-unrole>
     </table>
 
     <ul class="pagination justify-content-center" style="margin:20px 0">
@@ -95,11 +95,11 @@
 </template>
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
-import TableCustomer from './tables/TableCustomer.vue'
+import TableUnrole from './tables/TableUnrole.vue'
 
 export default {
   components: {
-    TableCustomer
+    TableUnrole
     },
   data() {
     return {
@@ -138,22 +138,15 @@ export default {
     if (localStorage.getItem("role") !== "admin") {
       this.$router.push("/");
     } else {
-      this.$store.dispatch("getUserListApi");
+      this.$store.dispatch("getListUnroleUser");
     }
 
     // this.listUser = this._getUserList
     // listUser = _getUserList
   },
   computed: {
-    ...mapGetters({
-      _getUserList: "GET_LIST_USER",
-    }),
-    ...mapActions({
-      // userList: "getUserList",
-      // getUserListApi: "getUserListApi",
-    }),
     ...mapState({
-      customerList: "listUser",
+      customerList: "listUnroleUser",
     }),
   },
   methods: {
@@ -164,8 +157,8 @@ export default {
       console.log(id);
       this.$store.dispatch("changeStatusUser", id);
     },
-    updateCustomerRole(id,role){
-      this.$store.dispatch("updateCustomerRole", {id,role})
+    updateRole(id,role){
+      this.$store.dispatch("updateUnroleUser", {id,role})
     },
     createCustomerAccount(inpName, inpEmail){
       if(inpName.trim() !== '' && inpEmail.trim() !== ''){
