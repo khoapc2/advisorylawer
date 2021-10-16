@@ -83,25 +83,25 @@ namespace AdvisoryLawyer.Business.Services
             if("undefined".Equals(account.Role) || "admin".Equals(account.Role))
             {
                 var token = GenerateJSONWebToken(account.Id.ToString(), account.Email, account.Role);
-                return new AuthenticationModel { token = token, display_name = account.Name, email = account.Email, role = account.Role };
+                return new AuthenticationModel {id = account.Id, token = token, display_name = account.Name, email = account.Email, role = account.Role };
             } 
             else if("customer".Equals(account.Role))
             {
                 var customer = await _customerRepository.FindAsync(c => c.Email.Equals(account.Email));
                 var token = GenerateJSONWebToken(customer.Id.ToString(), customer.Email, account.Role);
-                return new AuthenticationModel { token = token, display_name = customer.Name, email = customer.Email, role = account.Role };
+                return new AuthenticationModel {id = customer.Id, token = token, display_name = customer.Name, email = customer.Email, role = account.Role };
             }
             else if ("lawyer".Equals(account.Role))
             {
                 var lawyer = await _lawyerRepository.FindAsync(l => l.Email.Equals(account.Email));
                 var token = GenerateJSONWebToken(lawyer.Id.ToString(), lawyer.Email, account.Role);
-                return new AuthenticationModel { token = token, display_name = lawyer.Name, email = lawyer.Email, role = account.Role };
+                return new AuthenticationModel {id = lawyer.Id, token = token, display_name = lawyer.Name, email = lawyer.Email, role = account.Role };
             }
             else if ("lawyer_office".Equals(account.Role))
             {
                 var lawyerOffice = await _lawyerOfficeRepository.FindAsync(l => l.Email.Equals(account.Email));
                 var token = GenerateJSONWebToken(lawyerOffice.Id.ToString(), lawyerOffice.Email, account.Role);
-                return new AuthenticationModel { token = token, display_name = lawyerOffice.Name, email = lawyerOffice.Email, role = account.Role };
+                return new AuthenticationModel {id = lawyerOffice.Id, token = token, display_name = lawyerOffice.Name, email = lawyerOffice.Email, role = account.Role };
             }
             return null;
         }

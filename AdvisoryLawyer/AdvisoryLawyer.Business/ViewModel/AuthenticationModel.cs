@@ -8,6 +8,7 @@ namespace AdvisoryLawyer.Business.ViewModel
 {
     public class AuthenticationModel
     {
+        public int? id { get; set; }
         public string token { get; set; }
         public string display_name { get; set; }
         public string email { get; set; }
