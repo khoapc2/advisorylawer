@@ -99,7 +99,7 @@ namespace AdvisoryLawyer.Business.Services
             }
             else if ("lawyer_office".Equals(account.Role))
             {
-                var lawyerOffice = await _customerRepository.FindAsync(l => l.Email.Equals(account.Email));
+                var lawyerOffice = await _lawyerOfficeRepository.FindAsync(l => l.Email.Equals(account.Email));
                 var token = GenerateJSONWebToken(lawyerOffice.Id.ToString(), lawyerOffice.Email, account.Role);
                 return new AuthenticationModel { token = token, display_name = lawyerOffice.Name, email = lawyerOffice.Email, role = account.Role };
             }
