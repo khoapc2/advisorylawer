@@ -84,7 +84,7 @@ namespace AdvisoryLawyer.Business.Services
 
         public async Task<LawyerModel> GetDetailByEmail(string email)
         {
-            var lawyer = await _genericRepository.FindByAsync(x => x.Email.Equals(email));
+            var lawyer = await _genericRepository.FindAsync(x => x.Email.Equals(email));
             return _mapper.Map<LawyerModel>(lawyer);
         }
 
