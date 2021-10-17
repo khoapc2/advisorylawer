@@ -219,4 +219,93 @@ export default {
       });
     }
   },
+
+  getOfficerProfile(context){
+    const id = localStorage.getItem('id');
+    if(id !== null){
+      axios({
+        method: "GET",
+        url:
+          "https://104.215.186.78/api/v1/lawyer-offices/" + id,
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
+        },
+      }).then((response) => {
+        context.commit("OFFICER_PROFILE", response.data);
+      });
+    }
+  },
+
+  updateOfficeProfile(context, user) {
+    const id = localStorage.getItem('id');
+    axios({
+      method: "PUT",
+      url: "https://104.215.186.78/api/v1/lawyer-offices",
+      data: {
+        id: `${id}`,
+        name: `${user.name}`,
+        address: `${user.address}`,
+        location: `${user.location}`,
+        description: `${user.description}`,
+        phone_number: `${user.phone_number}`,
+        website: `${user.website}`,
+        email: `${user.email}`,
+      },
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
+      },
+    }).then((response) => {
+      if (response !== null) {
+        context.dispatch("officerProfile");
+      }
+    });
+  },
+
+  removeLawyerFromOffice(context, idLawyer){
+    axios({
+      method: "PUT",
+      url: "https://104.215.186.78/api/v1/lawyers/remove-out-of-office",
+      data: {
+        id: `${idLawyer}`,
+      },
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
+      },
+    }).then((response) => {
+      if (response !== null) {
+        context.dispatch("getListLawyerOffice");
+      }
+    });
+  },
+
+  updateLevelLawyer(context, user){
+    const id = localStorage.getItem('id');
+    console.log(user.status)
+    console.log(user.name)
+    console.log(user.level_id)
+    console.log(user.email)
+
+    axios({
+      method: "PUT",
+      url: "https://104.215.186.78/api/v1/lawyers/update-lawyer",
+      data: {
+        id: `${user.id}`,
+        name: `${user.name}`,
+        email: `${user.email}`,
+        level_id: `${user.level_id}`,
+        lawyer_office_id: `${id}`
+      },
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
+      },
+    }).then((response) => {
+      if (response !== null) {
+        context.dispatch("getListLawyerOffice");
+      }
+    });
+  }
 };

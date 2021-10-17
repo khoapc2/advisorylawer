@@ -7,38 +7,27 @@
           </td>
           <td>{{ user.email }}</td>
           <td>
-            {{user.level_id}}
+            <!-- {{user.level_id}} -->
 
-            <!-- <select class="form-control" v-model="user.role" :required="true">
-              <option v-for="option in roleOption" :key="option.name">{{
-                option.name
+            <select class="form-control" v-model="user.level_id" :required="true">
+              <option v-for="level in levelOption" :key="level.name">{{
+                level.name
               }}</option>
-            </select> -->
+            </select>
 
           </td>
-          <td v-if="user.status === 1">Active</td>
-          <td v-else>Inactive</td>
+          <td>{{user.sex}}</td>
           <td>
-            <button type="button" class="btn btn-warning" style="float: left" @click="updateRole(user)">
+            <button type="button" class="btn btn-warning" style="float: left" @click="updateLevel(user)">
               Update
             </button>
             <button
-              v-if="user.status === 1"
               type="button"
               class="btn btn-outline-danger"
               style="float: right"
-              @click="banUser(user.id)"
+              @click="deleteUser(user.id)"
             >
-              Ban
-            </button>
-            <button
-              v-else-if="user.status === 0"
-              type="button"
-              class="btn btn-outline-danger"
-              style="float: right"
-              @click="banUser(user.id)"
-            >
-              Unbanned
+              Delete
             </button>
           </td>
         </tr>
@@ -53,31 +42,23 @@ export default {
     return {
       
       listUser: [],
-      roleOption: [
+      levelOption: [
         {
-          name: "customer",
+          name: "1",
         },
         {
-          name: "admin",
+          name: "2",
         },
         {
-          name: "lawyer",
+          name: "3",
         },
         {
-          name: "office lawyer",
+          name: "4",
+        },
+        {
+          name: "5",
         },
       ],
-      statusOption: [
-        {
-          name: ""
-        },
-        {
-          name: "Inactive"
-        },
-        {
-          name: "Active"
-        }
-      ]
     };
   },
   created() {
@@ -96,12 +77,13 @@ export default {
     onUpdate() {
      this.$refs.table.refresh();
     },
-    banUser(id) {
-      this.$store.dispatch("changeStatusLawyer", id);
+    deleteUser(id) {
+      this.$store.dispatch("removeLawyerFromOffice", id);
     },
-    updateRole(user){
-      this.$store.dispatch("updateUnroleUser", {user})
+    updateLevel(user){
+      this.$store.dispatch("updateLevelLawyer", user)
     },
+
   },
   mounted() {
     this.$store.dispatch("getListLawyerOffice");
