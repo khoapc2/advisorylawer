@@ -14,4 +14,7 @@ export default {
 
     //officer lawyer
     listOfficerManagementLawyer:[],
+
+    //customer
+    customer:{}
 }

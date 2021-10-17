@@ -1,9 +1,10 @@
 <template>
   <tbody>
+        <CustomerModal :edit="customer"/>
         <tr v-for="user in customerList" :key="user.id" style="text-align:center">
           <!-- <th scope="row">1</th> -->
           <td style="display:none">{{ user.id }}</td>
-          <td>
+          <td>          
             {{user.name}}
           </td>
           <!-- <td>{{ user.address }}</td> -->
@@ -24,6 +25,15 @@
             <!-- <button type="button" class="btn btn-warning" style="float: left" @click="updateCustomerRole(user.id,user.role)">
               Update
             </button> -->
+            <button
+              type="button"
+              class="btn btn-outline-info"
+              style="float: right"
+              v-b-modal.modal-prevent-closing
+              @click="clickViewDetail(user)"
+            >
+            Detail
+            </button>
             <button
               v-if="user.status === 1"
               type="button"
@@ -49,11 +59,14 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
-
+import CustomerModal from '../CustomerModal.vue';
 export default {
+  components :{
+    CustomerModal
+  },
   data() {
     return {
-      
+//      customer:{},
       listUser: [],
       roleOption: [
         {
@@ -93,18 +106,20 @@ export default {
     // listUser = _getUserList
   },
   computed: {
-    ...mapGetters({
-      _getUserList: "GET_LIST_USER",
-    }),
     ...mapActions({
       // userList: "getUserList",
       // getUserListApi: "getUserListApi",
     }),
     ...mapState({
       customerList: "listUser",
+      customer: "customer"
     }),
   },
   methods: {
+    clickViewDetail(user) {
+      this.$store.dispatch("getCustomerByEmail", user.email) 
+      console.log(this.customer);
+    },
     onUpdate() {
      this.$refs.table.refresh();
     },

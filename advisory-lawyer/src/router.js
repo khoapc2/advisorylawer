@@ -88,7 +88,7 @@ export default new Router({
         // },
         {
           path: "/table-list",
-          name: "Users",
+          name: "Customers",
           component: TableList
         },
         {
@@ -103,7 +103,7 @@ export default new Router({
         },
         {
           path: "/table-list-unrole",
-          name: "Unrole Users",
+          name: "Unrolee Users",
           component: TableListUnrole
         },
         {

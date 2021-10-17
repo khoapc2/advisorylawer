@@ -219,4 +219,26 @@ export default {
       });
     }
   },
+
+  //AnTDP
+  getCustomerByEmail(context, email){
+    if(email !== null){
+      axios({
+        method: "POST",
+        url:
+          "https://104.215.186.78/api/customers/details",
+        data: {
+          email: `${email}`,
+        },
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
+        },
+      }).then((response) => {
+        context.commit("CUSTOMER", response.data);
+      });
+    }
+  }
 };
+
+

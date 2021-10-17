@@ -21,10 +21,14 @@ import router from './router';
 import NowUiKit from './plugins/now-ui-kit';
 import PaperDashboard from "./plugins/paperDashboard"
 import { store } from './store/index';
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 
-
-
+Vue.use(BootstrapVue);
+// Optionally install the BootstrapVue icon components plugin
+Vue.use(IconsPlugin);
 Vue.config.productionTip = false;
 Vue.use(PaperDashboard);
 Vue.use(NowUiKit);

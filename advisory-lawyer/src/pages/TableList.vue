@@ -12,6 +12,7 @@
                 v-model="inpEmail"
               >
               </fg-input>
+              <label v-if="emailErr !== ''" style="color: red"> {{emailErr}} </label>
             </div>
             <div class="col-md-6">
               <fg-input
@@ -21,6 +22,7 @@
                 v-model="inpName"
               >
               </fg-input>
+              <label v-if="nameErr !== ''" style="color: red"> {{nameErr}} </label>
             </div>
           </div>
 
@@ -29,8 +31,8 @@
           <div class="text-center">
             <p-button type="info" round @click.native.prevent="createCustomerAccount(inpName,inpEmail)">
               Create Account
-            </p-button>
-            <p v-if="message !== ''"> {{message}} </p>
+            </p-button><br>
+            
           </div>
           <div class="clearfix"></div>
         </form>
@@ -84,26 +86,26 @@
       </table-customer>
     </table>
 
-    <ul class="pagination justify-content-center" style="margin:20px 0">
-      <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-      <li class="page-item"><a class="page-link" href="#">1</a></li>
-      <li class="page-item"><a class="page-link" href="#">2</a></li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    <ul class="pagination justify-content-center" style="margin:auto;">
+      <li class="page-item"><a class="page-link btn" href="#">Previous</a></li>
+      <li class="page-item"><a class="page-link btn" href="#">1</a></li>
+      <li class="page-item"><a class="page-link btn" href="#">2</a></li>
+      <li class="page-item"><a class="page-link btn" href="#">3</a></li>
+      <li class="page-item"><a class="page-link btn" href="#">Next</a></li>
     </ul>
   </div>
 </template>
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
 import TableCustomer from './tables/TableCustomer.vue'
-
 export default {
   components: {
-    TableCustomer
+    TableCustomer,
     },
   data() {
     return {
-      message: '',
+      emailErr: '',
+      nameErr:'',
       inpEmail: '',
       inpName: '',
       listUser: [],
@@ -173,7 +175,12 @@ export default {
         this.$store.dispatch("createCustomer", {inpName,inpEmail})
       }
       else {
-        this.message = "Create fail"
+        if(inpName.trim() == ''){
+          this.emailErr = 'Please input your email'
+        }
+        if(inpEmail.trim() == ''){
+          this.nameErr = 'Please input your name'
+        }
       }
     }
   },

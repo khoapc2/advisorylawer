@@ -16,6 +16,7 @@
             <fg-input
               type="text"
               label="Your Name"
+              :disabled="true"
               placeholder="Fullname"
               v-model="name"
             >
