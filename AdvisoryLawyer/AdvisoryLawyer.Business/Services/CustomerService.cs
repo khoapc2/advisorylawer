@@ -37,20 +37,20 @@ namespace AdvisoryLawyer.Business.Services
 
         public async Task<bool> DeleteCustomerModel(int id)
         {
-            var Customer = (await _res.FindByAsync(x => x.Id == id && x.Status == (int)CustomerStatus.Active)).FirstOrDefault();
-            if (Customer == null)
+            var customer = await _res.FindAsync(x => x.Id == id && x.Status == (int)CustomerStatus.Active);
+            if (customer == null)
             {
                 return false;
             }
-            Customer.Status = 0;
-            await _res.UpdateAsync(Customer);
+            customer.Status = 0;
+            await _res.UpdateAsync(customer);
             await _res.SaveAsync();
             return true;
         }
 
         public async Task<CustomerModel> GetCustomerModelById(int id)
         {
-            var Customer = (await _res.FindByAsync(x => x.Id == id && x.Status == (int)CustomerStatus.Active)).FirstOrDefault();
+            var Customer = await _res.FindAsync(x => x.Id == id && x.Status == (int)CustomerStatus.Active);
             if (Customer == null)
                 return null;
             var CustomerModel = _mapper.Map<CustomerModel>(Customer);
@@ -106,22 +106,21 @@ namespace AdvisoryLawyer.Business.Services
 
         public async Task<CustomerModel> UpdateCustomerModel(int id, UpdateCustomerModelRequest request)
         {
-            var listCustomer = await _res.FindByAsync(x => x.Id == id && x.Status == (int)CustomerStatus.Active);
-            var Customer = listCustomer.FirstOrDefault();
-            if (Customer == null)
+            var customer = await _res.FindAsync(x => x.Id == id && x.Status == (int)CustomerStatus.Active);
+            if (customer == null)
             {
                 return null;
             }
-            Customer = _mapper.Map(request, Customer);
-            await _res.UpdateAsync(Customer);
+            customer = _mapper.Map(request, customer);
+            await _res.UpdateAsync(customer);
             await _res.SaveAsync();
 
-            return _mapper.Map<CustomerModel>(Customer);
+            return _mapper.Map<CustomerModel>(customer);
         }
 
         public async Task<CustomerModel> GetDetailByEmail(string email)
         {
-            var customer = await _res.FindByAsync(x => x.Email.Equals(email));
+            var customer = await _res.FindAsync(x => x.Email.Equals(email));
             return _mapper.Map<CustomerModel>(customer);
         }
     }
