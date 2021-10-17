@@ -7,6 +7,7 @@ export default {
 
     // officer
     listOfficer: [],
+    officerProfile:[],
     // Lawyer
     listLawyer: [],
     //Unrole User

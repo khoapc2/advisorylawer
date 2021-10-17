@@ -51,7 +51,6 @@ export default {
     if (
        this.role === "admin" || this.role === "lawyer_office"
     ) {
-       console.log("Come Here");
       this.name = localStorage.getItem("displayName");
       this.photo = localStorage.getItem("photoURL");
       this.email = localStorage.getItem("email");

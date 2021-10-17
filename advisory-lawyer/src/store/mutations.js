@@ -75,9 +75,13 @@ export default {
             }
         }
     },
-
+    // Officer 
     LIST_LAWYER_OFFICER(state, data){
         state.listOfficerManagementLawyer = data
+    },
+
+    OFFICER_PROFILE(state, data){
+        state.officerProfile = data
     },
 
     CUSTOMER(state, data){

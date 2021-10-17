@@ -68,7 +68,7 @@
               <b-form-input
                 type="number"
                 id="phone-input"
-                v-model="customer.phone"
+                v-model="customer.phone_number"
                 :state="phoneState"
                 required
               ></b-form-input>

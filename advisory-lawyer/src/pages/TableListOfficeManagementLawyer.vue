@@ -44,10 +44,10 @@
           <th scope="col" style="text-align:center">Name</th>
           <th scope="col" style="text-align:center">Email</th>
           <th scope="col" style="text-align:center">Level</th>
-          <th scope="col" style="text-align:center">Status</th>
+          <th scope="col" style="text-align:center">Sex</th>
           <th scope="col" colspan="2" style="text-align:center">Action</th>
         </tr>
-        <tr>
+        <!-- <tr>
           <td>
             <div class="form-horizontal">
               <input
@@ -67,17 +67,17 @@
                 placeholder="Search Emaill..."
                 style="width:280px;max-width:280px;display:inline-block"
               />
-          </td>
-          <td>
-            </td>
-             <td>
+          </td> -->
+          <!-- <td>
+            </td> -->
+             <!-- <td>
               <select class="form-control" :required="true">
                   <option v-for="option in statusOption" :key="option.name">{{
                     option.name
                   }}</option>
                 </select>
-          </td>
-        </tr>
+          </td> -->
+        <!-- </tr> -->
       </thead>
       <table-officer-management-lawyer>
 

@@ -18,53 +18,53 @@
               label="Your Name"
               :disabled="true"
               placeholder="Fullname"
-              v-model="name"
+              v-model="officeProfile.name"
             >
             </fg-input>
           </div>
         </div>
 
-        <!-- <div class="row">
+         <div class="row" v-if="role === 'lawyer_office'">
           <div class="col-md-8">
             <fg-input
               type="text"
-              label="Address"
+              label="Address" 
               placeholder="Address"
-              v-model="userProfile.address"
+              v-model="officeProfile.address"
             >
             </fg-input>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-4" v-if="role === 'lawyer_office'">
             <fg-input
               type="text"
               label="Location"
               placeholder="Location"
-              v-model="userProfile.location"
+              v-model="officeProfile.location"
             >
             </fg-input>
           </div>
         </div>
 
-        <div class="row">
+        <div class="row" v-if="role === 'lawyer_office'">
           <div class="col-md-4">
             <fg-input
               type="text"
               label="Phone"
               placeholder="Phone Number"
-              v-model="userProfile.phone"
+              v-model="officeProfile.phone_number"
             >
             </fg-input>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-8" v-if="role === 'lawyer_office'">
             <fg-input
-              type="date"
-              label="Birth Day"
-              placeholder=" Your Birth Day"
-              v-model="userProfile.birthday_formatted"
+              type="text"
+              label="Office's Website"
+              placeholder="Website link"
+              v-model="officeProfile.website"
             >
             </fg-input>
           </div>
-          <div class="col-md-4">         
+          <!-- <div class="col-md-4">         
               <label>Sex</label>
               <select class="form-control" v-model="userProfile.sex" :required="true">
                   <option v-for="option in optionsSex" v-bind:key="option.name" v-bind:value="option.name" >{{ option.name }}</option>
@@ -81,40 +81,44 @@
               v-model="userProfile.email"
             >
             </fg-input>
-          </div>
-        </div> -->
+          </div> -->
+        </div> 
 
-        <!-- <div class="row">
+        <div class="row" v-if="role === 'lawyer_office'">
           <div class="col-md-12">
             <div class="form-group">
-              <label>About Me</label>
+              <label>About Office</label>
               <textarea
                 rows="5"
                 class="form-control border-input"
                 placeholder="Here can be your description"
-                v-model="userProfile.description"
+                v-model="officeProfile.description"
               >
               </textarea>
             </div>
           </div>
-        </div> -->
-        <!-- <div class="text-center">
-          <p-button type="info" round @click.native.prevent="updateProfile">
+        </div> 
+         <div class="text-center" v-if="role === 'lawyer_office'">
+          <p-button type="info" round @click.native.prevent="updateOfficerProfile(officeProfile)">
             Update Profile
           </p-button>
-        </div> -->
+        </div> 
         <div class="clearfix"></div>
       </form>
     </div>
   </card>
 </template>
 <script>
+import { mapState } from 'vuex';
 // import { mapActions, mapGetters } from "vuex";
 // import axios from "axios";
 
 export default {
   data() {
     return {
+
+
+
       // userProfile: [{
 
       // }],
@@ -128,62 +132,42 @@ export default {
       //   }
       // ],
       // userProfile: {
+      userProfile: [{
+        location: "",
+        phone: "",
+        address: "",
+      }],
       username: "",
       name: "",
+      role: "",
       // },
     };
   },
   created() {
-    // this.getProfileApi();
-    // this.userProfile = {
-    if (
-      localStorage.getItem("role") === "admin" || localStorage.getItem("role") === "lawyer_office"     
-    ) {
+    this.role = localStorage.getItem("role");
+    if (this.role !== null ) {
       this.username = localStorage.getItem("email");
       this.name = localStorage.getItem("displayName");
+      if(this.role === "admin"){}
+      else if(this.role === "lawyer_office"){
+        this.$store.dispatch("getOfficerProfile");
+      }else{
+        this.$router.push("/");
+      }
     } else {
       this.$router.push("/");
     }
   },
   methods: {
-    // updateProfile() {
-    //   console.log("Your data: " + JSON.stringify(this.user));
-    // },
-    // getProfileApi() {
-    //   console.log("tokenV " + localStorage.getItem("tokenID"));
-    //   axios({
-    //     method: "GET",
-    //     url: "https://104.215.186.78/api/v1/user-accounts/profile",
-    //     headers: {
-    //       // "Content-Type": "application/json; charset=utf-8",
-    //       Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
-    //     },
-    //   })
-    //     .then((response) => {
-    //       const data = response.data;
-    //       console.log(response),
-    //         (this.userProfile = {
-    //           id: data.id,
-    //           location: data.location,
-    //           sex: data.sex,
-    //           email: data.email,
-    //           username: data.username,
-    //           description: data.description,
-    //           name: data.name,
-    //           birthday: data.date_of_birth,
-    //           birthday_formatted: data.date_of_birth_formated,
-    //           phone: data.phone_number,
-    //           address: data.address,
-    //         });
-    //       _userProfile(this.userProfile);
-    //     })
-    //     .catch((error) => console.log(error));
-    // },
+    updateOfficerProfile(user){
+      console.log("UPDATE" + user)
+      this.$store.dispatch("updateOfficeProfile", user);
+    }
   },
   computed: {
-    // ...mapGetters({
-    //   _getUserProfile: "GET_USER_PROFILE",
-    // }),
+    ...mapState({
+      officeProfile: "officerProfile",
+    }),
     // ...mapActions({
     //   _userProfile: "getUserProfile",
     // }),
