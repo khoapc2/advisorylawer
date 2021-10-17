@@ -118,5 +118,17 @@ namespace AdvisoryLawyer.Business.Services
             }
             return null;
         }
+
+        public async Task<LawyerModel> UpdateLevelForLawyer(UpdateLevelForLawyerRequest request)
+        {
+            var lawyer = await _genericRepository.FindAsync(x => x.Id == request.LawyerId);
+            if (lawyer != null)
+            {
+                lawyer.LevelId = request.LevelId;
+                await _genericRepository.UpdateAsync(lawyer);
+                return _mapper.Map<LawyerModel>(lawyer);
+            }
+            return null;
+        }
     }
 }

@@ -104,5 +104,20 @@ namespace AdvisoryLawyer.API.Controllers
                 return BadRequest(ex.Message);
             } 
         }
+
+        [HttpPut("update-level")]
+        public async Task<IActionResult> UpdateLevelForLawyer([FromBody] UpdateLevelForLawyerRequest request)
+        {
+            try
+            {
+                var lawyer = await _service.UpdateLevelForLawyer(request);
+                if (lawyer != null) return Ok(lawyer);
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
