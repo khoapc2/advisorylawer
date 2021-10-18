@@ -22,5 +22,8 @@ namespace AdvisoryLawyer.Business.ViewModel
         public int? Status { get; set; }
         public int? LawyerOfficeId { get; set; }
         public int? LevelId { get; set; }
+
+        public string LawyerOfficeName { get; set; }
+        public string Level { get; set; }
     }
 }

@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdvisoryLawyer.Business.Services
 {
@@ -84,14 +85,19 @@ namespace AdvisoryLawyer.Business.Services
 
         public async Task<LawyerModel> GetDetailByEmail(string email)
         {
-            var lawyer = await _genericRepository.FindAsync(x => x.Email.Equals(email));
+            var lawyer = await _genericRepository.GetAllByIQueryable()
+                .Where(x => x.Email.Equals(email) && x.Status == (int)LawyerStatus.Active)
+                .Include(x => x.LawyerOffice)
+                .Include(x => x.Level).FirstOrDefaultAsync();
             return _mapper.Map<LawyerModel>(lawyer);
         }
 
         public async Task<LawyerModel> GetLawyerById(int id)
         {
-            var lawyer = await _genericRepository.FindAsync(x => x.Id == id &&
-            x.Status == (int)LawyerStatus.Active);
+            var lawyer = await _genericRepository.GetAllByIQueryable()
+                .Where(x => x.Id == id && x.Status == (int)LawyerStatus.Active)
+                .Include(x => x.LawyerOffice)
+                .Include(x => x.Level).FirstOrDefaultAsync();
             if (lawyer != null)
             {
                 return _mapper.Map<LawyerModel>(lawyer);
