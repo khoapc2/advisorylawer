@@ -1,14 +1,21 @@
 import 'package:advisories_lawyer/provider/google_sign_in.dart';
 import 'package:advisories_lawyer/views/booking_page.dart';
 import 'package:advisories_lawyer/views/document_page.dart';
-import 'package:advisories_lawyer/views/lawyer_page.dart';
+import 'package:advisories_lawyer/views/customer_page.dart';
 import 'package:advisories_lawyer/views/navbar.dart';
+import 'package:advisories_lawyer/views/welcome_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class LoggedIn extends StatelessWidget {
   final user = FirebaseAuth.instance.currentUser!;
+
+  Users? users;
+  getUser(BuildContext context) async {
+    final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
+    provider.logout();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +29,11 @@ class LoggedIn extends StatelessWidget {
         actions: [
           TextButton(
               onPressed: () {
-                final provider =
-                    Provider.of<GoogleSignInProvider>(context, listen: false);
-                provider.logout();
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) {
+                    return WelcomePage();
+                  },
+                ));
               },
               child: Text('Logout'))
         ],

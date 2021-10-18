@@ -14,7 +14,6 @@ class BookingPage extends StatefulWidget {
 }
 
 class _BookingPageState extends State<BookingPage> {
-  late Users _user;
   late Future<List<Catagories>> futureCata;
   @override
   void initState() {
