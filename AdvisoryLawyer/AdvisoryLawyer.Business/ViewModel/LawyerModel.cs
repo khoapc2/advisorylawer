@@ -23,6 +23,8 @@ namespace AdvisoryLawyer.Business.ViewModel
         public int? LawyerOfficeId { get; set; }
         public int? LevelId { get; set; }
 
+        public string? DateOfBirthFormatted { get; set; }
+
         public string LawyerOfficeName { get; set; }
         public string Level { get; set; }
     }

@@ -18,7 +18,8 @@ namespace AdvisoryLawyer.Business.AutoMapper
             CreateMap<Lawyer, LawyerModel>()
                 .ForMember(d => d.Sex, s => s.MapFrom(s => MappingSex(s.Sex)))
                 .ForMember(d => d.Level, s => s.MapFrom(s => s.Level.LevelName))
-                .ForMember(d => d.LawyerOfficeName, s => s.MapFrom(s => s.LawyerOffice.Name));
+                .ForMember(d => d.LawyerOfficeName, s => s.MapFrom(s => s.LawyerOffice.Name))
+                .ForMember(d => d.DateOfBirthFormatted, s => s.MapFrom(s => ConvertDateTimeToString(s.DateOfBirth)));
             CreateMap<LawyerRequest, Lawyer>()
                 .ForMember(des => des.Status, opt => opt.MapFrom(src => (int)LawyerStatus.Active))
                 .ForMember(d => d.Sex, s => s.MapFrom(s => (int)s.Sex));
@@ -32,6 +33,12 @@ namespace AdvisoryLawyer.Business.AutoMapper
             if (i == 2) return Sex.Male;
             else if (i == 1) return Sex.Female;
             return Sex.Unknown;
+        }
+
+        private static string ConvertDateTimeToString(DateTime? date)
+        {
+            if (date != null) return date?.ToString("yyyy-MM-dd");
+            return null;
         }
     }
 }
