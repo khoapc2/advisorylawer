@@ -2,12 +2,14 @@ export default {
     user: [],
     profile: [],
     listUser:[],
+    //customer
     statusBan: 0, 
-
+    customer:{},
 
     // officer
     listOfficer: [],
     officerProfile:[],
+    
     // Lawyer
     listLawyer: [],
     //Unrole User
@@ -16,6 +18,5 @@ export default {
     //officer lawyer
     listOfficerManagementLawyer:[],
 
-    //customer
-    customer:{}
+    
 }

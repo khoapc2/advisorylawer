@@ -10,6 +10,11 @@ export default {
   },
 
   //Management Customer
+  
+
+
+
+
   updateProfileForm(context, user) {
     axios({
       method: "PUT",
@@ -89,6 +94,26 @@ export default {
       }).then((response) => {
         const data = response.data;
         context.commit("CREATE_ACCOUNT", { data });
+      });
+    }
+  },
+
+  //AnTDP
+  getCustomerByEmail(context, email) {
+    if(email !== null){
+      axios({
+        method: "POST",
+        url:
+          "https://104.215.186.78/api/customers/details",
+        data:{
+          email: `${email}`
+        },
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
+        },
+      }).then((response) => {
+        context.commit("CUSTOMER", response.data);
       });
     }
   },
@@ -309,24 +334,7 @@ export default {
     });
   },
 
-  getCustomerByEmail(context, email) {
-    if(email !== null){
-      axios({
-        method: "POST",
-        url:
-          "https://104.215.186.78/api/customers/details",
-        data:{
-          email: `${email}`
-        },
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
-        },
-      }).then((response) => {
-        context.commit("CUSTOMER", response.data);
-      });
-    }
-  },
+ 
 };
 
 
