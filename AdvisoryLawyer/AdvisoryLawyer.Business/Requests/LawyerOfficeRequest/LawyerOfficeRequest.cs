@@ -11,7 +11,7 @@ namespace AdvisoryLawyer.Business.Requests.LawyerOfficeRequest
     public class LawyerOfficeRequest
     {
         [FromQuery(Name = "id")]
-        public int Id { get; set; }
+        public int? Id { get; set; }
         [FromQuery(Name = "name")]
         [String]
         public string Name { get; set; }
@@ -32,6 +32,6 @@ namespace AdvisoryLawyer.Business.Requests.LawyerOfficeRequest
         [String]
         public string Email { get; set; }
         [FromQuery(Name = "status")]
-        public int Status { get; set; }
+        public int? Status { get; set; }
     }
 }
