@@ -131,7 +131,7 @@ namespace AdvisoryLawyer.Business.Services
         public async Task<LawyerOfficeModel> UpdateLawyerOffice(LawyerOfficeRequest request)
         {
             var office = _mapper.Map<LawyerOffice>(request);
-            office.Id = request.Id;
+            office.Id = request.Id.Value;
             await _genericRepository.UpdateAsync(office);
             return _mapper.Map<LawyerOfficeModel>(office);
         }

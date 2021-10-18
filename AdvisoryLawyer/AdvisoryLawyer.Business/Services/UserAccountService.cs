@@ -136,7 +136,7 @@ namespace AdvisoryLawyer.Business.Services
 
         public async Task<UserAccountModel> UpdateRole(UpdateRoleRequest request)
         {
-            var account = await _genericRepository.GetByIDAsync(request.Id);
+            var account = await _genericRepository.GetByIDAsync(request.Id.Value);
             account.Role = request.Role;
             await _genericRepository.UpdateAsync(account);
 
