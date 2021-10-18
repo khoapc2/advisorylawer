@@ -32,10 +32,10 @@ namespace AdvisoryLawyer.API.Controllers
         }
 
         //GET api/categories/{id}
-        [HttpGet("get-category-by-id", Name = "GetCategoryById")]
-        public async Task<ActionResult <CategoryModel>> GetCategoryById(ID ID)
+        [HttpGet("{id}", Name = "GetCategoryById")]
+        public async Task<ActionResult <CategoryModel>> GetCategoryById(int id)
         {
-            var categoryModel = await _service.GetCategoryById(ID);
+            var categoryModel = await _service.GetCategoryById(id);
             if(categoryModel == null)
             {
                 return BadRequest();

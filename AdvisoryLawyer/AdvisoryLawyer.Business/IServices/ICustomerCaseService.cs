@@ -14,7 +14,7 @@ namespace AdvisoryLawyer.Business.IServices
     {
         IPagedList<CustomerCaseModel> GetAllCustomerCases(CustomerCaseRequest filter,
             CustomerCaseSortBy sortBy, OrderBy order, int pageIndex, int pageSize);
-        Task<CustomerCaseModel> GetCustomerCaseById(ID ID);
+        Task<CustomerCaseModel> GetCustomerCaseById(int id);
         Task<CustomerCaseModel> CreateCustomerCase(CustomerCaseRequest categoryRequest);
         Task<CustomerCaseModel> UpdateCustomerCase(CustomerCaseUpdate customerCaseUpdate);
         Task<bool> DeleteCustomerCase(int id);

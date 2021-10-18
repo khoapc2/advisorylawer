@@ -30,10 +30,10 @@ namespace AdvisoryLawyer.API.Controllers
         }
 
         //GET api/customer-cases/{id}
-        [HttpGet("get-customer-case-by-id", Name = "GetCustomerCaseById")]
-        public async Task<ActionResult<CustomerCaseModel>> GetCustomerCaseById(ID ID)
+        [HttpGet("{id}", Name = "GetCustomerCaseById")]
+        public async Task<ActionResult<CustomerCaseModel>> GetCustomerCaseById(int id)
         {
-            var customerCaseModel = await _service.GetCustomerCaseById(ID);
+            var customerCaseModel = await _service.GetCustomerCaseById(id);
             if (customerCaseModel == null)
             {
                 return BadRequest();

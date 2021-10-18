@@ -82,9 +82,9 @@ namespace AdvisoryLawyer.Business.Services
             return PagedListExtensions.ToPagedList(listCustomerCasesModel, pageIndex, pageSize);
         }
 
-        public async Task<CustomerCaseModel> GetCustomerCaseById(ID ID)
+        public async Task<CustomerCaseModel> GetCustomerCaseById(int id)
         {
-            var customerCase = await _genericRepository.FindAsync(x => x.Id == ID.Id &&
+            var customerCase = await _genericRepository.FindAsync(x => x.Id == id &&
             x.Status == (int)CustomerCaseStatus.Active);
             if (customerCase != null)
             {

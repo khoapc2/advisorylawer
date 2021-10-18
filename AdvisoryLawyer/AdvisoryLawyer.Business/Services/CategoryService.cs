@@ -56,9 +56,9 @@ namespace AdvisoryLawyer.Business.Services
             return PagedListExtensions.ToPagedList(listCategoriesModel, pageIndex, pageSize);
         }
 
-        public async Task<CategoryModel> GetCategoryById(ID ID)
+        public async Task<CategoryModel> GetCategoryById(int id)
         {
-            var category = await _genericRepository.FindAsync(x => x.Id == ID.Id 
+            var category = await _genericRepository.FindAsync(x => x.Id == id
             && x.Status == (int)CategoryStatus.Active);
             if(category != null) 
             {

@@ -14,7 +14,7 @@ namespace AdvisoryLawyer.Business.IServices
     {
         IPagedList<CategoryModel> GetAllCategories(CategoryRequest filter,
             CategorySortBy sortBy, OrderBy order, int pageIndex, int pageSize);
-        Task<CategoryModel> GetCategoryById(ID ID);
+        Task<CategoryModel> GetCategoryById(int id);
         Task<CategoryModel> CreateCategory(CategoryRequest categoryRequest);
         Task<CategoryModel> UpdateCategory(CategoryUpdate categoryUpdate);
         Task<bool> DeleteCategory(int id);
