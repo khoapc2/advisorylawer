@@ -10,7 +10,7 @@ namespace AdvisoryLawyer.Business.Requests.UserAccountsRequest
     public class UpdateRoleRequest
     {
         [FromQuery(Name = "id")]
-        public int Id { get; set; }
+        public int? Id { get; set; }
         [FromQuery(Name = "name")]
         public string Name { get; set; }
         [FromQuery(Name = "email")]

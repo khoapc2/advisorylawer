@@ -9,7 +9,7 @@ namespace AdvisoryLawyer.Business.Requests.LevelRequest
 {
     public class LevelRequest
     {
-        public int id { get; set; }
+        public int? id { get; set; }
         [String]
         public string level_name { get; set; }
         public int? min_price { get; set; }
