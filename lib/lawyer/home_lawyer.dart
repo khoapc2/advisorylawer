@@ -1,5 +1,5 @@
-
 import 'package:advisories_lawyer/lawyer/category_page.dart';
+import 'package:advisories_lawyer/lawyer/slot_page.dart';
 import 'package:flutter/material.dart';
 
 class LawyerHomePage extends StatefulWidget {
@@ -158,8 +158,12 @@ class _HomePageState extends State<LawyerHomePage> {
                       MaterialPageRoute(builder: (context) => CategoryPage()));
                   break;
                 case "Document":
-                Navigator.push(context,
+                  Navigator.push(context,
                       MaterialPageRoute(builder: (context) => CategoryPage()));
+                  break;
+                case "Contact":
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SlotPage()));
                   break;
               }
             },
