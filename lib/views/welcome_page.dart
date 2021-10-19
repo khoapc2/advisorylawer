@@ -1,3 +1,4 @@
+import 'package:advisories_lawyer/lawyer/main_lawyer.dart';
 import 'package:advisories_lawyer/models/user_account.dart';
 import 'package:advisories_lawyer/provider/google_sign_in.dart';
 import 'package:advisories_lawyer/views/lawyer_page.dart';
@@ -30,7 +31,7 @@ class _WelcomePageState extends State<WelcomePage> {
         color: Colors.cyan[50],
         constraints: BoxConstraints.expand(),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             //text
@@ -69,7 +70,7 @@ class _WelcomePageState extends State<WelcomePage> {
                     } else if (snapshot.data!.role == "lawyer") {
                       Navigator.push(context, MaterialPageRoute(
                         builder: (context) {
-                          return LawyerPage();
+                          return LawyerMain();
                         },
                       ));
                     } else {
