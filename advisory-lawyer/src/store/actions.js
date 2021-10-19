@@ -71,7 +71,7 @@ export default {
   },
 
   createCustomer(context, { inpName, inpEmail }) {
-    if (inpEmail !== null && inpName != null) {
+    if (inpEmail !== null && inpName !== null) {
       axios({
         method: "POST",
         url: "https://104.215.186.78/api/v1/user-accounts",
@@ -85,8 +85,9 @@ export default {
           Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
         },
       }).then((response) => {
-        const data = response.data;
-        context.commit("CREATE_ACCOUNT", { data });
+        if (response !== null) {
+          context.dispatch("getUserListApi");
+        }
       });
     }
   },
