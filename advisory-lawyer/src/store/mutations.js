@@ -8,9 +8,7 @@
 
 //HERE 
 export default {
-    setUserInfor(state, userInfor){
-    state.user = userInfor
-    },
+    
 
     setUserProfile(state,userProfile) {
         state.profile = userProfile

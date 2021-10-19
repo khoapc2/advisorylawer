@@ -1,20 +1,13 @@
 import axios from "axios";
 
 export default {
-  getUserInfo(context, payload) {
-    context.commit("setUserInfor", payload);
-  },
+
 
   getUserProfile(context, payload) {
     context.commit("setUserProfile", payload);
   },
 
   //Management Customer
-  
-
-
-
-
   updateProfileForm(context, user) {
     axios({
       method: "PUT",
@@ -326,21 +319,13 @@ export default {
   },
 
   updateLevelLawyer(context, user){
-    const id = localStorage.getItem('id');
-    console.log(user.status)
-    console.log(user.name)
-    console.log(user.level_id)
-    console.log(user.email)
-
+    console.log(user.id +'  ' + user.level_id)
     axios({
       method: "PUT",
-      url: "https://104.215.186.78/api/v1/lawyers/update-lawyer",
+      url: "https://104.215.186.78/api/v1/lawyers/update-level",
       data: {
-        id: `${user.id}`,
-        name: `${user.name}`,
-        email: `${user.email}`,
+        lawyer_id: `${user.id}`,
         level_id: `${user.level_id}`,
-        lawyer_office_id: `${id}`
       },
       headers: {
         "Content-Type": "application/json; charset=utf-8",

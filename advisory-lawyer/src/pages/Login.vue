@@ -59,9 +59,7 @@ export default {
     )
   },
   methods: {
-    ...mapActions({
-      userInfor: 'getUserInfo'
-      })
+    
   },
  
   
@@ -101,7 +99,6 @@ export default {
 
 
                     console.log("LocalStorage  " + localStorage.getItem("tokenID"))
-                  this.userInfor(this.user);
                   // console.log(this.user.role), console.log(this.user.userToken);
                   if ("admin" === this.user.role || "lawyer_office" === this.user.role) {
                     console.log('Here')
