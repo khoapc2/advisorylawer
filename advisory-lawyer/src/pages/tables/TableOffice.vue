@@ -1,5 +1,6 @@
 <template>
   <tbody>
+        <OfficeModal :edit="office"/>
         <tr v-for="user in listOffice" :key="user.id" style="text-align:center">
           <td style="display:none">{{ user.id }}</td>
           <td>
@@ -20,6 +21,15 @@
             <!-- <button type="button" class="btn btn-warning" style="float: left" @click="updateRole(user)">
               Update
             </button> -->
+            <button
+              type="button"
+              class="btn btn-outline-info"
+              style="float: right"
+              v-b-modal.modal-prevent-closing
+              @click="clickViewDetail(user)"
+            >
+            Detail
+            </button>
             <button
               v-if="user.status === 1"
               type="button"
@@ -45,11 +55,13 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
-
+import OfficeModal from '../modals/OfficeModal.vue';
 export default {
+  components :{
+    OfficeModal
+  },
   data() {
-    return {
-      
+    return {     
       listUser: [],
       roleOption: [
         {
@@ -88,14 +100,18 @@ export default {
   computed: {
     ...mapState({
       listOffice: "listOfficer",
+      office: "office"
     }),
   },
   methods: {
+    clickViewDetail(user) {
+      this.$store.dispatch("getOfficeByEmail", user.email) 
+      console.log(this.office);
+    },
     onUpdate() {
      this.$refs.table.refresh();
     },
-    banUser(id) {
-      
+    banUser(id) {      
       this.$store.dispatch("changeStatusOfficer", id);
     },
     updateRole(user){
