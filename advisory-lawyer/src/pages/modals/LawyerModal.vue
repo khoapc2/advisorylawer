@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-button v-b-modal.modal-prevent-closing>Open Modal</b-button>
+    <b-button v-b-modal.modal-prevent-closing style="display:none">Open Modal</b-button>
 
     <b-modal
       id="modal-prevent-closing"
@@ -21,7 +21,7 @@
             >
               <b-form-input
                 id="name-input"
-                v-model="customer.name"
+                v-model="lawyer.name"
                 :state="nameState"
                 required
               ></b-form-input>
@@ -36,7 +36,7 @@
               <b-form-input
                 type="email"
                 id="email-input"
-                v-model="customer.email"
+                v-model="lawyer.email"
                 :state="emailState"
                 required
               ></b-form-input>
@@ -46,30 +46,92 @@
               label="Sex"
               label-for="sex-input"
               invalid-feedback="Sex is required"
-              :state="sexState"
+            
+            >
+            <select 
+                    id="sex-input"
+                                     
+                    class="form-control" 
+                    v-model="lawyer.sex" 
+                    :required="true">
+                <option v-for="option in optionsSex" 
+                    v-bind:key="option.name" 
+                    v-bind:value="option.name" >{{ option.name }}</option>
+              </select>   
+            </b-form-group>
+            
+            <b-form-group
+              label="Date Of Birth"
+              label-for="DoB-input"
+              invalid-feedback="Date Of Birth is required"
+ 
+            >
+              <fg-input
+                type="date"
+                id="DoB-input"
+                v-model="lawyer.date_of_birth_formatted"
+
+                required
+              ></fg-input>
+            </b-form-group>
+
+            <b-form-group
+              label="level"
+              label-for="level-input"
+              invalid-feedback="level is required"
+              
             >
               <b-form-input
-                type="sex"
-                id="sex-input"
-                v-model="customer.sex"
-                :state="sexState"
+                id="level-input"
+                v-model="lawyer.level"
+                
                 required
               ></b-form-input>
             </b-form-group>
 
+            
           </div>
           <div class="col-6">
+
+            <b-form-group
+              label="Office"
+              label-for="office-input"
+              invalid-feedback="office is required"
+              
+            >
+              <b-form-input
+                id="office-input"
+                v-model="lawyer.lawyer_office_name"
+                
+                required
+              ></b-form-input>
+            </b-form-group>
+
+            <b-form-group
+              label="website"
+              label-for="website-input"
+              invalid-feedback="website is required"
+              
+            >
+              <b-form-input
+                id="website-input"
+                v-model="lawyer.website"
+                
+                required
+              ></b-form-input>
+            </b-form-group>
+
             <b-form-group
               label="phone"
               label-for="phone-input"
               invalid-feedback="phone is required"
-              :state="phoneState"
+              
             >
               <b-form-input
                 type="number"
                 id="phone-input"
-                v-model="customer.phone_number"
-                :state="phoneState"
+                v-model="lawyer.phone_number"
+                
                 required
               ></b-form-input>
             </b-form-group>
@@ -78,13 +140,12 @@
               label="address"
               label-for="address-input"
               invalid-feedback="address is required"
-              :state="addressState"
+              
             >
               <b-form-input
-                type="address"
                 id="address-input"
-                v-model="customer.address"
-                :state="addressState"
+                v-model="lawyer.address"
+                
                 required
               ></b-form-input>
             </b-form-group>
@@ -93,13 +154,12 @@
               label="location"
               label-for="location-input"
               invalid-feedback="location is required"
-              :state="locationState"
+          
             >
               <b-form-input
-                type="location"
                 id="location-input"
-                v-model="customer.location"
-                :state="locationState"
+                v-model="lawyer.location"
+                
                 required
               ></b-form-input>
             </b-form-group>
@@ -121,21 +181,32 @@ export default {
   watch: {
     edit() {
       if (this.edit) {
-        this.customer = Object.assign({}, this.edit);
+        this.lawyer = Object.assign({}, this.edit);
       } else {
-        this.customer = {};
+        this.lawyer = {};
       }
     },
   },
   data() {
     return {
-      customer: {
-        name: "",
-        email: "",
-        sex:"",
-        address:"",
-        location:"",
-        phone:""
+      optionsSex: [
+        {
+          name: 'Unknown'  
+        },
+        {
+          name: 'Female'
+        },
+        {
+          name: 'Male'
+        }
+      ],
+      lawyer: {
+        // name: "",
+        // email: "",
+        // sex:"",
+        // address:"",
+        // location:"",
+        // phone_number:""
       },
       name: "",
       nameState: null,

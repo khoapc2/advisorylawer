@@ -59,7 +59,7 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
-import CustomerModal from '../CustomerModal.vue';
+import CustomerModal from '../modals/CustomerModal.vue';
 export default {
   components :{
     CustomerModal

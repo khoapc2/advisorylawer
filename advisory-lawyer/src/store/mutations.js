@@ -84,8 +84,14 @@ export default {
         state.officerProfile = data
     },
 
+    // Customer
     CUSTOMER(state, data){
         state.customer = data
+    },
+
+    // Lawyer
+    LAWYER(state, data){
+        state.lawyer = data
     }
 
 };

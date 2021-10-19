@@ -4,6 +4,7 @@ export default {
     GET_USER_PROFILE(state) {
         return state.profile 
     },
+    
     GET_LIST_USER(state) {
         return state.listUser.filter(element => element.role === "customer");
     },

@@ -12,6 +12,7 @@ export default {
     
     // Lawyer
     listLawyer: [],
+    lawyer:{},
     //Unrole User
     listUnroleUser:[],
 

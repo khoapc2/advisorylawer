@@ -1,5 +1,6 @@
 <template>
   <tbody>
+        <LawyerModal :edit="lawyer"/>
         <tr v-for="user in listLawyer" :key="user.id" style="text-align:center">
           <td style="display:none">{{ user.id }}</td>
           <td>
@@ -22,6 +23,15 @@
             <!-- <button type="button" class="btn btn-warning" style="float: left" @click="updateRole(user)">
               Update
             </button> -->
+            <button
+              type="button"
+              class="btn btn-outline-info"
+              style="float: right"
+              v-b-modal.modal-prevent-closing
+              @click="clickViewDetail(user)"
+            >
+            Detail
+            </button>
             <button
               v-if="user.status === 1"
               type="button"
@@ -47,8 +57,11 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
-
+import LawyerModal from '../modals/LawyerModal.vue';
 export default {
+  components :{
+    LawyerModal
+  },
   data() {
     return {
       
@@ -90,9 +103,14 @@ export default {
   computed: {
     ...mapState({
       listLawyer: "listLawyer",
+      lawyer: "lawyer"
     }),
   },
   methods: {
+    clickViewDetail(user) {
+      this.$store.dispatch("getLawyerByEmail", user.email) 
+      console.log(this.lawyer);
+    },
     onUpdate() {
      this.$refs.table.refresh();
     },

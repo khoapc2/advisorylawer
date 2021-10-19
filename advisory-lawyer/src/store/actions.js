@@ -152,6 +152,25 @@ export default {
   },
 
   //Lawyer
+  getLawyerByEmail(context, email) {
+    if(email !== null){
+      axios({
+        method: "POST",
+        url:
+          "https://104.215.186.78/api/v1/lawyers/details",
+        data:{
+          email: `${email}`
+        },
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
+        },
+      }).then((response) => {
+        context.commit("LAWYER", response.data);
+      });
+    }
+  },
+
   getListLawyer(context) {
     axios({
       method: "GET",
