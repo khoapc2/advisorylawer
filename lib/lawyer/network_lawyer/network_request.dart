@@ -93,7 +93,9 @@ class NetworkRequest {
     final response = await http.get(
       Uri.parse(urlSlot),
       headers: {
-        HttpHeaders.authorizationHeader: '$idToken',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $idToken',
       },
     );
 

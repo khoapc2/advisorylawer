@@ -106,9 +106,6 @@ Future<Users> getUsers() async {
 
   Map<String, dynamic> userMap = jsonDecode(reply);
   var user = Users.fromJson(userMap);
-  print(user.role);
-
-  print("-----**" + reply);
 
   return user;
 }
