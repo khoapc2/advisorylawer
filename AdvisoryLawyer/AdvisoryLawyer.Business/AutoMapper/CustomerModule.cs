@@ -16,7 +16,8 @@ namespace AdvisoryLawyer.Business.AutoMapper
         public CustomerModule()
         {
             CreateMap<Customer, CustomerModel>()
-                .ForMember(d => d.Sex, s => s.MapFrom(s => MappingSex(s.Sex)));
+                .ForMember(d => d.Sex, s => s.MapFrom(s => MappingSex(s.Sex)))
+                .ForMember(d => d.DateOfBirthFormatted, s => s.MapFrom(s => ConvertDateTimeToString(s.DateOfBirth)));
             CreateMap<CustomerModel, Customer>()
                 .ForMember(d => d.Sex, s => s.MapFrom(s => (int)s.Sex));
             CreateMap<CreateCustomerModelRequest, Customer>()
@@ -32,6 +33,12 @@ namespace AdvisoryLawyer.Business.AutoMapper
             if (i == 2) return Sex.Male;
             else if (i == 1) return Sex.Female;
             return Sex.Unknown;
+        }
+
+        private static string ConvertDateTimeToString(DateTime? date)
+        {
+            if (date != null) return date?.ToString("yyyy-MM-dd");
+            return null;
         }
     }
 }

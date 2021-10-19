@@ -18,5 +18,7 @@ namespace AdvisoryLawyer.Business.ViewModel
         public Sex? Sex { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public int? Status { get; set; }
+
+        public string? DateOfBirthFormatted { get; set; }
     }
 }
