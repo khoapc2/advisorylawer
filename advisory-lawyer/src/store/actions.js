@@ -240,6 +240,26 @@ export default {
 
 
   //role: Officer Management
+
+  getOfficeByEmail(context, email){
+    if(email !== null){
+      axios({
+        method: "POST",
+        url:
+          "https://104.215.186.78/api/v1/lawyer-offices/details",
+        data:{
+          email: `${email}`
+        },
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
+        },
+      }).then((response) => {
+        context.commit("OFFICE", response.data);
+      });
+    }
+  },
+
   getListLawyerOffice(context) {
     const id = localStorage.getItem('id');
     const pageSize = 10;

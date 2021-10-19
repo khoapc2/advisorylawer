@@ -9,15 +9,16 @@ export default {
     // officer
     listOfficer: [],
     officerProfile:[],
-    
+    office:{},
+
     // Lawyer
     listLawyer: [],
     lawyer:{},
+
     //Unrole User
     listUnroleUser:[],
 
     //officer lawyer
     listOfficerManagementLawyer:[],
-
     
 }

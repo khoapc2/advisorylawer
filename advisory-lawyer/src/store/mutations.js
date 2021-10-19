@@ -85,6 +85,11 @@ export default {
     // Lawyer
     LAWYER(state, data){
         state.lawyer = data
+    },
+
+    //Office
+    OFFICE(state, data){
+        state.office = data
     }
 
 };
