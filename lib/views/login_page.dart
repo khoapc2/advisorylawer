@@ -49,7 +49,7 @@ class LoginPage extends StatelessWidget {
                     style: TextStyle(
                         color: Colors.yellowAccent,
                         fontWeight: FontWeight.bold,
-                        fontSize: 40),
+                        fontSize: 35),
                   ),
                 ),
               ),

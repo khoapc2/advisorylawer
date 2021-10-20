@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 Future<List<Lawyer>> fetchLawyer() async {
   final response = await http.get(Uri.parse(
-      'https://104.215.186.78/api/v1/lawyers?page_index=1&page_size=3'));
+      'https://104.215.186.78/api/v1/lawyers?page_index=1&page_size=10'));
 
   print(response);
 
@@ -27,7 +27,7 @@ class Lawyer {
   final String description;
   final String phoneNumber;
   final String website;
-  final int sex;
+  final String sex;
   final String dateOfBirth;
   final int status;
   final int lawyerOfficeId;

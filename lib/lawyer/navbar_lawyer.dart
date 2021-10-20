@@ -1,24 +1,23 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LawyerNavBar extends StatelessWidget {
-
+  final user = FirebaseAuth.instance.currentUser!;
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
         children: [
           UserAccountsDrawerHeader(
-            accountName: Text('Do Duong'), 
-            accountEmail: Text('duongdtse141129@gmail.com'),
+            accountName: Text(
+              'Name: ' + user.displayName!,
+            ),
+            accountEmail: Text(
+              'Email: ' + user.email!,
+            ),
             currentAccountPicture: CircleAvatar(
-              child: ClipOval(
-                child: Image.network(
-                  'https://vnn-imgs-a1.vgcloud.vn/image1.ictnews.vn/_Files/2020/03/17/trend-avatar-1.jpg',
-                  width: 90,
-                  height: 90,
-                  fit: BoxFit.cover,
-                ),
-              ),
+              radius: 40,
+              backgroundImage: NetworkImage(user.photoURL!),
             ),
             decoration: BoxDecoration(
               color: Colors.purple,
@@ -29,29 +28,27 @@ class LawyerNavBar extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-
           ),
-
           ListTile(
             leading: Icon(Icons.people),
             title: Text('Friends'),
-            onTap: () =>{},
+            onTap: () => {},
           ),
           ListTile(
             leading: Icon(Icons.account_circle),
             title: Text('Profile'),
-            onTap: () =>{},
+            onTap: () => {},
           ),
           ListTile(
             leading: Icon(Icons.notifications),
             title: Text('Notifications'),
-            onTap: () =>{},
+            onTap: () => {},
             trailing: ClipOval(
-              child:Container(
-              color: Colors.red,
-              width: 20,
-              height: 20,
-              child: Center(
+              child: Container(
+                color: Colors.red,
+                width: 20,
+                height: 20,
+                child: Center(
                   child: Text(
                     '8',
                     style: TextStyle(
@@ -66,12 +63,12 @@ class LawyerNavBar extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.message),
             title: Text('Message'),
-            onTap: () =>{},
+            onTap: () => {},
           ),
           ListTile(
             leading: Icon(Icons.schedule),
             title: Text('Schedule'),
-            onTap: () =>{},
+            onTap: () => {},
           ),
           Divider(
             color: Colors.purple,
@@ -79,17 +76,17 @@ class LawyerNavBar extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.settings),
             title: Text('Setting'),
-            onTap: () =>{},
+            onTap: () => {},
           ),
           ListTile(
             leading: Icon(Icons.question_answer),
             title: Text('Help'),
-            onTap: () =>{},
+            onTap: () => {},
           ),
           ListTile(
             leading: Icon(Icons.report_gmailerrorred),
             title: Text('Report Error'),
-            onTap: () =>{},
+            onTap: () => {},
           ),
           Divider(
             color: Colors.purple,
@@ -97,13 +94,9 @@ class LawyerNavBar extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.exit_to_app),
             title: Text('Log out'),
-            onTap: () =>{},
+            onTap: () => {},
           ),
-    
         ],
-
-        
-
       ),
     );
   }

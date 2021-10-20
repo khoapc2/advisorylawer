@@ -1,5 +1,6 @@
 import 'package:advisories_lawyer/lawyer/category_page.dart';
 import 'package:advisories_lawyer/lawyer/slot_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LawyerHomePage extends StatefulWidget {
@@ -10,6 +11,7 @@ class LawyerHomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<LawyerHomePage> {
+  final user = FirebaseAuth.instance.currentUser!;
   @override
   Widget listObj = Container(
     //padding: EdgeInsets.all(40),
@@ -71,7 +73,7 @@ class _HomePageState extends State<LawyerHomePage> {
             height: 10,
           ),
           Text(
-            "Hello Laywer Duong,",
+            "Hello Laywer ${user.displayName},",
             style: TextStyle(
                 fontSize: 21,
                 fontWeight: FontWeight.w800,

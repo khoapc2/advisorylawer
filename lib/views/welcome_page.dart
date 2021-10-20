@@ -4,6 +4,7 @@ import 'package:advisories_lawyer/provider/google_sign_in.dart';
 import 'package:advisories_lawyer/views/lawyer_page.dart';
 import 'package:advisories_lawyer/views/logged_in.dart';
 import 'package:advisories_lawyer/views/login_page.dart';
+import 'package:advisories_lawyer/views/main_customer.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -27,18 +28,13 @@ class _WelcomePageState extends State<WelcomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
-        color: Colors.cyan[50],
-        constraints: BoxConstraints.expand(),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            //text
-            Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-                child: buildFutureBuilder()),
-          ],
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('assets/theme2.png'), fit: BoxFit.cover),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 200),
+          child: Center(child: Container(child: buildFutureBuilder())),
         ),
       ),
     );
@@ -53,18 +49,29 @@ class _WelcomePageState extends State<WelcomePage> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "Title: " + snapshot.data!.name,
-                style: TextStyle(fontSize: 20),
+              Text("Welcome Back",
+                  style: TextStyle(fontSize: 40, color: Colors.yellow)),
+              SizedBox(
+                height: 20,
               ),
-              Text("Your Problem: " + snapshot.data!.role,
-                  style: TextStyle(fontSize: 20)),
+              Text("My " + snapshot.data!.role,
+                  style: TextStyle(fontSize: 20, color: Colors.white)),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                "Hello: " + snapshot.data!.name,
+                style: TextStyle(fontSize: 20, color: Colors.white),
+              ),
+              SizedBox(
+                height: 20,
+              ),
               TextButton(
                   onPressed: () {
                     if (snapshot.data!.role == "customer") {
                       Navigator.push(context, MaterialPageRoute(
                         builder: (context) {
-                          return LoggedIn();
+                          return CustomerMain();
                         },
                       ));
                     } else if (snapshot.data!.role == "lawyer") {

@@ -31,7 +31,7 @@ class _BookingPageState extends State<BookingPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Customer case'),
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.purple[400],
         centerTitle: true,
       ),
       body: Padding(

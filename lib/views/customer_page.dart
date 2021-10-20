@@ -28,7 +28,7 @@ class _DocPageState extends State<LawyerPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Lawyer List'),
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.purple[400],
         centerTitle: true,
       ),
       body: Column(
@@ -108,8 +108,7 @@ class _DocPageState extends State<LawyerPage> {
                                   child: Text(lawyer[index].description + "\n"),
                                 ),
                                 Expanded(
-                                  child:
-                                      Text(lawyer[index].sex.toString() + "\n"),
+                                  child: Text(lawyer[index].sex + "\n"),
                                 ),
                               ],
                             ),

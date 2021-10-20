@@ -1,3 +1,4 @@
+import 'package:advisories_lawyer/lawyer/category_page.dart';
 import 'package:advisories_lawyer/provider/google_sign_in.dart';
 import 'package:advisories_lawyer/views/booking_page.dart';
 import 'package:advisories_lawyer/views/document_page.dart';
@@ -21,29 +22,13 @@ class LoggedIn extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      drawer: NavBar(),
-      appBar: AppBar(
-        title: Text('Lawyer Page'),
-        backgroundColor: Colors.black,
-        centerTitle: true,
-        actions: [
-          TextButton(
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (context) {
-                    return WelcomePage();
-                  },
-                ));
-              },
-              child: Text('Logout'))
-        ],
-      ),
       body: Container(
         decoration: BoxDecoration(
             color: Colors.black87,
             image: DecorationImage(
-                alignment: Alignment.centerLeft,
-                image: AssetImage("assets/background.png"))),
+                alignment: Alignment.center,
+                image: AssetImage("assets/background.png"),
+                fit: BoxFit.cover)),
         child: Stack(
           children: [
             // Container(
@@ -70,12 +55,12 @@ class LoggedIn extends StatelessWidget {
                             child: Row(
                               children: [
                                 Text(
-                                  "WELCOME",
+                                  "WELCOME ${user.displayName}",
                                   style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white),
-                                )
+                                ),
                               ],
                             ),
                           ),
@@ -112,7 +97,8 @@ class LoggedIn extends StatelessWidget {
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) => DocPage()));
+                                              builder: (context) =>
+                                                  CategoryPage()));
                                     },
                                     padding: EdgeInsets.all(0.0),
                                     child: Column(
