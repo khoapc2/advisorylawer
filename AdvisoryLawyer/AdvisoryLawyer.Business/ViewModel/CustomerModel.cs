@@ -1,4 +1,5 @@
 ﻿using AdvisoryLawyer.Business.Enum;
+using Reso.Core.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace AdvisoryLawyer.Business.ViewModel
     public class CustomerModel
     {
         public int? Id { get; set; }
+        [String]
         public string Name { get; set; }
         public string Address { get; set; }
         public string Location { get; set; }
