@@ -10,7 +10,9 @@ namespace AdvisoryLawyer.Business.ViewModel
     {
         public int? Id { get; set; }
         public int? CustomerId { get; set; }
+        public string CustomerName { get; set; }
         public int? LawyerId { get; set; }
+        public string LawyerName { get; set; }
         public DateTime? BookingDate { get; set; }
         public string PaymentMethod { get; set; }
         public int? TotalPrice { get; set; }

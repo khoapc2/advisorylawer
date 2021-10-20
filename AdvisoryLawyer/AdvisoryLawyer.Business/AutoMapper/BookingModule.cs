@@ -15,7 +15,10 @@ namespace AdvisoryLawyer.Business.AutoMapper
     {
         public BookingModule()
         {
-            CreateMap<Booking, BookingModel>().ReverseMap();
+            CreateMap<Booking, BookingModel>()
+                .ForMember(d => d.CustomerName, s => s.MapFrom(s => s.Customer.Name))
+                .ForMember(d => d.LawyerName, s => s.MapFrom(s => s.Lawyer.Name));
+            CreateMap<BookingModel, Booking>();
             CreateMap<CreateBookingRequest, Booking>().ForMember(des
                 => des.Status, opt => opt.MapFrom(src => (int)BookingStatus.Active));
             CreateMap<UpdateBookingRequest, Booking>().ForMember(des

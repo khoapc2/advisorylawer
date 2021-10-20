@@ -1,4 +1,4 @@
-﻿
+﻿using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -51,10 +51,13 @@ namespace BookingLawyer.Business.Services
 
         public async Task<BookingModel> GetBookingById(int id)
         {
-            var Booking = (await _res.FindByAsync(x => x.Id == id && x.Status == (int)BookingStatus.Active)).FirstOrDefault();
-            if (Booking == null)
+            //var Booking = (await _res.FindByAsync(x => x.Id == id && x.Status == (int)BookingStatus.Active)).FirstOrDefault();
+            var booking = await _res.GetAllByIQueryable()
+                .Include(x => x.Customer).Include(x => x.Lawyer)
+                .Where(x => x.Id == id && x.Status == (int)BookingStatus.Active).FirstOrDefaultAsync();
+            if (booking == null)
                 return null;
-            var BookingModel = _mapper.Map<BookingModel>(Booking);
+            var BookingModel = _mapper.Map<BookingModel>(booking);
             var test = _mapper.Map<Booking>(BookingModel);
 
             return BookingModel;
