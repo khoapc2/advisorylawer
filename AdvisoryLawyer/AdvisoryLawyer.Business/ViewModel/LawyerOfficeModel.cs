@@ -9,7 +9,7 @@ namespace AdvisoryLawyer.Business.ViewModel
 {
     public class LawyerOfficeModel
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         [String]
         public string Name { get; set; }
         [String]
@@ -22,6 +22,6 @@ namespace AdvisoryLawyer.Business.ViewModel
         public string Website { get; set; }
         [String]
         public string Email { get; set; }
-        public int Status { get; set; }
+        public int? Status { get; set; }
     }
 }
