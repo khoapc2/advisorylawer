@@ -12,6 +12,7 @@
                 v-model="inpEmail"
               >
               </fg-input>
+              <label v-if="emailErr !== ''" style="color: red"> {{emailErr}} </label>
             </div>
             <div class="col-md-6">
               <fg-input
@@ -21,16 +22,21 @@
                 v-model="inpName"
               >
               </fg-input>
+              <label v-if="nameErr !== ''" style="color: red"> {{nameErr}} </label>
             </div>
           </div>
-
           <div class="row"></div>
 
           <div class="text-center">
-            <p-button type="info" round @click.native.prevent="createCustomerAccount(inpName,inpEmail)">
+            <p-button type="info" round @click="createOfficeAccount(inpName,inpEmail)">
               Create Account
             </p-button>
-            <p v-if="message !== ''"> {{message}} </p>
+            <div v-if="errorMessage === 'error'" class="alert alert-danger" role="alert">
+              Create Fail
+            </div>
+            <div v-else-if="errorMessage === 'success'" class="alert alert-success" role="alert">
+              Create Successful
+            </div>
           </div>
           <div class="clearfix"></div>
         </form>
@@ -103,10 +109,12 @@ export default {
     },
   data() {
     return {
-      message: '',
+      errorMessage:'',
       inpEmail: '',
       inpName: '',
       listUser: [],
+      nameErr: '',
+      emailErr: '',
       roleOption: [
         {
           name: "customer",
@@ -160,13 +168,25 @@ export default {
     // updateCustomerRole(id,role){
     //   this.$store.dispatch("updateCustomerRole", {id,role})
     // },
-    createCustomerAccount(inpName, inpEmail){
+    createOfficeAccount(inpName, inpEmail){
       if(inpName.trim() !== '' && inpEmail.trim() !== ''){
         console.log(inpName, inpEmail);
-        this.$store.dispatch("createCustomer", {inpName,inpEmail})
+        try{
+        this.$store.dispatch("createOffice", {inpName,inpEmail})
+        // this.inpName = '',
+        //   this.inpEmail = ''
+          this.errorMessage = "success"
+        }catch(error){
+          this.errorMessage = "error"
+        }
       }
       else {
-        this.message = "Create fail"
+        if(inpName.trim() == ''){
+          this.emailErr = "Please input Office's email"
+        }
+        if(inpEmail.trim() == ''){
+          this.nameErr = "Please input Office's name"
+        }
       }
     }
   },

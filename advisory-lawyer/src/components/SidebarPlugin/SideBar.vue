@@ -43,7 +43,7 @@ export default {
   props: {
     title: {
       type: String,
-      default: "Lawyer Dashboard"
+      default: "Dashboard"
     },
     backgroundColor: {
       type: String,

@@ -1,53 +1,16 @@
 <template>
   <div class="row">
-    <div class="col-12">
-      <card title="Lawyer's Management" subTitle="">
-        <form @submit.prevent>
-          <div class="row">
-            <div class="col-md-4">
-              <fg-input
-                type="email"
-                label="Lawyer's Email"
-                placeholder="example@example.com"
-                v-model="inpEmail"
-              >
-              </fg-input>
-            </div>
-            <div class="col-md-6">
-              <fg-input
-                type="text"
-                label="Lawyer's Name"
-                placeholder="Lawyer's Full Name"
-                v-model="inpName"
-              >
-              </fg-input>
-            </div>
-          </div>
-
-          <div class="row"></div>
-
-          <div class="text-center">
-            <p-button type="info" round @click.native.prevent="createCustomerAccount(inpName,inpEmail)">
-              Create Account
-            </p-button>
-            <p v-if="message !== ''"> {{message}} </p>
-          </div>
-          <div class="clearfix"></div>
-        </form>
-      </card>
-    </div>
-
-    <h3>Law's Detail</h3>
+    <h3>Booking Detail</h3>
     <table class="table" ref="table">
       <thead class="thead-dark">
         <tr>
           <th scope="col" style="text-align:center">Name</th>
           <th scope="col" style="text-align:center">Email</th>
-          <th scope="col" style="text-align:center">Level</th>
-          <th scope="col" style="text-align:center">Sex</th>
+          <th scope="col" style="text-align:center">Role</th>
+          <th scope="col" style="text-align:center">Status</th>
           <th scope="col" colspan="2" style="text-align:center">Action</th>
         </tr>
-        <!-- <tr>
+        <tr>
           <td>
             <div class="form-horizontal">
               <input
@@ -67,21 +30,21 @@
                 placeholder="Search Emaill..."
                 style="width:280px;max-width:280px;display:inline-block"
               />
-          </td> -->
-          <!-- <td>
-            </td> -->
-             <!-- <td>
+          </td>
+          <td>
+            </td>
+             <td>
               <select class="form-control" :required="true">
                   <option v-for="option in statusOption" :key="option.name">{{
                     option.name
                   }}</option>
                 </select>
-          </td> -->
-        <!-- </tr> -->
+          </td>
+        </tr>
       </thead>
-      <table-officer-management-lawyer>
+      <table-unrole>
 
-      </table-officer-management-lawyer>
+      </table-unrole>
     </table>
 
     <ul class="pagination justify-content-center" style="margin:20px 0">
@@ -95,11 +58,11 @@
 </template>
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
-import TableOfficerManagementLawyer from './tables/TableOfficerManagementLawyer.vue'
+import TableUnrole from './tables/TableUnrole.vue'
 
 export default {
   components: {
-    TableOfficerManagementLawyer
+    TableUnrole
     },
   data() {
     return {
@@ -135,38 +98,26 @@ export default {
     };
   },
   created() {
-    if (localStorage.getItem("role") !== "lawyer_office") {
+    if (localStorage.getItem("role") !== "admin") {
       this.$router.push("/");
     } else {
-      this.$store.dispatch("getUserListApi");
+      this.$store.dispatch("getListUnroleUser");
     }
 
     // this.listUser = this._getUserList
     // listUser = _getUserList
   },
   computed: {
-    ...mapGetters({
-      _getUserList: "GET_LIST_USER",
-    }),
-    ...mapActions({
-      // userList: "getUserList",
-      // getUserListApi: "getUserListApi",
-    }),
     ...mapState({
-      customerList: "listUser",
+      customerList: "listUnroleUser",
     }),
   },
   methods: {
     onUpdate() {
      this.$refs.table.refresh();
     },
-    banUser(id) {
-      console.log(id);
-      this.$store.dispatch("changeStatusUser", id);
-    },
-    updateCustomerRole(id,role){
-      this.$store.dispatch("updateCustomerRole", {id,role})
-    },
+    
+ 
     createCustomerAccount(inpName, inpEmail){
       if(inpName.trim() !== '' && inpEmail.trim() !== ''){
         console.log(inpName, inpEmail);

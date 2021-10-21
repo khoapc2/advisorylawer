@@ -106,7 +106,6 @@ export default {
   methods: {
     clickViewDetail(user) {
       this.$store.dispatch("getOfficeByEmail", user.email) 
-      console.log(this.office);
     },
     onUpdate() {
      this.$refs.table.refresh();

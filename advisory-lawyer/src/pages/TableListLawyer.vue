@@ -12,6 +12,7 @@
                 v-model="inpEmail"
               >
               </fg-input>
+              <label v-if="emailErr !== ''" style="color: red"> {{emailErr}} </label>
             </div>
             <div class="col-md-6">
               <fg-input
@@ -21,16 +22,26 @@
                 v-model="inpName"
               >
               </fg-input>
+              <label v-if="nameErr !== ''" style="color: red"> {{nameErr}} </label>
             </div>
           </div>
 
           <div class="row"></div>
 
           <div class="text-center">
-            <p-button type="info" round @click.native.prevent="createCustomerAccount(inpName,inpEmail)">
+            <p-button
+              type="info"
+              round
+              @click.native.prevent="createLawyerAccount(inpName, inpEmail)"
+            >
               Create Account
             </p-button>
-            <p v-if="message !== ''"> {{message}} </p>
+             <div v-if="errorMessage === 'error'" class="alert alert-danger" role="alert">
+              Create Fail
+            </div>
+            <div v-else-if="errorMessage === 'success'" class="alert alert-success" role="alert">
+              Create Successful
+            </div>
           </div>
           <div class="clearfix"></div>
         </form>
@@ -61,27 +72,24 @@
           </td>
           <td>
             <input
-                type="text"
-                name="..."
-                class="form-control"
-                placeholder="Search Emaill..."
-                style="width:280px;max-width:280px;display:inline-block"
-              />
+              type="text"
+              name="..."
+              class="form-control"
+              placeholder="Search Emaill..."
+              style="width:280px;max-width:280px;display:inline-block"
+            />
           </td>
+          <td></td>
           <td>
-            </td>
-             <td>
-              <select class="form-control" :required="true">
-                  <option v-for="option in statusOption" :key="option.name">{{
-                    option.name
-                  }}</option>
-                </select>
+            <select class="form-control" :required="true">
+              <option v-for="option in statusOption" :key="option.name">{{
+                option.name
+              }}</option>
+            </select>
           </td>
         </tr>
       </thead>
-      <table-lawyer>
-
-      </table-lawyer>
+      <table-lawyer> </table-lawyer>
     </table>
 
     <ul class="pagination justify-content-center" style="margin:20px 0">
@@ -95,17 +103,19 @@
 </template>
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
-import TableLawyer from './tables/TableLawyer.vue'
+import TableLawyer from "./tables/TableLawyer.vue";
 
 export default {
   components: {
-    TableLawyer
-    },
+    TableLawyer,
+  },
   data() {
     return {
-      message: '',
-      inpEmail: '',
-      inpName: '',
+      errorMessage: "",
+      inpEmail: "",
+      inpName: "",
+      nameErr: '',
+      emailErr: '',
       listUser: [],
       roleOption: [
         {
@@ -123,15 +133,15 @@ export default {
       ],
       statusOption: [
         {
-          name: ""
+          name: "",
         },
         {
-          name: "Inactive"
+          name: "Inactive",
         },
         {
-          name: "Active"
-        }
-      ]
+          name: "Active",
+        },
+      ],
     };
   },
   created() {
@@ -158,24 +168,33 @@ export default {
   },
   methods: {
     onUpdate() {
-     this.$refs.table.refresh();
+      this.$refs.table.refresh();
     },
     banUser(id) {
       console.log(id);
       this.$store.dispatch("changeStatusUser", id);
     },
-    updateCustomerRole(id,role){
-      this.$store.dispatch("updateCustomerRole", {id,role})
-    },
-    createCustomerAccount(inpName, inpEmail){
-      if(inpName.trim() !== '' && inpEmail.trim() !== ''){
+    // updateCustomerRole(id,role){
+    //   this.$store.dispatch("updateCustomerRole", {id,role})
+    // },
+    createLawyerAccount(inpName, inpEmail) {
+      if (inpName.trim() !== "" && inpEmail.trim() !== "") {
         console.log(inpName, inpEmail);
-        this.$store.dispatch("createCustomer", {inpName,inpEmail})
+        try {
+          this.$store.dispatch("createLawyer", { inpName, inpEmail });
+          this.errorMessage = "success";
+        } catch (error) {
+          this.errorMessage = "error";
+        }
+      } else {
+        if (inpName.trim() == "") {
+          this.emailErr = "Please input Office's email";
+        }
+        if (inpEmail.trim() == "") {
+          this.nameErr = "Please input Office's name";
+        }
       }
-      else {
-        this.message = "Create fail"
-      }
-    }
+    },
   },
   mounted() {
     this.$store.dispatch("getUserListApi");

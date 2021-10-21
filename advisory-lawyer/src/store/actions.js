@@ -118,6 +118,7 @@ export default {
       method: "GET",
       url:
         "https://104.215.186.78/api/v1/user-accounts?role=lawyer_office&page_index=1",
+        // https://104.215.186.78/api/v1/lawyers?lawyer_office_id="+ id + "&page_size=" + pageSize
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
@@ -143,6 +144,29 @@ export default {
         context.dispatch("getListOfficer");
       }
     });
+  },
+
+
+  createOffice(context, { inpName, inpEmail }) {
+    if (inpEmail !== null && inpName !== null) {
+      axios({
+        method: "POST",
+        url: "https://104.215.186.78/api/v1/user-accounts",
+        data: {
+          name: `${inpName}`,
+          email: `${inpEmail}`,
+          role: "lawyer_office",
+        },
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
+        },
+      }).then((response) => {
+        if (response !== null) {
+          context.dispatch("getListOfficer");
+        }
+      });
+    }
   },
 
   //Lawyer
@@ -195,6 +219,29 @@ export default {
         context.dispatch("getListLawyer");
       }
     });
+  },
+
+
+  createLawyer(context, { inpName, inpEmail }) {
+    if (inpEmail !== null && inpName !== null) {
+      axios({
+        method: "POST",
+        url: "https://104.215.186.78/api/v1/user-accounts",
+        data: {
+          name: `${inpName}`,
+          email: `${inpEmail}`,
+          role: "lawyer",
+        },
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
+        },
+      }).then((response) => {
+        if (response !== null) {
+          context.dispatch("getListOfficer");
+        }
+      });
+    }
   },
 
   //Unrole User

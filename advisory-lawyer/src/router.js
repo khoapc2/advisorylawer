@@ -103,7 +103,7 @@ export default new Router({
         },
         {
           path: "/table-list-unrole",
-          name: "Unrolee Users",
+          name: "Unrole Users",
           component: TableListUnrole
         },
         {

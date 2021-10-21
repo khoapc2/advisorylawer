@@ -12,11 +12,20 @@
             >
             </fg-input>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-6" v-if="role === 'admin'">
             <fg-input
               type="text"
               label="Your Name"
               :disabled="true"
+              placeholder="Fullname"
+              v-model="name"
+            >
+            </fg-input>
+          </div>
+          <div class="col-md-6" v-if="role === 'lawyer_office'">
+            <fg-input
+              type="text"
+              label="Office Name"
               placeholder="Fullname"
               v-model="officeProfile.name"
             >
