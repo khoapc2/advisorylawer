@@ -22,16 +22,16 @@
               >
               </fg-input>
             </div>
-          </div>
-
-          <div class="row"></div>
-
-          <div class="text-center">
+            <div class="col-md-2">
             <p-button type="info" round @click.native.prevent="createCustomerAccount(inpName,inpEmail)">
               Create Account
             </p-button>
             <p v-if="message !== ''"> {{message}} </p>
           </div>
+          </div>
+
+          <div class="row"></div>
+
           <div class="clearfix"></div>
         </form>
       </card>

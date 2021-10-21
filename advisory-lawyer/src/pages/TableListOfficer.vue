@@ -22,29 +22,29 @@
               >
               </fg-input>
             </div>
-          </div>
-
-          <div class="row"></div>
-
-          <div class="text-center">
+            <div class="col-md-2">
             <p-button type="info" round @click.native.prevent="createCustomerAccount(inpName,inpEmail)">
               Create Account
             </p-button>
             <p v-if="message !== ''"> {{message}} </p>
           </div>
+          </div>
+
+          <div class="row"></div>
+
+          
           <div class="clearfix"></div>
         </form>
       </card>
     </div>
 
-    <h3>Customer's Detail</h3>
+    <h3>Office's Detail</h3>
     <table class="table" ref="table">
       <thead class="thead-dark">
         <tr>
-          <th scope="col" style="text-align:center">Name</th>
-          <th scope="col" style="text-align:center">Email</th>
-          <th scope="col" style="text-align:center">Role</th>
-          <th scope="col" style="text-align:center">Status</th>
+          <th scope="col" >Name</th>
+          <th scope="col" >Email</th>
+          <th scope="col" >Status</th>
           <th scope="col" colspan="2" style="text-align:center">Action</th>
         </tr>
         <tr>
@@ -67,8 +67,6 @@
                 placeholder="Search Emaill..."
                 style="width:280px;max-width:280px;display:inline-block"
               />
-          </td>
-          <td>
             </td>
              <td>
               <select class="form-control" :required="true">

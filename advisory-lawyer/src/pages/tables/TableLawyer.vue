@@ -1,14 +1,13 @@
 <template>
   <tbody>
         <LawyerModal :edit="lawyer"/>
-        <tr v-for="user in listLawyer" :key="user.id" style="text-align:center">
+        <tr v-for="user in listLawyer" :key="user.id">
           <td style="display:none">{{ user.id }}</td>
           <td>
             {{user.name}}
           </td>
           <td>{{ user.email }}</td>
-          <td>
-            {{user.role}}
+          
 
             <!-- <select class="form-control" v-model="user.role" :required="true">
               <option v-for="option in roleOption" :key="option.name">{{
@@ -16,7 +15,7 @@
               }}</option>
             </select> -->
 
-          </td>
+          
           <td v-if="user.status === 1">Active</td>
           <td v-else>Inactive</td>
           <td>
