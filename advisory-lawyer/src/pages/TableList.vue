@@ -40,7 +40,14 @@
           </div>
 
           <div class="row"></div>
-
+          <div class="text-center">
+            <div v-if="errorMessage === 'error'" class="alert alert-danger" role="alert">
+              Create Fail
+            </div>
+            <div v-else-if="errorMessage === 'success'" class="alert alert-success" role="alert">
+              Create Successful
+            </div>
+          </div>
           <div class="clearfix"></div>
         </form>
       </card>
@@ -111,6 +118,7 @@ export default {
       inpEmail: "",
       inpName: "",
       listUser: [],
+      errorMessage:'',
       roleOption: [
         {
           name: "customer",
@@ -174,10 +182,19 @@ export default {
     createCustomerAccount(inpName, inpEmail) {
       if (inpName.trim() !== "" && inpEmail.trim() !== "") {
         console.log(inpName, inpEmail);
-        this.$store.dispatch("createCustomer", { inpName, inpEmail });
-      } else {
-        if (inpName.trim() == "") {
-          this.emailErr = "Please input your email";
+        try {
+          this.$store.dispatch("createCustomer", {inpName,inpEmail})
+          this.inpName = '',
+          this.inpEmail = ''
+          this.errorMessage = "success"
+        }catch(error){
+          this.errorMessage = "error"
+        }
+          
+      }
+      else {
+        if(inpName.trim() == ''){
+          this.emailErr = 'Please input your email'
         }
         if (inpEmail.trim() == "") {
           this.nameErr = "Please input your name";

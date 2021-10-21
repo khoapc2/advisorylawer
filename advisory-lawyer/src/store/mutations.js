@@ -39,11 +39,6 @@ export default {
         }
     },
 
-    CREATE_ACCOUNT(state, data) {
-        if(data !== null){
-            state.listUser.push(data);
-        }
-    },
 
 
     //List Officer
