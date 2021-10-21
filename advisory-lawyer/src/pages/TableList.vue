@@ -12,7 +12,9 @@
                 v-model="inpEmail"
               >
               </fg-input>
-              <label v-if="emailErr !== ''" style="color: red"> {{emailErr}} </label>
+              <label v-if="emailErr !== ''" style="color: red">
+                {{ emailErr }}
+              </label>
             </div>
             <div class="col-md-6">
               <fg-input
@@ -22,16 +24,23 @@
                 v-model="inpName"
               >
               </fg-input>
-              <label v-if="nameErr !== ''" style="color: red"> {{nameErr}} </label>
+              <label v-if="nameErr !== ''" style="color: red">
+                {{ nameErr }}
+              </label>
+            </div>
+            <div class="col-md-2">
+              <p-button
+                type="info"
+                round
+                @click.native.prevent="createCustomerAccount(inpName, inpEmail)"
+              >
+                Create Account</p-button
+              ><br />
             </div>
           </div>
 
           <div class="row"></div>
-
           <div class="text-center">
-            <p-button type="info" round @click.native.prevent="createCustomerAccount(inpName,inpEmail)">
-              Create Account
-            </p-button><br>
             <div v-if="errorMessage === 'error'" class="alert alert-danger" role="alert">
               Create Fail
             </div>
@@ -48,10 +57,9 @@
     <table class="table" ref="table">
       <thead class="thead-dark">
         <tr>
-          <th scope="col" style="text-align:center">Name</th>
-          <th scope="col" style="text-align:center">Email</th>
-          <th scope="col" style="text-align:center">Role</th>
-          <th scope="col" style="text-align:center">Status</th>
+          <th scope="col" >Name</th>
+          <th scope="col" >Email</th>
+          <th scope="col" >Status</th>
           <th scope="col" colspan="2" style="text-align:center">Action</th>
         </tr>
         <tr>
@@ -68,27 +76,23 @@
           </td>
           <td>
             <input
-                type="text"
-                name="..."
-                class="form-control"
-                placeholder="Search Emaill..."
-                style="width:280px;max-width:280px;display:inline-block"
-              />
+              type="text"
+              name="..."
+              class="form-control"
+              placeholder="Search Emaill..."
+              style="width:280px;max-width:280px;display:inline-block"
+            />
           </td>
           <td>
-            </td>
-             <td>
-              <select class="form-control" :required="true">
-                  <option v-for="option in statusOption" :key="option.name">{{
-                    option.name
-                  }}</option>
-                </select>
+            <select class="form-control" :required="true">
+              <option v-for="option in statusOption" :key="option.name">{{
+                option.name
+              }}</option>
+            </select>
           </td>
         </tr>
       </thead>
-      <table-customer>
-
-      </table-customer>
+      <table-customer> </table-customer>
     </table>
 
     <ul class="pagination justify-content-center" style="margin:auto;">
@@ -102,17 +106,17 @@
 </template>
 <script>
 import { mapActions, mapGetters, mapState } from "vuex";
-import TableCustomer from './tables/TableCustomer.vue'
+import TableCustomer from "./tables/TableCustomer.vue";
 export default {
   components: {
     TableCustomer,
-    },
+  },
   data() {
     return {
-      emailErr: '',
-      nameErr:'',
-      inpEmail: '',
-      inpName: '',
+      emailErr: "",
+      nameErr: "",
+      inpEmail: "",
+      inpName: "",
       listUser: [],
       errorMessage:'',
       roleOption: [
@@ -131,15 +135,15 @@ export default {
       ],
       statusOption: [
         {
-          name: ""
+          name: "",
         },
         {
-          name: "Inactive"
+          name: "Inactive",
         },
         {
-          name: "Active"
-        }
-      ]
+          name: "Active",
+        },
+      ],
     };
   },
   created() {
@@ -166,17 +170,17 @@ export default {
   },
   methods: {
     onUpdate() {
-     this.$refs.table.refresh();
+      this.$refs.table.refresh();
     },
     banUser(id) {
       console.log(id);
       this.$store.dispatch("changeStatusUser", id);
     },
-    updateCustomerRole(id,role){
-      this.$store.dispatch("updateCustomerRole", {id,role})
+    updateCustomerRole(id, role) {
+      this.$store.dispatch("updateCustomerRole", { id, role });
     },
-    createCustomerAccount(inpName, inpEmail){
-      if(inpName.trim() !== '' && inpEmail.trim() !== ''){
+    createCustomerAccount(inpName, inpEmail) {
+      if (inpName.trim() !== "" && inpEmail.trim() !== "") {
         console.log(inpName, inpEmail);
         try {
           this.$store.dispatch("createCustomer", {inpName,inpEmail})
@@ -192,11 +196,11 @@ export default {
         if(inpName.trim() == ''){
           this.emailErr = 'Please input your email'
         }
-        if(inpEmail.trim() == ''){
-          this.nameErr = 'Please input your name'
+        if (inpEmail.trim() == "") {
+          this.nameErr = "Please input your name";
         }
       }
-    }
+    },
   },
   mounted() {
     this.$store.dispatch("getUserListApi");

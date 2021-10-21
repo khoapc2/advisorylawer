@@ -24,18 +24,17 @@
               </fg-input>
               <label v-if="nameErr !== ''" style="color: red"> {{nameErr}} </label>
             </div>
-          </div>
-
-          <div class="row"></div>
-
-          <div class="text-center">
-            <p-button
-              type="info"
-              round
-              @click.native.prevent="createLawyerAccount(inpName, inpEmail)"
-            >
+             <div class="col-md-2">
+             <p-button type="info" round @click="createLawyerAccount(inpName,inpEmail)">
               Create Account
             </p-button>
+          </div>
+          </div>
+
+
+           
+          <div class="text-center">
+            
              <div v-if="errorMessage === 'error'" class="alert alert-danger" role="alert">
               Create Fail
             </div>
@@ -48,14 +47,13 @@
       </card>
     </div>
 
-    <h3>Customer's Detail</h3>
+    <h3>Lawyer's Detail</h3>
     <table class="table" ref="table">
       <thead class="thead-dark">
         <tr>
-          <th scope="col" style="text-align:center">Name</th>
-          <th scope="col" style="text-align:center">Email</th>
-          <th scope="col" style="text-align:center">Role</th>
-          <th scope="col" style="text-align:center">Status</th>
+          <th scope="col" >Name</th>
+          <th scope="col" >Email</th>
+          <th scope="col" >Status</th>
           <th scope="col" colspan="2" style="text-align:center">Action</th>
         </tr>
         <tr>
