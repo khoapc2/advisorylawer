@@ -146,6 +146,7 @@ namespace AdvisoryLawyer.Business.Services
                 customer.Name = request.Name;
                 customer.Email = request.Email;
                 customer.Sex = Sex.Unknown;
+                customer.Status = (int)CustomerStatus.Active;
                 await _customerService.CreateCustomerModel(customer);
             } 
             else if("lawyer".Equals(request.Role))
@@ -154,7 +155,7 @@ namespace AdvisoryLawyer.Business.Services
                 lawyer.Name = request.Name;
                 lawyer.Email = request.Email;
                 lawyer.Sex = Sex.Unknown;
-                lawyer.Status = 1;
+                lawyer.Status = (int)LawyerStatus.Active;
                 await _lawyerService.CreateLawyer(lawyer);
             }
             else if ("lawyer_office".Equals(request.Role))
@@ -162,7 +163,7 @@ namespace AdvisoryLawyer.Business.Services
                 LawyerOfficeRequest lawyerOffice = new LawyerOfficeRequest();
                 lawyerOffice.Name = request.Name;
                 lawyerOffice.Email = request.Email;
-                lawyerOffice.Status = 1;
+                lawyerOffice.Status = (int)LawyerOfficeStatus.Active;
                 await _lawyerOfficeService.CreateLawyerOffice(lawyerOffice);
             }
             return _mapper.Map<UserAccountModel>(account);

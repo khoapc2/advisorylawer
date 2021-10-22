@@ -22,7 +22,7 @@ namespace AdvisoryLawyer.API.Controllers
             _service = service;
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet]
         public IActionResult GetListLawyerOffice([FromQuery] LawyerOfficeRequest request, LawyerOfficeSortBy sort_by, OrderBy order_by, int page_index = 1, int page_size = 5)
         {
