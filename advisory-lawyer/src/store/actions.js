@@ -181,6 +181,76 @@ export default {
   },
 
   //Officer
+  searchOfficeByName(context, username){
+    const pageSize = 10;
+    const pageIndex = 1;
+    const role = "lawyer_office";
+    console.log("1");
+    axios({
+      method: "GET",
+      url:
+      "https://104.215.186.78/api/v1/user-accounts?name="+username+"&role="+role+"&page_index="+pageIndex+"&page_size="+pageSize,
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
+      },
+    }).then((response) => {
+      context.commit("LIST_OFFICER", response.data);
+    });
+  },
+
+  searchOfficeByStatus(context, status){
+    const pageSize = 10;
+    const pageIndex = 1;
+    axios({
+      method: "GET",
+      url:
+      "https://104.215.186.78/api/v1/user-accounts?role=lawyer_office&status="+status+"&page_index="+pageIndex+"&page_size="+pageSize,
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
+      },
+    }).then((response) => {
+      context.commit("LIST_OFFICER", response.data);
+    });
+  },
+
+
+  searchOfficeByEmail(context, email) {
+    const pageSize = 10;
+    const pageIndex = 1;
+    axios({
+      method: "GET",
+      url:
+      "https://104.215.186.78/api/v1/user-accounts?email="+ email +"&role=lawyer_office&page_index="+ pageIndex +"&page_size=" + pageSize,
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
+      },
+    }).then((response) => {
+      context.commit("LIST_OFFICER", response.data);
+    });
+  },
+
+  getOfficeByEmail(context, email){
+    if(email !== null){
+      axios({
+        method: "POST",
+        url:
+          "https://104.215.186.78/api/v1/lawyer-offices/details",
+        data:{
+          email: `${email}`
+        },
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
+        },
+      }).then((response) => {
+        context.commit("OFFICE", response.data);
+      });
+    }
+  },
+
   getListOfficer(context) {
     axios({
       method: "GET",
@@ -238,6 +308,58 @@ export default {
   },
 
   //Lawyer
+  searchLawyerByName(context, username){
+    const pageSize = 10;
+    const pageIndex = 1;
+    const role = "lawyer";
+    console.log("1");
+    axios({
+      method: "GET",
+      url:
+      "https://104.215.186.78/api/v1/user-accounts?name="+username+"&role="+role+"&page_index="+pageIndex+"&page_size="+pageSize,
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
+      },
+    }).then((response) => {
+      context.commit("LIST_LAWYER", response.data);
+    });
+  },
+
+  searchLawyerByStatus(context, status){
+    const pageSize = 10;
+    const pageIndex = 1;
+    axios({
+      method: "GET",
+      url:
+      "https://104.215.186.78/api/v1/user-accounts?role=lawyer&status="+status+"&page_index="+pageIndex+"&page_size="+pageSize,
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
+      },
+    }).then((response) => {
+      context.commit("LIST_LAWYER", response.data);
+    });
+  },
+
+
+  searchLawyerByEmail(context, email) {
+    const pageSize = 10;
+    const pageIndex = 1;
+    axios({
+      method: "GET",
+      url:
+      "https://104.215.186.78/api/v1/user-accounts?email="+ email +"&role=lawyer&page_index="+ pageIndex +"&page_size=" + pageSize,
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
+      },
+    }).then((response) => {
+      context.commit("LIST_LAWYER", response.data);
+    });
+  },
+
+
   getLawyerByEmail(context, email) {
     if(email !== null){
       axios({
@@ -313,6 +435,57 @@ export default {
   },
 
   //Unrole User
+  searchUnRoleByName(context, username){
+    const pageSize = 10;
+    const pageIndex = 1;
+    const role = "undefined";
+    console.log("1");
+    axios({
+      method: "GET",
+      url:
+      "https://104.215.186.78/api/v1/user-accounts?name="+username+"&role="+role+"&page_index="+pageIndex+"&page_size="+pageSize,
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
+      },
+    }).then((response) => {
+      context.commit("LIST_UNROLE_USER", response.data);
+    });
+  },
+
+  searchUnRoleByStatus(context, status){
+    const pageSize = 10;
+    const pageIndex = 1;
+    axios({
+      method: "GET",
+      url:
+      "https://104.215.186.78/api/v1/user-accounts?role=undefined&status="+status+"&page_index="+pageIndex+"&page_size="+pageSize,
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
+      },
+    }).then((response) => {
+      context.commit("LIST_UNROLE_USER", response.data);
+    });
+  },
+
+
+  searchUnRoleByEmail(context, email) {
+    const pageSize = 10;
+    const pageIndex = 1;
+    axios({
+      method: "GET",
+      url:
+      "https://104.215.186.78/api/v1/user-accounts?email="+ email +"&role=undefined&page_index="+ pageIndex +"&page_size=" + pageSize,
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
+      },
+    }).then((response) => {
+      context.commit("LIST_UNROLE_USER", response.data);
+    });
+  },
+
   getListUnroleUser(context) {
     axios({
       method: "GET",
@@ -371,25 +544,6 @@ export default {
   },
 
   //role: Officer Management
-
-  getOfficeByEmail(context, email){
-    if(email !== null){
-      axios({
-        method: "POST",
-        url:
-          "https://104.215.186.78/api/v1/lawyer-offices/details",
-        data:{
-          email: `${email}`
-        },
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
-        },
-      }).then((response) => {
-        context.commit("OFFICE", response.data);
-      });
-    }
-  },
 
   getListLawyerOffice(context) {
     const id = localStorage.getItem('id');
