@@ -6,7 +6,6 @@ export default {
   getUserProfile(context, payload) {
     context.commit("setUserProfile", payload);
   },
-
   //Management Customer
   updateProfileForm(context, user) {
     axios({
@@ -21,11 +20,10 @@ export default {
       context.commit("UPDATE_LIST_USER", { data, id });
     });
   },
-
   getUserListApi(context) {
     axios({
       method: "GET",
-      url: "https://104.215.186.78/api/v1/user-accounts?role=customer",
+      url: "https://104.215.186.78/api/v1/user-accounts?role=customer&page_index=1&page_size=10",
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
@@ -110,6 +108,76 @@ export default {
         context.commit("CUSTOMER", response.data);
       });
     }
+  },
+
+  getCustomerByEmail(context, email) {
+    if(email !== null){
+      axios({
+        method: "POST",
+        url:
+          "https://104.215.186.78/api/customers/details",
+        data:{
+          email: `${email}`
+        },
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
+        },
+      }).then((response) => {
+        context.commit("CUSTOMER", response.data);
+      });
+    }
+  },
+
+  searchByName(context, username){
+    const pageSize = 10;
+    const pageIndex = 1;
+    const role = "customer";
+    console.log("1");
+    axios({
+      method: "GET",
+      url:
+      "https://104.215.186.78/api/v1/user-accounts?name="+username+"&role="+role+"&page_index="+pageIndex+"&page_size="+pageSize,
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
+      },
+    }).then((response) => {
+      context.commit("LIST_USER", response.data);
+    });
+  },
+
+  searchByStatus(context, status){
+    const pageSize = 10;
+    const pageIndex = 1;
+    axios({
+      method: "GET",
+      url:
+      "https://104.215.186.78/api/v1/user-accounts?role=customer&status="+status+"&page_index="+pageIndex+"&page_size="+pageSize,
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
+      },
+    }).then((response) => {
+      context.commit("LIST_USER", response.data);
+    });
+  },
+
+
+  searchByEmail(context, email) {
+    const pageSize = 10;
+    const pageIndex = 1;
+    axios({
+      method: "GET",
+      url:
+      "https://104.215.186.78/api/v1/user-accounts?email="+ email +"&role=customer&page_index="+ pageIndex +"&page_size=" + pageSize,
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
+      },
+    }).then((response) => {
+      context.commit("LIST_USER", response.data);
+    });
   },
 
   //Officer

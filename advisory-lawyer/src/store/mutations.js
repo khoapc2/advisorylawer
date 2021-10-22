@@ -79,6 +79,7 @@ export default {
 
     // Customer
     CUSTOMER(state, data){
+        console.log(data);
         state.customer = data
     },
 

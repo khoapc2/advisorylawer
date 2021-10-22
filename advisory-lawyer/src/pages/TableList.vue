@@ -62,39 +62,9 @@
           <th scope="col" >Status</th>
           <th scope="col" colspan="2" style="text-align:center">Action</th>
         </tr>
-        <tr>
-          <td>
-            <div class="form-horizontal">
-              <input
-                type="text"
-                name="..."
-                class="form-control"
-                placeholder="Search People..."
-                style="width:280px;max-width:280px;display:inline-block"
-              />
-            </div>
-          </td>
-          <td>
-            <input
-              type="text"
-              name="..."
-              class="form-control"
-              placeholder="Search Emaill..."
-              style="width:280px;max-width:280px;display:inline-block"
-            />
-          </td>
-          <td>
-            <select class="form-control" :required="true">
-              <option v-for="option in statusOption" :key="option.name">{{
-                option.name
-              }}</option>
-            </select>
-          </td>
-        </tr>
       </thead>
       <table-customer> </table-customer>
     </table>
-
     <ul class="pagination justify-content-center" style="margin:auto;">
       <li class="page-item"><a class="page-link btn" href="#">Previous</a></li>
       <li class="page-item"><a class="page-link btn" href="#">1</a></li>
@@ -169,6 +139,7 @@ export default {
     }),
   },
   methods: {
+    
     onUpdate() {
       this.$refs.table.refresh();
     },
@@ -190,7 +161,6 @@ export default {
         }catch(error){
           this.errorMessage = "error"
         }
-          
       }
       else {
         if(inpName.trim() == ''){

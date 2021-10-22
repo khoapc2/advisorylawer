@@ -1,6 +1,59 @@
+
+
 <template>
+<!-- #                        _oo0oo_                 -->
+<!-- #                       o8888888o                -->
+<!-- #                       88" . "88                -->
+<!-- #                       (| -_- |)                -->    
+<!-- #                       0\  =  /0                -->
+<!-- #                     ___/`---'\___              -->
+<!-- #                   .' \|     |// '.             -->
+<!-- #                  / \|||  :  |||// \            -->
+<!-- #                 / _||||| -:- |||||- \          -->
+<!-- #                |   | \\  -  /// |   |          -->
+<!-- #                | \_|  ''\---/''  |_/ |         -->
+<!-- #                \  .-\__  '-'  ___/-. /         -->
+<!-- #              ___'. .'  /--.--\  `. .'___       -->
+<!-- #           ."" '<  `.___\_<|>_/___.' >' "".     -->
+<!-- #          | | :  `- \`.;`\ _ /`;.`/ - ` : | |   -->
+<!-- #          \  \ `_.   \_ __\ /__ _/   .-` /  /   -->
+<!-- #      =====`-.____`.___ \_____/___.-`___.-'===== -->
+<!-- #                        `=---=' -->
   <tbody>
         <CustomerModal :edit="customer"/>
+        <tr>
+          <td>
+            <div class="form-horizontal">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Search People..."
+                style="width:280px;max-width:280px;display:inline-block"
+                v-model="searchName"
+                @keyup.enter="searchByName(searchName)"
+              />
+            </div>
+          </td>
+          <td>
+            <input
+              type="text"
+              name="..."
+              class="form-control"
+              placeholder="Search Emaill..."
+              style="width:280px;max-width:280px;display:inline-block"
+              v-model="searchEmail"
+              @keyup.enter="searchByEmail(searchEmail)"
+            />
+          </td>
+          <td>
+            <select class="form-control" :required="true" v-model="selected" @change="searchByStatus($event)">
+              <option :value="undefined" disabled style="display:none">Select something</option>
+              <option  v-for="option in statusOption" :key="option.name" :value="option.name" >{{
+                option.name
+              }}</option>
+            </select>
+          </td>
+        </tr>
         <tr v-for="user in customerList" :key="user.id">
           <!-- <th scope="row">1</th> -->
           <td style="display:none">{{ user.id }}</td>
@@ -65,7 +118,10 @@ export default {
   },
   data() {
     return {
-//      customer:{},
+      selected:undefined,
+      searchStatus: "",
+      searchName: "",
+      searchEmail: "",
       listUser: [],
       roleOption: [
         {
@@ -83,7 +139,7 @@ export default {
       ],
       statusOption: [
         {
-          name: ""
+          name: "All"
         },
         {
           name: "Inactive"
@@ -100,9 +156,6 @@ export default {
     } else {
       // this.$store.dispatch("getUserListApi");
     }
-
-    // this.listUser = this._getUserList
-    // listUser = _getUserList
   },
   computed: {
     ...mapActions({
@@ -115,6 +168,37 @@ export default {
     }),
   },
   methods: {
+    searchByStatus(ev){
+      var status = ev.target.value
+      var intStatus
+      if(status === 'Inactive'){
+        console.log(status)
+        intStatus = 0;
+      }else if(status === 'Active'){
+        intStatus = 1;
+      }else{
+        intStatus = -1
+      }
+
+      if(intStatus !== -1){
+        this.$store.dispatch("searchByStatus", intStatus);
+      }else{
+        this.$store.dispatch("getUserListApi");
+      }
+      this.searchName = "",
+      this.searchEmail = ""
+    },
+    searchByName(username){
+      this.$store.dispatch("searchByName", username);
+      this.selected = undefined
+      this.searchEmail = ''
+    },
+    searchByEmail(email){
+      this.$store.dispatch("searchByEmail", email);
+      this.selected = undefined
+      this.searchName = ''
+    },
+
     clickViewDetail(user) {
       this.$store.dispatch("getCustomerByEmail", user.email) 
       console.log(this.customer);
@@ -133,7 +217,7 @@ export default {
 
   },
   mounted() {
-    this.$store.dispatch("getUserListApi");
+    // this.$store.dispatch("getUserListApi");
   },
 };
 </script>

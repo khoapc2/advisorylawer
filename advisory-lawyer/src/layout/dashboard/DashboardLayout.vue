@@ -5,13 +5,12 @@
         <!-- <sidebar-link to="/dashboard" name="Dashboard" icon="ti-panel"/> -->
         
         <sidebar-link to="/stats" name="Your Profile" icon="ti-user"/>
-        <sidebar-link v-if="role === 'admin'" to="/table-list" name="User Management" icon="ti-folder"/>
-        <sidebar-link v-if="role === 'admin'" to="/table-list-officer" name="Officer Management" icon="ti-folder"/>
-        <sidebar-link v-if="role === 'admin'" to="/table-list-lawyer" name="Lawyer Management" icon="ti-folder"/>
+        <sidebar-link v-if="role === 'admin'" to="/table-list" name="Customer" icon="ti-folder"/>
+        <sidebar-link v-if="role === 'admin'" to="/table-list-officer" name="Officer" icon="ti-folder"/>
+        <sidebar-link v-if="role === 'admin'" to="/table-list-lawyer" name="Lawyer" icon="ti-folder"/>
         <sidebar-link v-if="role === 'admin'" to="/table-list-unrole" name="Unrole Users" icon="ti-folder"/>
-        <sidebar-link v-if="role === 'admin'" to="" name="Booking Management" icon="ti-folder"/>
-
-        <sidebar-link v-if="role === 'lawyer_office'" to="/table-list-office-mangement-lawyer" name="Lawyer Mangement" icon="ti-folder"/>
+        <sidebar-link v-if="role === 'admin'" to="" name="Booking" icon="ti-folder"/>
+        <sidebar-link v-if="role === 'lawyer_office'" to="/table-list-office-mangement-lawyer" name="Lawyer" icon="ti-folder"/>
 
         <!-- <sidebar-link to="/notifications" name="Notifications" icon="ti-bell"/> -->
       </template>
