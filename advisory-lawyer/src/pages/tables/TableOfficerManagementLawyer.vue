@@ -7,14 +7,11 @@
           </td>
           <td>{{ user.email }}</td>
           <td>
-            <!-- {{user.level_id}} -->
-
             <select class="form-control" v-model="user.level_id" :required="true">
-              <option v-for="level in levelOption" :key="level.name">{{
-                level.name
+              <option v-for="level in listLevel" :key="level.id" :value="level.id">{{
+                level.level_name
               }}</option>
             </select>
-
           </td>
           <td>{{user.sex}}</td>
           <td>
@@ -62,6 +59,7 @@ export default {
   computed: {
     ...mapState({
       listOfficeLawyer: "listOfficerManagementLawyer",
+      listLevel: "level"
     }),
   },
   methods: {
@@ -72,12 +70,14 @@ export default {
       this.$store.dispatch("removeLawyerFromOffice", id);
     },
     updateLevel(user){
+      console.log(user)
       this.$store.dispatch("updateLevelLawyer", user)
     },
 
   },
   mounted() {
     this.$store.dispatch("getListLawyerOffice");
+    this.$store.dispatch("getLevel");
   },
 };
 </script>

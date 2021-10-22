@@ -91,6 +91,10 @@ export default {
     //Office
     OFFICE(state, data){
         state.office = data
+    },
+
+    GET_LEVEL(state,data){
+        state.level = data
     }
 
 };

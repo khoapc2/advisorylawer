@@ -103,7 +103,7 @@ export default {
     },
     banUser(id) {
       console.log(id);
-      this.$store.dispatch("changeStatusUser", id);
+      this.$store.dispatch("updateStatusUnrole", id);
     },
     updateRole(user){
       this.$store.dispatch("updateUnroleUser", {user})

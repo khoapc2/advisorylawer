@@ -24,7 +24,7 @@
             </div>
             <div class="col-md-2">
             <p-button type="info" round @click.native.prevent="createCustomerAccount(inpName,inpEmail)">
-              Create Account
+              Add lawyer
             </p-button>
             <p v-if="message !== ''"> {{message}} </p>
           </div>

@@ -352,7 +352,23 @@ export default {
     });
   },
 
-
+  updateStatusUnrole(context, id){
+    axios({
+      method: "PUT",
+      url: "https://104.215.186.78/api/v1/user-accounts/change-status/",
+      data: {
+        id: `${id}`,
+      },
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
+      },
+    }).then(response => {
+      if(response !== null){
+      context.dispatch("getListUnroleUser");
+      }
+    });
+  },
 
   //role: Officer Management
 
@@ -473,6 +489,22 @@ export default {
       }
     });
   },
+
+  getLevel(context){
+    const pageSize = 20
+    axios({
+      method: "GET",
+      url: "https://104.215.186.78/api/v1/levels?page_index=1&page_size=" + pageSize,
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
+      },
+    }).then((response) => {
+      if (response !== null) {
+        context.commit("GET_LEVEL",response.data);
+      }
+    });
+  }
 
  
 };
