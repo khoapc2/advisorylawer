@@ -65,6 +65,8 @@
                 class="form-control"
                 placeholder="Search People..."
                 style="width:280px;max-width:280px;display:inline-block"
+                v-model="searchName"
+                @keyup.enter="searchByName(searchName)"
               />
             </div>
           </td>
@@ -75,12 +77,15 @@
               class="form-control"
               placeholder="Search Emaill..."
               style="width:280px;max-width:280px;display:inline-block"
+              v-model="searchEmail"
+              @keyup.enter="searchByEmail(searchEmail)"
             />
           </td>
-          <td></td>
+          
           <td>
-            <select class="form-control" :required="true">
-              <option v-for="option in statusOption" :key="option.name">{{
+            <select class="form-control" :required="true" v-model="selected" @change="searchByStatus($event)">
+              <option :value="undefined" disabled style="display:none">Select something</option>
+              <option v-for="option in statusOption" :key="option.name" :value="option.name">{{
                 option.name
               }}</option>
             </select>
@@ -109,6 +114,11 @@ export default {
   },
   data() {
     return {
+      selected:undefined,
+      searchStatus: "",
+      searchName: "",
+      searchEmail: "",
+
       errorMessage: "",
       inpEmail: "",
       inpName: "",
@@ -131,7 +141,7 @@ export default {
       ],
       statusOption: [
         {
-          name: "",
+          name: "All",
         },
         {
           name: "Inactive",
@@ -165,6 +175,36 @@ export default {
     }),
   },
   methods: {
+    searchByStatus(ev){
+      var status = ev.target.value
+      var intStatus
+      if(status === 'Inactive'){
+        console.log(status)
+        intStatus = 0;
+      }else if(status === 'Active'){
+        intStatus = 1;
+      }else{
+        intStatus = -1
+      }
+
+      if(intStatus !== -1){
+        this.$store.dispatch("searchLawyerByStatus", intStatus);
+      }else{
+        this.$store.dispatch("getListLawyer");
+      }
+      this.searchName = "",
+      this.searchEmail = ""
+    },
+    searchByName(username){
+      this.$store.dispatch("searchLawyerByName", username);
+      this.selected = undefined
+      this.searchEmail = ''
+    },
+    searchByEmail(email){
+      this.$store.dispatch("searchLawyerByEmail", email);
+      this.selected = undefined
+      this.searchName = ''
+    },
     onUpdate() {
       this.$refs.table.refresh();
     },

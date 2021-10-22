@@ -238,6 +238,56 @@ export default {
   },
 
   //Lawyer
+  searchLawyerByName(context, username){
+    const pageSize = 10;
+    const pageIndex = 1;
+    const role = "lawyer";
+    console.log("1");
+    axios({
+      method: "GET",
+      url:
+      "https://104.215.186.78/api/v1/user-accounts?name="+username+"&role="+role+"&page_index="+pageIndex+"&page_size="+pageSize,
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
+      },
+    }).then((response) => {
+      context.commit("LIST_LAWYER", response.data);
+    });
+  },
+
+  searchLawyerByStatus(context, status){
+    const pageSize = 10;
+    const pageIndex = 1;
+    axios({
+      method: "GET",
+      url:
+      "https://104.215.186.78/api/v1/user-accounts?role=lawyer&status="+status+"&page_index="+pageIndex+"&page_size="+pageSize,
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
+      },
+    }).then((response) => {
+      context.commit("LIST_LAWYER", response.data);
+    });
+  },
+
+
+  searchLawyerByEmail(context, email) {
+    const pageSize = 10;
+    const pageIndex = 1;
+    axios({
+      method: "GET",
+      url:
+      "https://104.215.186.78/api/v1/user-accounts?email="+ email +"&role=lawyer&page_index="+ pageIndex +"&page_size=" + pageSize,
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
+      },
+    }).then((response) => {
+      context.commit("LIST_LAWYER", response.data);
+    });
+  },
   getLawyerByEmail(context, email) {
     if(email !== null){
       axios({
