@@ -164,7 +164,6 @@ export default {
       var status = ev.target.value
       var intStatus
       if(status === 'Inactive'){
-        console.log(status)
         intStatus = 0;
       }else if(status === 'Active'){
         intStatus = 1;
@@ -194,7 +193,6 @@ export default {
      this.$refs.table.refresh();
     },
     banUser(id) {
-      console.log(id);
       this.$store.dispatch("changeStatusUser", id);
     },
     updateRole(id,role){
@@ -202,7 +200,6 @@ export default {
     },
     createCustomerAccount(inpName, inpEmail){
       if(inpName.trim() !== '' && inpEmail.trim() !== ''){
-        console.log(inpName, inpEmail);
         this.$store.dispatch("createCustomer", {inpName,inpEmail})
       }
       else {

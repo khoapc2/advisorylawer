@@ -133,7 +133,6 @@ export default {
     const pageSize = 10;
     const pageIndex = 1;
     const role = "customer";
-    console.log("1");
     axios({
       method: "GET",
       url:
@@ -185,7 +184,6 @@ export default {
     const pageSize = 10;
     const pageIndex = 1;
     const role = "lawyer_office";
-    console.log("1");
     axios({
       method: "GET",
       url:
@@ -312,7 +310,6 @@ export default {
     const pageSize = 10;
     const pageIndex = 1;
     const role = "lawyer";
-    console.log("1");
     axios({
       method: "GET",
       url:
@@ -439,7 +436,6 @@ export default {
     const pageSize = 10;
     const pageIndex = 1;
     const role = "undefined";
-    console.log("1");
     axios({
       method: "GET",
       url:
@@ -520,7 +516,6 @@ export default {
       },
     }).then((response) => {
       const data = response.data;
-      console.log(response);
       context.commit("UPDATE_UNROLE_USER", { data });
     });
   },
@@ -675,7 +670,6 @@ export default {
   },
 
   updateLevelLawyer(context, user){
-    console.log(user.id +'  ' + user.level_id)
     axios({
       method: "PUT",
       url: "https://104.215.186.78/api/v1/lawyers/update-level",

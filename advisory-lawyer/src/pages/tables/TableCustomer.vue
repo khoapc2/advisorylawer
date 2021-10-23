@@ -172,7 +172,6 @@ export default {
       var status = ev.target.value
       var intStatus
       if(status === 'Inactive'){
-        console.log(status)
         intStatus = 0;
       }else if(status === 'Active'){
         intStatus = 1;
@@ -201,17 +200,14 @@ export default {
 
     clickViewDetail(user) {
       this.$store.dispatch("getCustomerByEmail", user.email) 
-      console.log(this.customer);
     },
     onUpdate() {
      this.$refs.table.refresh();
     },
     banUser(id) {
-      console.log(id);
       this.$store.dispatch("changeStatusUser", id);
     },
     updateCustomerRole(id,role){
-      console.log(role)
       this.$store.dispatch("updateCustomerRole", {id,role})
     }
 

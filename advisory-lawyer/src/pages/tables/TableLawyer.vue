@@ -108,7 +108,6 @@ export default {
   methods: {
     clickViewDetail(user) {
       this.$store.dispatch("getLawyerByEmail", user.email) 
-      console.log(this.lawyer);
     },
     onUpdate() {
      this.$refs.table.refresh();

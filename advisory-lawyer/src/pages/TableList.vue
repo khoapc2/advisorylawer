@@ -144,7 +144,6 @@ export default {
       this.$refs.table.refresh();
     },
     banUser(id) {
-      console.log(id);
       this.$store.dispatch("changeStatusUser", id);
     },
     updateCustomerRole(id, role) {
@@ -152,7 +151,6 @@ export default {
     },
     createCustomerAccount(inpName, inpEmail) {
       if (inpName.trim() !== "" && inpEmail.trim() !== "") {
-        console.log(inpName, inpEmail);
         try {
           this.$store.dispatch("createCustomer", {inpName,inpEmail})
           this.inpName = '',

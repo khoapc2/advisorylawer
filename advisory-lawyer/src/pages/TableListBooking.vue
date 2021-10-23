@@ -120,7 +120,6 @@ export default {
  
     createCustomerAccount(inpName, inpEmail){
       if(inpName.trim() !== '' && inpEmail.trim() !== ''){
-        console.log(inpName, inpEmail);
         this.$store.dispatch("createCustomer", {inpName,inpEmail})
       }
       else {

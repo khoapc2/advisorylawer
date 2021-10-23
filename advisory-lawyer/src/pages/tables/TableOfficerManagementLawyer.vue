@@ -70,7 +70,6 @@ export default {
       this.$store.dispatch("removeLawyerFromOffice", id);
     },
     updateLevel(user){
-      console.log(user)
       this.$store.dispatch("updateLevelLawyer", user)
     },
 

@@ -210,7 +210,6 @@ export default {
       this.searchEmail = ""
     },
     searchByName(name){
-      console.log("cc");
       this.$store.dispatch("searchLawyerOfficeByName", name);
       this.selected = undefined
       this.searchEmail = ''
@@ -224,7 +223,6 @@ export default {
      this.$refs.table.refresh();
     },
     banUser(id) {
-      console.log(id);
       this.$store.dispatch("changeStatusUser", id);
     },
     updateCustomerRole(id,role){
@@ -232,7 +230,6 @@ export default {
     },
     createCustomerAccount(inpName, inpEmail){
       if(inpName.trim() !== '' && inpEmail.trim() !== ''){
-        console.log(inpName, inpEmail);
         this.$store.dispatch("createCustomer", {inpName,inpEmail})
       }
       else {
