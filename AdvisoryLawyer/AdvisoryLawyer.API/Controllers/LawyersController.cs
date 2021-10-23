@@ -132,6 +132,19 @@ namespace AdvisoryLawyer.API.Controllers
             }
         }
 
-        
+        [HttpPut("add-to-office")]
+        public async Task<IActionResult> AddLawyerToOffice([FromBody] AddLawyerToOfficeRequest request)
+        {
+            try
+            {
+                var lawyer = await _service.AddLawyerToOffice(request);
+                if (lawyer != null) return Ok(lawyer);
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

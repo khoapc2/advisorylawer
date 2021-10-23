@@ -25,6 +25,5 @@ namespace AdvisoryLawyer.Business.ViewModel
         public int? Status { get; set; }
         [Contain]
         public List<int> CategoryIds { get; set; }
-
     }
 }

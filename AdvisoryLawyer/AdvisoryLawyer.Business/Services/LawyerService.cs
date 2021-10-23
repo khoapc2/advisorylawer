@@ -32,6 +32,19 @@ namespace AdvisoryLawyer.Business.Services
             _categoryLawyerService = categoryLawyerOfficeService;
         }
 
+        public async Task<LawyerModel> AddLawyerToOffice(AddLawyerToOfficeRequest request)
+        {
+            var lawyer = await _genericRepository
+                .FindAsync(l => l.LawyerOfficeId == null && l.Status == (int)LawyerStatus.Active && l.Email.Equals(request.LawyerEmail));
+            if(lawyer != null)
+            {
+                lawyer.LawyerOfficeId = request.OfficeId;
+                await _genericRepository.UpdateAsync(lawyer);
+                return _mapper.Map<LawyerModel>(lawyer);
+            }
+            return null;
+        }
+
         public async Task<LawyerModel> CreateLawyer(LawyerRequest lawyerRequest)
         {
             var lawyer = _mapper.Map<Lawyer>(lawyerRequest);

@@ -22,6 +22,7 @@ namespace AdvisoryLawyer.Business.IServices
         Task RemoveLawyerOutOfOffice(int id);
         Task<LawyerModel> UpdateLevelForLawyer(UpdateLevelForLawyerRequest request);
         Task<LawyerCategoryUpdate> UpdateCategoryLawyer(LawyerCategoryUpdate request);
+        Task<LawyerModel> AddLawyerToOffice(AddLawyerToOfficeRequest request);
 
     }
 }
