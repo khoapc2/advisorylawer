@@ -72,7 +72,14 @@ namespace AdvisoryLawyer.Business.Services
         {
             var listLawyers = _genericRepository.FindBy(x => x.Status == (int)LawyerStatus.Active);
             var listLawyersModel = (listLawyers.ProjectTo<LawyerModel>
-                (_mapper.ConfigurationProvider)).DynamicFilter(_mapper.Map<LawyerModel>(filter));
+                (_mapper.ConfigurationProvider));
+            var lawyerModel = _mapper.Map<LawyerModel>(filter);
+            if(lawyerModel.CategoryIds.Count == 0)
+            {
+                lawyerModel.CategoryIds = null;
+            }
+            listLawyersModel = listLawyersModel.DynamicFilter(lawyerModel);
+            //
             switch (sortBy.ToString())
             {
                 case "Name":

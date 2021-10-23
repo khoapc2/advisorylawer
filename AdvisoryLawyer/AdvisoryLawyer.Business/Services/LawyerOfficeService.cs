@@ -63,7 +63,14 @@ namespace AdvisoryLawyer.Business.Services
             var listLawyerOffice = _genericRepository.GetAllByIQueryable();
             if (listLawyerOffice == null) return null;
 
-            var listLawyerOfficeModel = listLawyerOffice.ProjectTo<LawyerOfficeModel>(_mapper.ConfigurationProvider).DynamicFilter(_mapper.Map<LawyerOfficeModel>(request));
+            var listLawyerOfficeModel = listLawyerOffice.ProjectTo<LawyerOfficeModel>(_mapper.ConfigurationProvider);
+
+            var lawyerOfficeModel = _mapper.Map<LawyerOfficeModel>(request);
+            if (lawyerOfficeModel.CategoryIds.Count == 0)
+            {
+                lawyerOfficeModel.CategoryIds = null;
+            }
+            listLawyerOfficeModel = listLawyerOfficeModel.DynamicFilter(lawyerOfficeModel);
 
             switch (sortBy.ToString())
             {
