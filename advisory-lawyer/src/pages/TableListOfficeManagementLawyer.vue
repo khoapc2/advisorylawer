@@ -41,11 +41,45 @@
     <table class="table" ref="table">
       <thead class="thead-dark">
         <tr>
-          <th scope="col" style="text-align:center">Name</th>
-          <th scope="col" style="text-align:center">Email</th>
-          <th scope="col" style="text-align:center">Level</th>
-          <th scope="col" style="text-align:center">Sex</th>
+          <th scope="col" >Name</th>
+          <th scope="col" >Email</th>
+          <th scope="col" >Level</th>
+          <th scope="col" >Sex</th>
           <th scope="col" colspan="2" style="text-align:center">Action</th>
+        </tr>
+        <tr>
+          <td>
+            <div class="form-horizontal">
+              <input
+                type="text"
+                name="..."
+                class="form-control"
+                placeholder="Search People..."
+                style="width:280px;max-width:280px;display:inline-block"
+                v-model="searchName"
+                @keyup.enter="searchByName(searchName)"
+              />
+            </div>
+          </td>
+          <td>
+            <input
+                type="text"
+                name="..."
+                class="form-control"
+                placeholder="Search Emaill..."
+                style="width:280px;max-width:280px;display:inline-block"
+                v-model="searchEmail"
+                @keyup.enter="searchByEmail(searchEmail)"
+              />
+            </td>
+             <td>
+              <select class="form-control" :required="true" v-model="selected" @change="searchByLevel($event)">
+                  <option :value="undefined" >All</option>
+                  <option v-for="level in listLevel" :key="level.id" :value="level.id">{{
+                    level.level_name
+                  }}</option>
+              </select>
+          </td>
         </tr>
         <!-- <tr>
           <td>
@@ -103,6 +137,11 @@ export default {
     },
   data() {
     return {
+      selected:undefined,
+      searchLevel: "",
+      searchName: "",
+      searchEmail: "",
+
       message: '',
       inpEmail: '',
       inpName: '',
@@ -154,9 +193,33 @@ export default {
     }),
     ...mapState({
       customerList: "listUser",
+      listLevel: "level"
     }),
   },
   methods: {
+    searchByLevel(ev){
+      var level = ev.target.value
+      
+      if(this.selected !== undefined){
+        this.$store.dispatch("searchLawyerOfficeByLevel", level);
+      }else{
+        this.$store.dispatch("getListLawyerOffice");
+      }
+           
+      this.searchName = "",
+      this.searchEmail = ""
+    },
+    searchByName(name){
+      console.log("cc");
+      this.$store.dispatch("searchLawyerOfficeByName", name);
+      this.selected = undefined
+      this.searchEmail = ''
+    },
+    searchByEmail(email){
+      this.$store.dispatch("searchLawyerOfficeByEmail", email);
+      this.selected = undefined
+      this.searchName = ''
+    },
     onUpdate() {
      this.$refs.table.refresh();
     },
@@ -179,6 +242,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getUserListApi");
+    this.$store.dispatch("getLevel");
   },
 };
 </script>

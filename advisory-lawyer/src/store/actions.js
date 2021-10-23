@@ -545,6 +545,56 @@ export default {
 
   //role: Officer Management
 
+
+  searchLawyerOfficeByName(context, name){
+    const id = localStorage.getItem('id');
+    const pageSize = 10;
+    axios({
+      method: "GET",
+      url:
+      "https://104.215.186.78/api/v1/lawyers?lawyer_office_id="+ id + "&name="+name+"&page_size=" + pageSize,
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
+      },
+    }).then((response) => {
+      context.commit("LIST_LAWYER_OFFICER", response.data);
+    });
+  },
+
+  searchLawyerOfficeByLevel(context, level){
+    const id = localStorage.getItem('id');
+    const pageSize = 10;
+    axios({
+      method: "GET",
+      url:
+      "https://104.215.186.78/api/v1/lawyers?lawyer_office_id="+ id + "&level_id="+level+"&page_size=" + pageSize,
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
+      },
+    }).then((response) => {
+      context.commit("LIST_LAWYER_OFFICER", response.data);
+    });
+  },
+
+
+  searchLawyerOfficeByEmail(context, email) {
+    const id = localStorage.getItem('id');
+    const pageSize = 10;
+    axios({
+      method: "GET",
+      url:
+      "https://104.215.186.78/api/v1/lawyers?lawyer_office_id="+ id + "&email="+email+"&page_size=" + pageSize,
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
+      },
+    }).then((response) => {
+      context.commit("LIST_LAWYER_OFFICER", response.data);
+    });
+  },
+
   getListLawyerOffice(context) {
     const id = localStorage.getItem('id');
     const pageSize = 10;

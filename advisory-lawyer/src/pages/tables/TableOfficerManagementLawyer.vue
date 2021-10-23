@@ -1,6 +1,6 @@
 <template>
   <tbody>
-        <tr v-for="user in listOfficeLawyer" :key="user.id" style="text-align:center">
+        <tr v-for="user in listOfficeLawyer" :key="user.id">
           <td style="display:none">{{ user.id }}</td>
           <td>
             {{user.name}}
