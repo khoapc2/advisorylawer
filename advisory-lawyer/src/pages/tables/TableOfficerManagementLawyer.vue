@@ -63,6 +63,8 @@ export default {
     }),
   },
   methods: {
+    
+
     onUpdate() {
      this.$refs.table.refresh();
     },

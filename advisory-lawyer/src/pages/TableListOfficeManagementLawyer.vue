@@ -13,17 +13,8 @@
               >
               </fg-input>
             </div>
-            <div class="col-md-6">
-              <fg-input
-                type="text"
-                label="Lawyer's Name"
-                placeholder="Lawyer's Full Name"
-                v-model="inpName"
-              >
-              </fg-input>
-            </div>
             <div class="col-md-2">
-            <p-button type="info" round @click.native.prevent="createCustomerAccount(inpName,inpEmail)">
+            <p-button type="info" round @click="addLawyer(inpEmail)">
               Add lawyer
             </p-button>
             <p v-if="message !== ''"> {{message}} </p>
@@ -37,7 +28,7 @@
       </card>
     </div>
 
-    <h3>Law's Detail</h3>
+    <h3>Lawyer's Detail</h3>
     <table class="table" ref="table">
       <thead class="thead-dark">
         <tr>
@@ -197,6 +188,14 @@ export default {
     }),
   },
   methods: {
+    addLawyer(lawyerEmail){
+      try{
+        this.$store.dispatch("addLawyerToOffice", lawyerEmail);
+      }catch(error){
+        console.log(error)
+        console.log('he')
+      }
+    },
     searchByLevel(ev){
       var level = ev.target.value
       

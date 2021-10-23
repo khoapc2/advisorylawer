@@ -702,9 +702,29 @@ export default {
         context.commit("GET_LEVEL",response.data);
       }
     });
-  }
+  },
 
- 
+  addLawyerToOffice(context, lawyer_email){
+    const officeID = localStorage.getItem('id')
+
+    console.log(lawyer_email)
+    axios({
+      method: "PUT",
+      url: "https://104.215.186.78/api/v1/lawyers/add-to-office",
+      data: {
+        "office_id": `${officeID}`,
+        "lawyer_email": `${lawyer_email}`
+      },
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
+      },
+    }).then((response) => {
+      if (response !== null) {
+        context.dispatch("getListLawyerOffice");
+      }
+    });
+  },
 };
 
 
