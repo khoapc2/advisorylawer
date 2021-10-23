@@ -22,11 +22,14 @@ namespace AdvisoryLawyer.Business.Services
     {
         private IGenericRepository<Lawyer> _genericRepository;
         private IMapper _mapper;
+        private readonly ICategoryLawyerService _categoryLawyerService;
 
-        public LawyerService(IGenericRepository<Lawyer> genericRepository, IMapper mapper)
+        public LawyerService(IGenericRepository<Lawyer> genericRepository, IMapper mapper,
+            ICategoryLawyerService categoryLawyerOfficeService)
         {
             _genericRepository = genericRepository;
             _mapper = mapper;
+            _categoryLawyerService = categoryLawyerOfficeService;
         }
 
         public async Task<LawyerModel> CreateLawyer(LawyerRequest lawyerRequest)
@@ -133,6 +136,18 @@ namespace AdvisoryLawyer.Business.Services
                 lawyer.LevelId = request.LevelId;
                 await _genericRepository.UpdateAsync(lawyer);
                 return _mapper.Map<LawyerModel>(lawyer);
+            }
+            return null;
+        }
+
+        public async Task<LawyerCategoryUpdate> UpdateCategoryLawyer(LawyerCategoryUpdate request)
+        {
+            var category = await _genericRepository.FindAsync(x => x.Id == request.Id &&
+           x.Status == (int)CategoryLawyerStatus.Active);
+            if (category != null)
+            {
+                await _categoryLawyerService.UpdateLawyerCategory(request.Id, request.CategoryIds);
+                return request;
             }
             return null;
         }

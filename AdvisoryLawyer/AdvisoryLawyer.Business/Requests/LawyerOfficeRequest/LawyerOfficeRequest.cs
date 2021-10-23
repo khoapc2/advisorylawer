@@ -33,5 +33,8 @@ namespace AdvisoryLawyer.Business.Requests.LawyerOfficeRequest
         public string Email { get; set; }
         [FromQuery(Name = "status")]
         public int? Status { get; set; }
+        [Contain]
+        public List<int> CategoryIds { get; set; }
+
     }
 }

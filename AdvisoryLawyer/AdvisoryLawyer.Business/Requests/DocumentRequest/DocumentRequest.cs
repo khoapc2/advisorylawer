@@ -20,5 +20,8 @@ namespace AdvisoryLawyer.Business.Requests.DocumentRequest
 
         [FromQuery(Name = "category_id")]
         public int? CategoryId { get; set; }
+        [Contain]
+        [FromQuery(Name = "customer_case_ids")]
+        public List<int> CustomerCaseIds { get; set; }
     }
 }

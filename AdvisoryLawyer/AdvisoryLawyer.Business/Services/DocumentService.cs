@@ -21,11 +21,13 @@ namespace AdvisoryLawyer.Business.Services
     {
         private IGenericRepository<Document> _genericRepository;
         private IMapper _mapper;
-
-        public DocumentService(IGenericRepository<Document> genericRepository, IMapper mapper)
+        private readonly IDocumentCaseService _documentCaseSeService;
+        public DocumentService(IGenericRepository<Document> genericRepository, IMapper mapper, 
+            IDocumentCaseService documentCaseSeService)
         {
             _genericRepository = genericRepository;
             _mapper = mapper;
+            _documentCaseSeService = documentCaseSeService;
         }
 
         public async Task<DocumentModel> CreateDocument(DocumentRequest documentRequest)
@@ -102,6 +104,18 @@ namespace AdvisoryLawyer.Business.Services
                 document = _mapper.Map(documentUpdate, document);
                 await _genericRepository.SaveAsync();
                 return _mapper.Map<DocumentModel>(document);
+            }
+            return null;
+        }
+
+        public async Task<DocumentCaseUpdate> UpdateDocumentCase(DocumentCaseUpdate request)
+        {
+            var category = await _genericRepository.FindAsync(x => x.Id == request.DocumentId &&
+           x.Status == (int)DocumentCaseStatus.Active);
+            if (category != null)
+            {
+                await _documentCaseSeService.UpdateDocumentCase(request.DocumentId, request.CustomerCaseIds);
+                return request;
             }
             return null;
         }

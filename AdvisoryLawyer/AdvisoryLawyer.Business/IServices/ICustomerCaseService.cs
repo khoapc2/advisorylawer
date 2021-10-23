@@ -18,5 +18,6 @@ namespace AdvisoryLawyer.Business.IServices
         Task<CustomerCaseModel> CreateCustomerCase(CustomerCaseRequest categoryRequest);
         Task<CustomerCaseModel> UpdateCustomerCase(CustomerCaseUpdate customerCaseUpdate);
         Task<bool> DeleteCustomerCase(int id);
+        Task<CaseDocumentUpdate> UpdateDocumentCase(CaseDocumentUpdate request);
     }
 }

@@ -15,7 +15,9 @@ namespace AdvisoryLawyer.Business.AutoMapper
     {
         public LawyerOfficeMapper()
         {
-            CreateMap<LawyerOffice, LawyerOfficeModel>(); ;
+            CreateMap<LawyerOffice, LawyerOfficeModel>().ForMember(des => des.CategoryIds, opt => opt.MapFrom(
+                src => src.CategoryLawyerOffices.Where(x => x.Status == (int)CategoryLawyerOfficeStatus.Active).
+                Select(x => x.CategoryId))); 
 
             CreateMap<LawyerOfficeRequest, LawyerOffice>()
                 .ForMember(d => d.Status, s => s.MapFrom(s => (int)LawyerOfficeStatus.Active));

@@ -13,6 +13,10 @@ namespace AdvisoryLawyer.Business.ViewModel
 
         [String]
         public string? CategoryName { get; set; }
-    
+
+        [Contain]
+        public List<int> LawyerIds { get; set; }
+        [Contain]
+        public List<int> LawyerOfficeIds { get; set; }
     }
 }

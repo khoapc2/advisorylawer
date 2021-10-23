@@ -12,7 +12,9 @@ namespace AdvisoryLawyer.Business.IServices
         Task<bool> CreateCategoryLawyerOffice(int categoryIds, List<int> LawyerOffice);
         Task<bool> CreateCategoryLawyerOffice(List<int> categoryIds, int LawyerOffice);
         Task<bool> UpdateCategoryLawyerOffice(int categoryIds, List<int> LawyerOffice);
-        Task<bool> DeleteCategoryLawyerOffice(int categoryIds);
+        Task<bool> UpdateLawyerOfficeCategory(int LawyerOffice, List<int> categoryIds);
+        Task<bool> DeleteCategory(int categoryIds);
         Task<CategoryLawyerOffice> GetCategoryLawyerOffice(int categoryId);
+        Task<bool> DeleteLawyerOffice(int LawyerOffice);
     }
 }

@@ -34,12 +34,23 @@ namespace AdvisoryLawyer.Business.Services
             return true;
         }
 
-        public Task<bool> CreateCategoryLawyerOffice(List<int> categoryIds, int LawyerOffice)
+        public async Task<bool> CreateCategoryLawyerOffice(List<int> categoryIds, int LawyerOffice)
         {
-            throw new NotImplementedException();
+            foreach (var categoryId in categoryIds)
+            {
+                var CategoryLawyerOffice = new CategoryLawyerOffice()
+                {
+                    CategoryId = categoryId,
+                    LawyerOfficeId = LawyerOffice,
+                    Status = (int)CategoryLawyerOfficeStatus.Active
+                };
+                await _res.InsertAsync(CategoryLawyerOffice);
+            }
+            await _res.SaveAsync();
+            return true;
         }
 
-        public async Task<bool> DeleteCategoryLawyerOffice(int categoryId)
+        public async Task<bool> DeleteCategory(int categoryId)
         {
             var listCategoryoffice = (List<CategoryLawyerOffice>)await _res.FindByAsync(x => x.CategoryId == categoryId);
             foreach(var categoryOffice in listCategoryoffice)
@@ -51,9 +62,21 @@ namespace AdvisoryLawyer.Business.Services
             return true;
         }
 
+        public async Task<bool> DeleteLawyerOffice (int lawyerOfficeId)
+        {
+            var listCategoryoffice = (List<CategoryLawyerOffice>)await _res.FindByAsync(x => x.LawyerOfficeId == lawyerOfficeId);
+            foreach (var categoryOffice in listCategoryoffice)
+            {
+                categoryOffice.Status = (int)CategoryLawyerOfficeStatus.InActive;
+                await _res.UpdateAsync(categoryOffice);
+            }
+            await _res.SaveAsync();
+            return true;
+        }
+
         public async Task<bool> UpdateCategoryLawyerOffice(int categoryId, List<int> LawyerOfficeIds)
         {
-            await DeleteCategoryLawyerOffice(categoryId);
+            await DeleteCategory(categoryId);
             if (LawyerOfficeIds.Contains(0) == true)
             { 
                 return true;
@@ -65,6 +88,13 @@ namespace AdvisoryLawyer.Business.Services
         public async Task<CategoryLawyerOffice> GetCategoryLawyerOffice(int categoryId)
         {
             return await _res.FindAsync(x => x.CategoryId == categoryId & x.Status == (int)CategoryLawyerOfficeStatus.Active);
+        }
+
+        public async Task<bool> UpdateLawyerOfficeCategory(int LawyerOffice, List<int> categoryIds)
+        {
+            await DeleteLawyerOffice(LawyerOffice);
+            await CreateCategoryLawyerOffice(categoryIds, LawyerOffice);
+            return true;
         }
     }
 }

@@ -16,7 +16,14 @@ namespace AdvisoryLawyer.Business.AutoMapper
     {
         public CategoriesMapper()
         {
-            CreateMap<Category, CategoryModel>();
+            CreateMap<Category, CategoryModel>().ForMember(des => des.LawyerIds, opt => opt.MapFrom(
+                src => src.CategoryLawyers.Where(x => x.Status == (int)CategoryLawyerStatus.Active).Select(x => x.LawyerId)
+                )).
+
+                ForMember(des => des.LawyerOfficeIds, opt => opt.MapFrom(
+                src => src.CategoryLawyerOffices.Where(x => x.Status == (int)CategoryLawyerOfficeStatus.Active).
+                Select(x => x.LawyerOfficeId)
+                ));
           
             CreateMap<CategoryRequest, Category>().ForMember(des
                 => des.Status, opt => opt.MapFrom(src => (int)CategoryStatus.Active)); ;

@@ -14,5 +14,6 @@ namespace AdvisoryLawyer.Business.IServices
         Task<bool> UpdateCategoryLawyer(int categoryIds, List<int> LawyerIds);
         Task<bool> DeleteCategoryLawyer(int categoryIds);
         Task<CategoryLawyer> GetCategoryLawyer(int categoryId);
+        Task<bool> UpdateLawyerCategory(int Id, List<int> CategoryIds);
     }
 }

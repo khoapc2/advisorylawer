@@ -1,4 +1,5 @@
 ﻿using AdvisoryLawyer.Business.Enum;
+using Reso.Core.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,5 +28,7 @@ namespace AdvisoryLawyer.Business.ViewModel
 
         public string LawyerOfficeName { get; set; }
         public string Level { get; set; }
+        [Contain]
+        public List<int> CategoryIds { get; set; }
     }
 }

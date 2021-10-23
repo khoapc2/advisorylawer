@@ -22,7 +22,7 @@ namespace AdvisoryLawyer.API.Controllers
             _service = service;
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         public IActionResult GetListLawyerOffice([FromQuery] LawyerOfficeRequest request, LawyerOfficeSortBy sort_by, OrderBy order_by, int page_index = 1, int page_size = 5)
         {
@@ -81,6 +81,21 @@ namespace AdvisoryLawyer.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpPut("update-categoryLawyer")]
+        public async Task<IActionResult> UpdateCategoryLawyerOffice([FromBody] LawyerOfficeCategoryUpdate request)
+        {
+            try
+            {
+                var office = await _service.UpdateCategoryOfficeLawyer(request);
+                return Ok(office);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
 
         [Authorize]
         [HttpDelete]

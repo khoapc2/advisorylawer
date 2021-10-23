@@ -77,6 +77,20 @@ namespace AdvisoryLawyer.API.Controllers
             }
             return BadRequest();
         }
+
+        [HttpPut("update-documentcase")]
+        public async Task<IActionResult> UpdateCategoryLawyerOffice([FromBody] DocumentCaseUpdate request)
+        {
+            try
+            {
+                var office = await _service.UpdateDocumentCase(request);
+                return Ok(office);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
 

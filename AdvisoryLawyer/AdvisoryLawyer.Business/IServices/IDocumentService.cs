@@ -2,10 +2,6 @@
 using AdvisoryLawyer.Business.Requests.DocumentRequest;
 using AdvisoryLawyer.Business.ViewModel;
 using PagedList;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AdvisoryLawyer.Business.IServices
@@ -18,5 +14,6 @@ namespace AdvisoryLawyer.Business.IServices
         Task<DocumentModel> CreateDocument(DocumentRequest documentRequest);
         Task<DocumentModel> UpdateDocument(DocumentUpdate documentUpdate);
         Task<bool> DeleteDocument(int id);
+        Task<DocumentCaseUpdate> UpdateDocumentCase(DocumentCaseUpdate request);
     }
 }

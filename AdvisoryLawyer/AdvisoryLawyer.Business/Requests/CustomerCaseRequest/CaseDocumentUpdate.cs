@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Reso.Core.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,15 +7,11 @@ using System.Threading.Tasks;
 
 namespace AdvisoryLawyer.Business.Requests.CustomerCaseRequest
 {
-    public class CustomerCaseRequest
+    public class CaseDocumentUpdate
     {
-        [FromQuery(Name = "name")]
-        [String]
-        public string Name { get; set; }
+        [FromQuery(Name = "customer_case_id")]
+        public int CustomerCaseId { get; set; }
 
-        [FromQuery(Name = "description")]
-        [String]
-        public string Description { get; set; }
         [FromQuery(Name = "document_ids")]
         public List<int> DocumentIds { get; set; }
     }

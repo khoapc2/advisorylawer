@@ -15,7 +15,9 @@ namespace AdvisoryLawyer.Business.AutoMapper
     {
         public DocumentsMapper()
         {
-            CreateMap<Document, DocumentModel>();
+            CreateMap<Document, DocumentModel>().ForMember(des => des.CustomerCaseIds, opt => opt.MapFrom(
+                src => src.DocumentCases.Where(x => x.Status == (int)DocumentCaseStatus.Active).
+                Select(x => x.CustomerCaseId))); ;
             CreateMap<DocumentRequest, Document>().ForMember(des
                 => des.Status, opt => opt.MapFrom(src => (int)DocumentStatus.Active)); ;
             CreateMap<DocumentRequest, DocumentModel>();

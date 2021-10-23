@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Reso.Core.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,5 +13,7 @@ namespace AdvisoryLawyer.Business.ViewModel
         public string? Name { get; set; }
         public string? Description { get; set; }
         public int? CategoryId { get; set; }
+        [Contain]
+        public List<int> CustomerCaseIds { get; set; }
     }
 }

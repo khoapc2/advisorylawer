@@ -33,13 +33,13 @@ namespace AdvisoryLawyer.Business.Services
             _categoryLawyerService = categoryLawyerService;
         }
 
-        public IPagedList<CategoryModel> GetAllCategories(CategoryRequest filter, CategorySortBy sortBy, 
+        public IPagedList<CategoryModel> GetAllCategories(CategoryModel filter, CategorySortBy sortBy, 
             OrderBy order, int pageIndex, int pageSize)
         {
             var listCategories = _genericRepository.FindBy(x => x.Status == (int)CategoryStatus.Active);
 
             var listCategoriesModel = (listCategories.ProjectTo<CategoryModel>
-                (_mapper.ConfigurationProvider)).DynamicFilter(_mapper.Map<CategoryModel>(filter));
+                (_mapper.ConfigurationProvider)).DynamicFilter(filter);
             switch (sortBy.ToString())
             {
                 case "Name":
@@ -107,6 +107,30 @@ namespace AdvisoryLawyer.Business.Services
             return null;
         }
 
+        public async Task<CategoryLawyerUpdate> UpdateCategoryLawyer(CategoryLawyerUpdate request)
+        {
+            var category = await _genericRepository.FindAsync(x => x.Id == request.Id &&
+            x.Status == (int)CategoryLawyerStatus.Active);
+            if (category != null)
+            {
+                await _categoryLawyerService.UpdateCategoryLawyer(request.Id, request.CategoryLawyerIds);
+                return request;
+            }
+            return null;
+        }
+
         
+
+        public async Task<CategoryLawyerOfficeUpdate> UpdateCategoryOfficeLawyer(CategoryLawyerOfficeUpdate request)
+        {
+            var category = await _genericRepository.FindAsync(x => x.Id == request.Id &&
+            x.Status == (int)CategoryLawyerOfficeStatus.Active);
+            if (category != null)
+            {
+                await _categoryLawyerOfficeService.UpdateCategoryLawyerOffice(request.Id, request.CategoryLawyerOfficeIds);
+                return request;
+            }
+            return null;
+        }
     }
 }

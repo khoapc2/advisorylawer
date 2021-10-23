@@ -17,5 +17,8 @@ namespace AdvisoryLawyer.Business.Requests.DocumentCaseRequest
         [FromQuery(Name = "document_id")]
         [String]
         public int DocumentId { get; set; }
+
+        [Contain]
+        public List<int> DocumentIds { get; set; }
     }
 }

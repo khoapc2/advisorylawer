@@ -25,7 +25,7 @@ namespace AdvisoryLawyer.API.Controllers
         //GET api/categories
         [HttpGet]
 
-        public IActionResult GetAllCategories([FromQuery] CategoryRequest filter, CategorySortBy sort_by, 
+        public IActionResult GetAllCategories([FromQuery] CategoryModel filter, CategorySortBy sort_by, 
             OrderBy order_by, int page_index = 1, int page_size = 1)
         {
             return Ok(_service.GetAllCategories(filter, sort_by, order_by, page_index, page_size));
@@ -67,6 +67,29 @@ namespace AdvisoryLawyer.API.Controllers
             }
             return BadRequest();
         }
+
+        [HttpPut("update-categoryLawyer")]
+        public async Task<ActionResult<CategoryModel>> UpdateCategoryLawyer(CategoryLawyerUpdate categoryUpdate)
+        {
+            var categoryModel = await _service.UpdateCategoryLawyer(categoryUpdate);
+            if (categoryModel != null)
+            {
+                return Ok(categoryModel);
+            }
+            return BadRequest();
+        }
+
+        [HttpPut("update-categoryLawyerOffice")]
+        public async Task<ActionResult<CategoryModel>> UpdateCategoryLawyerOffice(CategoryLawyerOfficeUpdate categoryUpdate)
+        {
+            var categoryModel = await _service.UpdateCategoryOfficeLawyer(categoryUpdate);
+            if (categoryModel != null)
+            {
+                return Ok(categoryModel);
+            }
+            return BadRequest();
+        }
+
 
         //DELETE api/categories/{id}
         [HttpDelete("{id}")]

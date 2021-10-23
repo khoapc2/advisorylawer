@@ -13,7 +13,10 @@ namespace AdvisoryLawyer.Business.Requests.CategoryRequest
         [String]
         [FromQuery(Name = "category_name")]
         public string CategoryName { get; set; }
-
+        [Contain]
+        public List<int> LawyerIds { get; set; }
+        [Contain]
+        public List<int> LawyerOfficeIds { get; set; }
     }
 
 }

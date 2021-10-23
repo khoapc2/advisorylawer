@@ -59,5 +59,7 @@ namespace AdvisoryLawyer.Business.Requests.LawyerRequest
         [FromQuery(Name = "level_id")]
         [String]
         public int? LevelId { get; set; }
+        [Contain]
+        public List<int> CategoryIds { get; set; }
     }
 }

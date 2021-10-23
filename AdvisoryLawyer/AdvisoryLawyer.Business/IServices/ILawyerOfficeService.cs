@@ -1,4 +1,5 @@
 ﻿using AdvisoryLawyer.Business.Requests;
+using AdvisoryLawyer.Business.Requests.CategoryRequest;
 using AdvisoryLawyer.Business.Requests.LawyerOfficeRequest;
 using AdvisoryLawyer.Business.ViewModel;
 using PagedList;
@@ -18,5 +19,6 @@ namespace AdvisoryLawyer.Business.IServices
         public Task<LawyerOfficeModel> UpdateLawyerOffice(LawyerOfficeRequest request);
         public Task DeleteLawyerOffice(int id);
         public Task<LawyerOfficeModel> GetDetailByEmail(string email);
+        Task<LawyerOfficeCategoryUpdate> UpdateCategoryOfficeLawyer(LawyerOfficeCategoryUpdate request);
     }
 }

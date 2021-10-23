@@ -1,5 +1,6 @@
 ﻿using AdvisoryLawyer.Business.IServices;
 using AdvisoryLawyer.Business.Requests;
+using AdvisoryLawyer.Business.Requests.LawyerOfficeRequest;
 using AdvisoryLawyer.Business.Requests.LawyerRequest;
 using AdvisoryLawyer.Business.ViewModel;
 using Microsoft.AspNetCore.Mvc;
@@ -105,6 +106,17 @@ namespace AdvisoryLawyer.API.Controllers
             } 
         }
 
+        [HttpPut("update-category-lawyer")]
+        public async Task<IActionResult> UpdateCategoryLawyer([FromBody] LawyerCategoryUpdate request)
+        {
+            var categoryLawyer = await _service.UpdateCategoryLawyer(request);
+            if (categoryLawyer == null)
+            {
+                return BadRequest();
+            }
+            return Ok(categoryLawyer);
+        }
+
         [HttpPut("update-level")]
         public async Task<IActionResult> UpdateLevelForLawyer([FromBody] UpdateLevelForLawyerRequest request)
         {
@@ -119,5 +131,7 @@ namespace AdvisoryLawyer.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        
     }
 }
