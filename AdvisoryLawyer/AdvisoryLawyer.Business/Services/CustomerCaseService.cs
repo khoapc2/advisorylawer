@@ -46,8 +46,8 @@ namespace AdvisoryLawyer.Business.Services
             x.Status == (int)CustomerCaseStatus.Active);
             if (customerCase != null)
             {
-                await _genericRepository.DeleteAsync(id);
-                await _genericRepository.SaveAsync();
+                customerCase.Status = (int)CustomerCaseStatus.InActive;
+                await _genericRepository.UpdateAsync(customerCase);
                 return true;
             }
             return false;

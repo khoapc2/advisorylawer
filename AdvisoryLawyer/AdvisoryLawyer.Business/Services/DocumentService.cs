@@ -45,8 +45,8 @@ namespace AdvisoryLawyer.Business.Services
             x.Status == (int)DocumentStatus.Active);
             if (document != null)
             {
-                await _genericRepository.DeleteAsync(id);
-                await _genericRepository.SaveAsync();
+                document.Status = (int)DocumentStatus.InActive;
+                await _genericRepository.UpdateAsync(document);
                 return true;
             }
             return false;
