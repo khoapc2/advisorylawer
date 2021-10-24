@@ -119,7 +119,7 @@ namespace AdvisoryLawyer.Business.Services
         public async Task<CaseDocumentUpdate> UpdateDocumentCase(CaseDocumentUpdate request)
         {
             var category = await _genericRepository.FindAsync(x => x.Id == request.CustomerCaseId &&
-           x.Status == (int)DocumentCaseStatus.Active);
+            x.Status == (int)DocumentCaseStatus.Active);
             if (category != null)
             {
                 await _documentCaseSeService.UpdateCaseDocument(request.CustomerCaseId, request.DocumentIds);

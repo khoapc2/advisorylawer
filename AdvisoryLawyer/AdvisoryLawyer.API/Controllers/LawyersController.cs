@@ -26,56 +26,94 @@ namespace AdvisoryLawyer.API.Controllers
         public ActionResult<IEnumerable<LawyerModel>> GetAllLawyers([FromQuery] LawyerRequest filter, LawyerSortBy sort_by,
             OrderBy order_by, int page_index = 1, int page_size = 1)
         {
-            return Ok(_service.GetAllLawyers(filter, sort_by, order_by, page_index, page_size));
+            try
+            {
+                var lawyers = _service.GetAllLawyers(filter, sort_by, order_by, page_index, page_size);
+                if (lawyers != null)
+                {
+                    return Ok(lawyers);
+                }
+                return NoContent();
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
         }
 
         //GET api/lawyers/{id}
         [HttpGet("{id}", Name = "GetLawyerById")]
         public async Task<ActionResult<LawyerModel>> GetLawyerById(int id)
         {
-            var lawyerModel = await _service.GetLawyerById(id);
-            if (lawyerModel == null)
+            try
+            {
+                var lawyerModel = await _service.GetLawyerById(id);
+                if (lawyerModel == null)
+                {
+                    return BadRequest();
+                }
+                return Ok(lawyerModel);
+            }
+            catch (Exception e)
             {
                 return BadRequest();
             }
-            return Ok(lawyerModel);
         }
 
         //POST api/lawyers
         [HttpPost]
-        public async Task<ActionResult<LawyerModel>> CreateLawyer(LawyerRequest lawyerRequest)
+        public async Task<ActionResult<LawyerModel>> CreateLawyer([FromBody] LawyerRequest lawyerRequest)
         {
-            var lawyerModel = await _service.CreateLawyer(lawyerRequest);
-            if (lawyerModel != null)
+            try
             {
-                return CreatedAtRoute(nameof(GetLawyerById)
-                    , new { Id = lawyerModel.Id }, lawyerModel);
+                var lawyerModel = await _service.CreateLawyer(lawyerRequest);
+                if (lawyerModel != null)
+                {
+                    return CreatedAtRoute(nameof(GetLawyerById)
+                        , new { Id = lawyerModel.Id }, lawyerModel);
+                }
+                return BadRequest();
             }
-            return BadRequest();
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
         }
 
         //PUT api/lawyers/{id}
         [HttpPut("update-lawyer")]
-        public async Task<ActionResult<LawyerModel>> UpdateLawyer(LawyerUpdate lawyerUpdate)
+        public async Task<ActionResult<LawyerModel>> UpdateLawyer([FromBody] LawyerUpdate lawyerUpdate)
         {
-            var lawyerModel = await _service.UpdateLawyer(lawyerUpdate);
-            if (lawyerModel != null)
+            try
             {
-                return Ok(lawyerModel);
+                var lawyerModel = await _service.UpdateLawyer(lawyerUpdate);
+                if (lawyerModel != null)
+                {
+                    return Ok(lawyerModel);
+                }
+                return BadRequest();
             }
-            return BadRequest();
+            catch (Exception e) { return BadRequest(); }
         }
 
         //DELETE api/lawyers/{id}
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteLawyer(int id)
         {
-            bool deleteStatus = await _service.DeleteLawyer(id);
-            if (deleteStatus)
+            try
             {
-                return Ok();
+                bool deleteStatus = await _service.DeleteLawyer(id);
+                if (deleteStatus)
+                {
+                    return Ok();
+                }
+                return BadRequest();
             }
-            return BadRequest();
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPost("details")]

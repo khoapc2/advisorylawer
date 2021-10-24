@@ -26,56 +26,94 @@ namespace AdvisoryLawyer.API.Controllers
         public ActionResult<IEnumerable<CustomerCaseModel>> GetAllCustomerCases([FromQuery] CustomerCaseRequest filter,
             CustomerCaseSortBy sort_by, OrderBy order_by, int page_index = 1, int page_size = 1)
         {
-            return Ok(_service.GetAllCustomerCases(filter, sort_by, order_by, page_index, page_size));
+            try
+            {
+                var customerCases = _service.GetAllCustomerCases(filter, sort_by, order_by, page_index, page_size);
+                if (customerCases != null)
+                {
+                    return Ok(customerCases);
+                }
+                return NoContent();
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
         }
 
         //GET api/customer-cases/{id}
         [HttpGet("{id}", Name = "GetCustomerCaseById")]
         public async Task<ActionResult<CustomerCaseModel>> GetCustomerCaseById(int id)
         {
-            var customerCaseModel = await _service.GetCustomerCaseById(id);
-            if (customerCaseModel == null)
+            try
+            {
+                var customerCaseModel = await _service.GetCustomerCaseById(id);
+                if (customerCaseModel == null)
+                {
+                    return BadRequest();
+                }
+                return Ok(customerCaseModel);
+            }
+            catch(Exception e)
             {
                 return BadRequest();
             }
-            return Ok(customerCaseModel);
         }
 
         //POST api/customer-cases
         [HttpPost]
         public async Task<ActionResult<CustomerCaseModel>> CreateCustomerCase(CustomerCaseRequest customerCaseRequest)
         {
-            var customerCaseModel = await _service.CreateCustomerCase(customerCaseRequest);
-            if (customerCaseModel != null)
+            try
             {
-                return CreatedAtRoute(nameof(GetCustomerCaseById)
-                    , new { Id = customerCaseModel.Id }, customerCaseModel);
+                var customerCaseModel = await _service.CreateCustomerCase(customerCaseRequest);
+                if (customerCaseModel != null)
+                {
+                    return CreatedAtRoute(nameof(GetCustomerCaseById)
+                        , new { Id = customerCaseModel.Id }, customerCaseModel);
+                }
+                return BadRequest();
             }
-            return BadRequest();
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
         }
 
         //PUT api/customer-cases/{id}
         [HttpPut("update-customer-case")]
         public async Task<ActionResult<CustomerCaseModel>> UpdateCustomerCase(CustomerCaseUpdate customerCaseUpdate)
         {
-            var customerCaseModel = await _service.UpdateCustomerCase(customerCaseUpdate);
-            if (customerCaseModel != null)
+            try
             {
-                return Ok(customerCaseModel);
+                var customerCaseModel = await _service.UpdateCustomerCase(customerCaseUpdate);
+                if (customerCaseModel != null)
+                {
+                    return Ok(customerCaseModel);
+                }
+                return BadRequest();
             }
-            return BadRequest();
+            catch (Exception e) { return BadRequest(); }
         }
 
         //DELETE api/customer-cases/{id}
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteCustomerCase(int id)
         {
-            bool deleteStatus = await _service.DeleteCustomerCase(id);
-            if (deleteStatus)
+            try
             {
-                return Ok();
+                bool deleteStatus = await _service.DeleteCustomerCase(id);
+                if (deleteStatus)
+                {
+                    return Ok();
+                }
+                return BadRequest();
             }
-            return BadRequest();
+            catch(Exception e)
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPut("update-document_case")]

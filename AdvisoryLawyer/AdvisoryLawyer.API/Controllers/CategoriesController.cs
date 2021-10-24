@@ -28,66 +28,107 @@ namespace AdvisoryLawyer.API.Controllers
         public IActionResult GetAllCategories([FromQuery] CategoryModel filter, CategorySortBy sort_by, 
             OrderBy order_by, int page_index = 1, int page_size = 1)
         {
-            return Ok(_service.GetAllCategories(filter, sort_by, order_by, page_index, page_size));
+            try
+            {
+                var categories = _service.GetAllCategories(filter, sort_by, order_by, page_index, page_size);
+                if (categories != null)
+                {
+                   return Ok(categories);
+                }
+                return NoContent();
+                
+            }
+            catch(Exception e)
+            {
+                return BadRequest();
+            }
         }
 
         //GET api/categories/{id}
         [HttpGet("{id}", Name = "GetCategoryById")]
         public async Task<ActionResult <CategoryModel>> GetCategoryById(int id)
         {
-            var categoryModel = await _service.GetCategoryById(id);
-            if(categoryModel == null)
+            try
+            {
+                var categoryModel = await _service.GetCategoryById(id);
+                if (categoryModel == null)
+                {
+                    return BadRequest();
+                }
+                return Ok(categoryModel);
+            }
+            catch(Exception e)
             {
                 return BadRequest();
             }
-            return Ok(categoryModel);
         }
 
         //POST api/categories
         [HttpPost]
         public async Task<ActionResult<CategoryModel>> CreateCategory(CategoryRequest categoryRequest)
         {
-            var categoryModel = await _service.CreateCategory(categoryRequest);
-            if(categoryModel != null)
+            try
             {
-                return CreatedAtRoute(nameof(GetCategoryById)
-                    , new { Id = categoryModel.Id }, categoryModel);
+                    var categoryModel = await _service.CreateCategory(categoryRequest);
+                    if (categoryModel != null)
+                    {
+                        return CreatedAtRoute(nameof(GetCategoryById), new
+                        {
+                            Id = categoryModel.Id
+                        }, categoryModel);
+                    }
+                    return BadRequest();
+                
             }
-            return BadRequest();
+            catch (Exception e) {
+                return BadRequest(); 
+            }
         }
 
         //PUT api/categories/{id}
         [HttpPut("update-category")]
         public async Task<ActionResult<CategoryModel>> UpdateCategory(CategoryUpdate categoryUpdate)
         {
-            var categoryModel = await _service.UpdateCategory(categoryUpdate);
-            if (categoryModel != null)
+            try
             {
-                return Ok(categoryModel);
+                var categoryModel = await _service.UpdateCategory(categoryUpdate);
+                if (categoryModel != null)
+                {
+                    return Ok(categoryModel);
+                }
+                return BadRequest();
             }
-            return BadRequest();
+            catch (Exception e) { return BadRequest(); }
         }
 
         [HttpPut("update-categoryLawyer")]
         public async Task<ActionResult<CategoryModel>> UpdateCategoryLawyer(CategoryLawyerUpdate categoryUpdate)
         {
-            var categoryModel = await _service.UpdateCategoryLawyer(categoryUpdate);
-            if (categoryModel != null)
+            try
             {
-                return Ok(categoryModel);
+                var categoryModel = await _service.UpdateCategoryLawyer(categoryUpdate);
+                if (categoryModel != null)
+                {
+                    return Ok(categoryModel);
+                }
+                return BadRequest();
             }
-            return BadRequest();
+            catch (Exception e) { return BadRequest(); }
         }
 
         [HttpPut("update-categoryLawyerOffice")]
         public async Task<ActionResult<CategoryModel>> UpdateCategoryLawyerOffice(CategoryLawyerOfficeUpdate categoryUpdate)
         {
-            var categoryModel = await _service.UpdateCategoryOfficeLawyer(categoryUpdate);
-            if (categoryModel != null)
+            try
             {
-                return Ok(categoryModel);
+                var categoryModel = await _service.UpdateCategoryOfficeLawyer(categoryUpdate);
+                if (categoryModel != null)
+                {
+                    return Ok(categoryModel);
+                }
+                return BadRequest();
             }
-            return BadRequest();
+            catch (Exception e) { return BadRequest(); }
         }
 
 
@@ -95,12 +136,19 @@ namespace AdvisoryLawyer.API.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteCategory(int id)
         {
-            bool deleteStatus = await _service.DeleteCategory(id);
-            if (deleteStatus)
+            try
             {
-                return Ok();
+                bool deleteStatus = await _service.DeleteCategory(id);
+                if (deleteStatus)
+                {
+                    return Ok();
+                }
+                return BadRequest();
             }
-            return BadRequest();
+            catch(Exception e)
+            {
+                return BadRequest();
+            }
         }
     }
 }
