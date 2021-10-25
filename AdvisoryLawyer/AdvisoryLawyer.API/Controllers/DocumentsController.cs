@@ -26,56 +26,91 @@ namespace AdvisoryLawyer.API.Controllers
         public ActionResult<IEnumerable<DocumentModel>> GetAllDocuments([FromQuery] DocumentRequest filter, DocumentSortBy sort_by,
             OrderBy order_by, int page_index = 1, int page_size = 1)
         {
-            return Ok(_service.GetAllDocuments(filter, sort_by, order_by, page_index, page_size));
+            try
+            {
+                var documents = _service.GetAllDocuments(filter, sort_by, order_by, page_index, page_size);
+                if (documents != null)
+                {
+                    return Ok(documents);
+                }
+                return NoContent();
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
         }
 
         //GET api/documents/{id}
         [HttpGet("{id}", Name = "GetDocumentById")]
         public async Task<ActionResult<DocumentModel>> GetDocumentById(int id)
         {
-            var documentModel = await _service.GetDocumentById(id);
-            if (documentModel == null)
+            try
+            {
+                var documentModel = await _service.GetDocumentById(id);
+                if (documentModel == null)
+                {
+                    return BadRequest();
+                }
+                return Ok(documentModel);
+            }
+            catch (Exception e)
             {
                 return BadRequest();
             }
-            return Ok(documentModel);
         }
 
         //POST api/documents
         [HttpPost]
         public async Task<ActionResult<DocumentModel>> CreateDocument(DocumentRequest documentRequest)
         {
-            var documentModel = await _service.CreateDocument(documentRequest);
-            if (documentModel != null)
+            try
             {
-                return CreatedAtRoute(nameof(GetDocumentById)
-                    , new { Id = documentModel.Id }, documentModel);
+                var documentModel = await _service.CreateDocument(documentRequest);
+                if (documentModel != null)
+                {
+                    return CreatedAtRoute(nameof(GetDocumentById)
+                        , new { Id = documentModel.Id }, documentModel);
+                }
+                return BadRequest();
             }
-            return BadRequest();
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
         }
 
         //PUT api/documents/{id}
         [HttpPut("update-document")]
         public async Task<ActionResult<DocumentModel>> UpdateDocument(DocumentUpdate documentUpdate)
         {
-            var documentModel = await _service.UpdateDocument(documentUpdate);
-            if (documentModel != null)
+            try
             {
-                return Ok(documentModel);
+                var documentModel = await _service.UpdateDocument(documentUpdate);
+                if (documentModel != null)
+                {
+                    return Ok(documentModel);
+                }
+                return BadRequest();
             }
-            return BadRequest();
+            catch (Exception e) { return BadRequest(); }
         }
 
         //DELETE api/documents/{id}
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteDocument(int id)
         {
-            bool deleteStatus = await _service.DeleteDocument(id);
-            if (deleteStatus)
+            try
             {
-                return Ok();
+                bool deleteStatus = await _service.DeleteDocument(id);
+                if (deleteStatus)
+                {
+                    return Ok();
+                }
+                return BadRequest();
             }
-            return BadRequest();
+            catch (Exception e) { return BadRequest(); }
         }
 
         [HttpPut("update-documentcase")]

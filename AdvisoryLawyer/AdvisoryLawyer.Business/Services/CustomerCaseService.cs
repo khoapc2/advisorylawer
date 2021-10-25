@@ -46,8 +46,8 @@ namespace AdvisoryLawyer.Business.Services
             x.Status == (int)CustomerCaseStatus.Active);
             if (customerCase != null)
             {
-                await _genericRepository.DeleteAsync(id);
-                await _genericRepository.SaveAsync();
+                customerCase.Status = (int)CustomerCaseStatus.InActive;
+                await _genericRepository.UpdateAsync(customerCase);
                 return true;
             }
             return false;
@@ -119,7 +119,7 @@ namespace AdvisoryLawyer.Business.Services
         public async Task<CaseDocumentUpdate> UpdateDocumentCase(CaseDocumentUpdate request)
         {
             var category = await _genericRepository.FindAsync(x => x.Id == request.CustomerCaseId &&
-           x.Status == (int)DocumentCaseStatus.Active);
+            x.Status == (int)DocumentCaseStatus.Active);
             if (category != null)
             {
                 await _documentCaseSeService.UpdateCaseDocument(request.CustomerCaseId, request.DocumentIds);
