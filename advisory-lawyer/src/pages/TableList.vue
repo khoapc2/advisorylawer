@@ -34,7 +34,7 @@
                 round
                 @click.native.prevent="createCustomerAccount(inpName, inpEmail)"
               >
-                Create Account</p-button
+                Create Customer</p-button
               ><br />
             </div>
           </div>

@@ -26,7 +26,7 @@
             </div>
              <div class="col-md-2">
              <p-button type="info" round @click="createLawyerAccount(inpName,inpEmail)">
-              Create Account
+              Create Lawyer
             </p-button>
           </div>
           </div>

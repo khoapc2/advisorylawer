@@ -26,7 +26,7 @@
             </div>
             <div class="col-md-2">
              <p-button type="info" round @click="createOfficeAccount(inpName,inpEmail)">
-              Create Account
+              Create Office
             </p-button>
           </div>
           </div>
