@@ -76,7 +76,7 @@
             </b-form-group>
 
             <b-form-group
-              label="level"
+              label="Level"
               label-for="level-input"
               invalid-feedback="level is required"
               
@@ -108,7 +108,7 @@
             </b-form-group>
 
             <b-form-group
-              label="website"
+              label="Website"
               label-for="website-input"
               invalid-feedback="website is required"
               
@@ -122,13 +122,13 @@
             </b-form-group>
 
             <b-form-group
-              label="phone"
+              label="Phone"
               label-for="phone-input"
               invalid-feedback="phone is required"
               
             >
               <b-form-input
-                type="number"
+                type="text"
                 id="phone-input"
                 v-model="lawyer.phone_number"
                 
@@ -137,7 +137,7 @@
             </b-form-group>
 
             <b-form-group
-              label="address"
+              label="Address"
               label-for="address-input"
               invalid-feedback="address is required"
               
@@ -151,7 +151,7 @@
             </b-form-group>
 
             <b-form-group
-              label="location"
+              label="Location"
               label-for="location-input"
               invalid-feedback="location is required"
           

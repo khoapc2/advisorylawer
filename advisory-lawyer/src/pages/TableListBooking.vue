@@ -4,8 +4,8 @@
     <table class="table" ref="table">
       <thead class="thead-dark">
         <tr>
-          <th scope="col" style="text-align:center">Name</th>
-          <th scope="col" style="text-align:center">Email</th>
+          <th scope="col" style="text-align:center">Customer's Name</th>
+          <th scope="col" style="text-align:center">Lawyer's Name</th>
           <th scope="col" style="text-align:center">Role</th>
           <th scope="col" style="text-align:center">Status</th>
           <th scope="col" colspan="2" style="text-align:center">Action</th>
@@ -47,13 +47,7 @@
       </table-unrole>
     </table>
 
-    <ul class="pagination justify-content-center" style="margin:20px 0">
-      <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-      <li class="page-item"><a class="page-link" href="#">1</a></li>
-      <li class="page-item"><a class="page-link" href="#">2</a></li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item"><a class="page-link" href="#">Next</a></li>
-    </ul>
+    
   </div>
 </template>
 <script>

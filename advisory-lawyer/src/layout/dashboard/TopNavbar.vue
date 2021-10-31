@@ -74,7 +74,7 @@ export default {
       this.$sidebar.displaySidebar(false);
     },
     async logOut(){
-      await firebase.auth().signOut().then(localStorage.clear());
+        firebase.auth().signOut().then(() => localStorage.clear());
     }
   }
 };

@@ -706,7 +706,6 @@ export default {
 
   addLawyerToOffice(context, lawyer_email){
     const officeID = localStorage.getItem('id')
-
     console.log(lawyer_email)
     axios({
       method: "PUT",

@@ -26,7 +26,7 @@
             </div>
              <div class="col-md-2">
              <p-button type="info" round @click="createLawyerAccount(inpName,inpEmail)">
-              Create Account
+              Create Lawyer
             </p-button>
           </div>
           </div>
@@ -95,13 +95,13 @@
       <table-lawyer> </table-lawyer>
     </table>
 
-    <ul class="pagination justify-content-center" style="margin:20px 0">
+    <!-- <ul class="pagination justify-content-center" style="margin:20px 0">
       <li class="page-item"><a class="page-link" href="#">Previous</a></li>
       <li class="page-item"><a class="page-link" href="#">1</a></li>
       <li class="page-item"><a class="page-link" href="#">2</a></li>
       <li class="page-item"><a class="page-link" href="#">3</a></li>
       <li class="page-item"><a class="page-link" href="#">Next</a></li>
-    </ul>
+    </ul> -->
   </div>
 </template>
 <script>

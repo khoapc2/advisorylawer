@@ -16,15 +16,21 @@
  */
 import Vue from 'vue';
 import App from './App.vue';
+import VueSimpleAlert from "vue-simple-alert";
+
 // You can change this import to `import router from './starterRouter'` to quickly start development from a blank layout.
 import router from './router';
 import NowUiKit from './plugins/now-ui-kit';
 import PaperDashboard from "./plugins/paperDashboard"
 import { store } from './store/index';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
+
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 
+
+Vue.use(VueSimpleAlert);
+Vue.use(VueSimpleAlert, { reverseButtons: true });
 
 Vue.use(BootstrapVue);
 // Optionally install the BootstrapVue icon components plugin

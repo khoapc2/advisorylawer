@@ -34,7 +34,7 @@
                 round
                 @click.native.prevent="createCustomerAccount(inpName, inpEmail)"
               >
-                Create Account</p-button
+                Create Customer</p-button
               ><br />
             </div>
           </div>
@@ -65,13 +65,13 @@
       </thead>
       <table-customer> </table-customer>
     </table>
-    <ul class="pagination justify-content-center" style="margin:auto;">
+    <!-- <ul class="pagination justify-content-center" style="margin:auto;">
       <li class="page-item"><a class="page-link btn" href="#">Previous</a></li>
       <li class="page-item"><a class="page-link btn" href="#">1</a></li>
       <li class="page-item"><a class="page-link btn" href="#">2</a></li>
       <li class="page-item"><a class="page-link btn" href="#">3</a></li>
       <li class="page-item"><a class="page-link btn" href="#">Next</a></li>
-    </ul>
+    </ul> -->
   </div>
 </template>
 <script>

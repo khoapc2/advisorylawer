@@ -43,7 +43,7 @@
             </b-form-group>
 
             <b-form-group
-              label="description"
+              label="Description"
               label-for="description-input"
               invalid-feedback="description is required"
 
@@ -61,7 +61,7 @@
           <div class="col-6">
 
             <b-form-group
-              label="website"
+              label="Website"
               label-for="website-input"
               invalid-feedback="website is required"
               
@@ -74,13 +74,13 @@
             </b-form-group>
 
             <b-form-group
-              label="phone"
+              label="Phone"
               label-for="phone-input"
               invalid-feedback="phone is required"
 
             >
               <b-form-input
-                type="number"
+                type="text"
                 id="phone-input"
                 v-model="office.phone_number"
 
@@ -89,7 +89,7 @@
             </b-form-group>
 
             <b-form-group
-              label="address"
+              label="Address"
               label-for="address-input"
               invalid-feedback="address is required"
  
@@ -103,7 +103,7 @@
             </b-form-group>
 
             <b-form-group
-              label="location"
+              label="Location"
               label-for="location-input"
               invalid-feedback="location is required"
 

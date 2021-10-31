@@ -63,7 +63,7 @@
           </div>
           <div class="col-6">
             <b-form-group
-              label="phone"
+              label="Phone"
               label-for="phone-input"
               invalid-feedback="phone is required"
 
@@ -78,7 +78,7 @@
             </b-form-group>
 
             <b-form-group
-              label="address"
+              label="Address"
               label-for="address-input"
               invalid-feedback="address is required"
  
@@ -92,7 +92,7 @@
             </b-form-group>
 
             <b-form-group
-              label="location"
+              label="Location"
               label-for="location-input"
               invalid-feedback="location is required"
 

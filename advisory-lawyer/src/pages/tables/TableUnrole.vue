@@ -6,9 +6,6 @@
           <td>
             {{user.name}}
           </td>
-          <!-- <td>{{ user.address }}</td> -->
-          <!-- <td>{{ user.phone_number }}</td> -->
-          <!-- <td>{{ user.sex }}</td> -->
           <td>{{ user.email }}</td>
           <td>
             <!-- {{ user.role }} -->
@@ -102,7 +99,6 @@ export default {
      this.$refs.table.refresh();
     },
     banUser(id) {
-      console.log(id);
       this.$store.dispatch("updateStatusUnrole", id);
     },
     updateRole(user){

@@ -1,34 +1,42 @@
 <template>
   <tbody>
-        <tr v-for="user in listOfficeLawyer" :key="user.id">
-          <td style="display:none">{{ user.id }}</td>
-          <td>
-            {{user.name}}
-          </td>
-          <td>{{ user.email }}</td>
-          <td>
-            <select class="form-control" v-model="user.level_id" :required="true">
-              <option v-for="level in listLevel" :key="level.id" :value="level.id">{{
-                level.level_name
-              }}</option>
-            </select>
-          </td>
-          <td>{{user.sex}}</td>
-          <td>
-            <button type="button" class="btn btn-warning" style="float: left" @click="updateLevel(user)">
-              Update
-            </button>
-            <button
-              type="button"
-              class="btn btn-outline-danger"
-              style="float: right"
-              @click="deleteUser(user.id)"
-            >
-              Delete
-            </button>
-          </td>
-        </tr>
-      </tbody>
+    <tr v-for="user in listOfficeLawyer" :key="user.id">
+      <td style="display:none">{{ user.id }}</td>
+      <td>
+        {{ user.name }}
+      </td>
+      <td>{{ user.email }}</td>
+      <td>
+        <select class="form-control" v-model="user.level_id" :required="true">
+          <option
+            v-for="level in listLevel"
+            :key="level.id"
+            :value="level.id"
+            >{{ level.level_name }}</option
+          >
+        </select>
+      </td>
+      <td>{{ user.sex }}</td>
+      <td>
+        <button
+          type="button"
+          class="btn btn-warning"
+          style="float: left"
+          @click="updateLevel(user)"
+        >
+          Update
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-danger"
+          style="float: right"
+          @click="deleteUser(user.id, user.name)"
+        >
+          Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
 </template>
 
 <script>
@@ -37,7 +45,6 @@ import { mapActions, mapGetters, mapState } from "vuex";
 export default {
   data() {
     return {
-      
       listUser: [],
       levelOption: [
         {
@@ -59,22 +66,30 @@ export default {
   computed: {
     ...mapState({
       listOfficeLawyer: "listOfficerManagementLawyer",
-      listLevel: "level"
+      listLevel: "level",
     }),
   },
   methods: {
-    
-
     onUpdate() {
-     this.$refs.table.refresh();
+      this.$refs.table.refresh();
     },
-    deleteUser(id) {
-      this.$store.dispatch("removeLawyerFromOffice", id);
+    deleteUser(id, username) {
+      this.$confirm("Are you want to remove this lawyer: " + username).then(
+        () => {
+          this.$store.dispatch("removeLawyerFromOffice", id);
+        }
+      );
     },
-    updateLevel(user){
-      this.$store.dispatch("updateLevelLawyer", user)
+    updateLevel(user) {
+      this.$store.dispatch("updateLevelLawyer", user);
+      this.$fire({
+        title: "Update Successful",
+        type: "success",
+        timer: 3000,
+      }).then((r) => {
+        console.log(r.value);
+      });
     },
-
   },
   mounted() {
     this.$store.dispatch("getListLawyerOffice");
