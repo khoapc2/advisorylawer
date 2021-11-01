@@ -22,10 +22,12 @@ namespace BookingLawyer.Business.Services
     {
         private readonly IGenericRepository<Booking> _res;
         private readonly IMapper _mapper;
-        public BookingService(IGenericRepository<Booking> res, IMapper mapper)
+        private readonly IAgoraService _agoraService;
+        public BookingService(IGenericRepository<Booking> res, IMapper mapper, IAgoraService agoraService)
         {
             _res = res;
             _mapper = mapper;
+            _agoraService = agoraService;
         }
 
         public async Task<BookingModel> CreateBooking(CreateBookingRequest request)
@@ -33,6 +35,7 @@ namespace BookingLawyer.Business.Services
             var Booking = _mapper.Map<Booking>(request);
             await _res.InsertAsync(Booking);
             await _res.SaveAsync();
+            await _agoraService.InsertChannel(Booking.Id.ToString(), Booking.Id);
             return _mapper.Map<BookingModel>(Booking);
         }
 

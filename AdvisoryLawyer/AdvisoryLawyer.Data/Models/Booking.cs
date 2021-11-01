@@ -10,6 +10,7 @@ namespace AdvisoryLawyer.Data.Models
         public Booking()
         {
             Advisories = new HashSet<Advisory>();
+            AgoraChannels = new HashSet<AgoraChannel>();
             Slots = new HashSet<Slot>();
         }
 
@@ -27,6 +28,7 @@ namespace AdvisoryLawyer.Data.Models
         public virtual CustomerCase CustomerCase { get; set; }
         public virtual Lawyer Lawyer { get; set; }
         public virtual ICollection<Advisory> Advisories { get; set; }
+        public virtual ICollection<AgoraChannel> AgoraChannels { get; set; }
         public virtual ICollection<Slot> Slots { get; set; }
     }
 }

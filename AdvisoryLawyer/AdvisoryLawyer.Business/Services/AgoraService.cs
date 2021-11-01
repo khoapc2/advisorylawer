@@ -2,6 +2,9 @@
 using AdvisoryLawyer.Business.Requests.AgoraRequest;
 using AdvisoryLawyer.Business.Utilities.Media;
 using AdvisoryLawyer.Business.ViewModel;
+using AdvisoryLawyer.Data.IRepositories;
+using AdvisoryLawyer.Data.Models;
+using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -14,10 +17,14 @@ namespace AdvisoryLawyer.Business.Services
     public class AgoraService : IAgoraService
     {
         private IConfiguration _config;
+        private readonly IGenericRepository<AgoraChannel> _genericRepository;
+        private readonly IMapper _mapper;
 
-        public AgoraService(IConfiguration config)
+        public AgoraService(IConfiguration config, IGenericRepository<AgoraChannel> genericRepository, IMapper mapper)
         {
             _config = config;
+            _genericRepository = genericRepository;
+            _mapper = mapper;
         }
 
         public AgoraChannelModel GetChannel(AgoraRequest request)
@@ -41,6 +48,22 @@ namespace AdvisoryLawyer.Business.Services
             return new AgoraChannelModel {Token = tokenString, Channel = channel };
         }
 
+        public async Task InsertChannel(string channel, int bookingId)
+        {
+            var agoraChannel = new AgoraChannel {
+                BookingId = bookingId,
+                ChannelName = channel,
+                Status = 1
+            };
 
+            await _genericRepository.InsertAsync(agoraChannel);
+            await _genericRepository.SaveAsync();
+        }
+
+        public async Task<AgoraChannelReponse> GetChannalByBookingID(int id)
+        {
+            var channel = await _genericRepository.FindAsync(c => c.BookingId == id && c.Status == 1);
+            return _mapper.Map<AgoraChannelReponse>(channel);
+        }
     }
 }

@@ -18,6 +18,7 @@ namespace AdvisoryLawyer.Data.Models
         }
 
         public virtual DbSet<Advisory> Advisories { get; set; }
+        public virtual DbSet<AgoraChannel> AgoraChannels { get; set; }
         public virtual DbSet<Booking> Bookings { get; set; }
         public virtual DbSet<CaseItem> CaseItems { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
@@ -59,6 +60,22 @@ namespace AdvisoryLawyer.Data.Models
                     .HasForeignKey(d => d.BookingId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__Advisory__Bookin__2F10007B");
+            });
+
+            modelBuilder.Entity<AgoraChannel>(entity =>
+            {
+                entity.ToTable("AgoraChannel");
+
+                entity.Property(e => e.BookingId).HasColumnName("BookingID");
+
+                entity.Property(e => e.ChannelName)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Booking)
+                    .WithMany(p => p.AgoraChannels)
+                    .HasForeignKey(d => d.BookingId)
+                    .HasConstraintName("FK__AgoraChan__Booki__5CD6CB2B");
             });
 
             modelBuilder.Entity<Booking>(entity =>

@@ -22,7 +22,7 @@ namespace AdvisoryLawyer.API.Controllers
         }
 
         //[Authorize]
-        [HttpPost] 
+        [HttpPost]
         public IActionResult GetChannel([FromBody] AgoraRequest request)
         {
             try
@@ -35,5 +35,22 @@ namespace AdvisoryLawyer.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        //[Authorize]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetChannelByBookingID(int id)
+        {
+            try
+            {
+                var channel = await _service.GetChannalByBookingID(id);
+                return Ok(channel);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
     }
 }
