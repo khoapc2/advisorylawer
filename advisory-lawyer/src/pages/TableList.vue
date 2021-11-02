@@ -120,22 +120,12 @@ export default {
     if (localStorage.getItem("role") !== "admin") {
       this.$router.push("/");
     } else {
-      this.$store.dispatch("getUserListApi");
+      this.$store.dispatch("customer/getUserListApi");
     }
-
-    // this.listUser = this._getUserList
-    // listUser = _getUserList
   },
   computed: {
-    ...mapGetters({
-      _getUserList: "GET_LIST_USER",
-    }),
-    ...mapActions({
-      // userList: "getUserList",
-      // getUserListApi: "getUserListApi",
-    }),
-    ...mapState({
-      customerList: "listUser",
+    ...mapState('customer',{
+      customerList: "customerlistUser",
     }),
   },
   methods: {
@@ -144,15 +134,15 @@ export default {
       this.$refs.table.refresh();
     },
     banUser(id) {
-      this.$store.dispatch("changeStatusUser", id);
+      this.$store.dispatch("customer/changeStatusUser", id);
     },
     updateCustomerRole(id, role) {
-      this.$store.dispatch("updateCustomerRole", { id, role });
+      this.$store.dispatch("customer/updateCustomerRole", { id, role });
     },
     createCustomerAccount(inpName, inpEmail) {
       if (inpName.trim() !== "" && inpEmail.trim() !== "") {
         try {
-          this.$store.dispatch("createCustomer", {inpName,inpEmail})
+          this.$store.dispatch("customer/createCustomer", {inpName,inpEmail})
           this.inpName = '',
           this.inpEmail = ''
           this.errorMessage = "success"
@@ -171,7 +161,7 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch("getUserListApi");
+    this.$store.dispatch("customer/getUserListApi");
   },
 };
 </script>

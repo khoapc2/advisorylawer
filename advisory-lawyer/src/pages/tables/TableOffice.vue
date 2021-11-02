@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
+import {mapState } from "vuex";
 import OfficeModal from '../modals/OfficeModal.vue';
 export default {
   components :{
@@ -98,27 +98,27 @@ export default {
     }
   },
   computed: {
-    ...mapState({
+    ...mapState('office',{
       listOffice: "listOfficer",
       office: "office"
     }),
   },
   methods: {
     clickViewDetail(user) {
-      this.$store.dispatch("getOfficeByEmail", user.email) 
+      this.$store.dispatch("office/getOfficeByEmail", user.email) 
     },
     onUpdate() {
      this.$refs.table.refresh();
     },
     banUser(id) {      
-      this.$store.dispatch("changeStatusOfficer", id);
+      this.$store.dispatch("office/changeStatusOfficer", id);
     },
     updateRole(user){
-      this.$store.dispatch("updateUnroleUser", {user})
+      this.$store.dispatch("office/updateUnroleUser", {user})
     },
   },
   mounted() {
-    this.$store.dispatch("getListOfficer");
+    this.$store.dispatch("office/getListOfficer");
   },
 };
 </script>

@@ -97,9 +97,6 @@ export default {
     } else {
       this.$store.dispatch("getListUnroleUser");
     }
-
-    // this.listUser = this._getUserList
-    // listUser = _getUserList
   },
   computed: {
     ...mapState({

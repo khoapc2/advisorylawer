@@ -156,23 +156,14 @@ export default {
     if (localStorage.getItem("role") !== "admin") {
       this.$router.push("/");
     } else {
-      this.$store.dispatch("getUserListApi");
+      // this.$store.dispatch("lawyer/getUserListApi");
     }
 
     // this.listUser = this._getUserList
     // listUser = _getUserList
   },
   computed: {
-    ...mapGetters({
-      _getUserList: "GET_LIST_USER",
-    }),
-    ...mapActions({
-      // userList: "getUserList",
-      // getUserListApi: "getUserListApi",
-    }),
-    ...mapState({
-      customerList: "listUser",
-    }),
+    
   },
   methods: {
     searchByStatus(ev){
@@ -187,20 +178,20 @@ export default {
       }
 
       if(intStatus !== -1){
-        this.$store.dispatch("searchLawyerByStatus", intStatus);
+        this.$store.dispatch("lawyer/searchLawyerByStatus", intStatus);
       }else{
-        this.$store.dispatch("getListLawyer");
+        this.$store.dispatch("lawyer/getListLawyer");
       }
       this.searchName = "",
       this.searchEmail = ""
     },
     searchByName(username){
-      this.$store.dispatch("searchLawyerByName", username);
+      this.$store.dispatch("lawyer/searchLawyerByName", username);
       this.selected = undefined
       this.searchEmail = ''
     },
     searchByEmail(email){
-      this.$store.dispatch("searchLawyerByEmail", email);
+      this.$store.dispatch("lawyer/searchLawyerByEmail", email);
       this.selected = undefined
       this.searchName = ''
     },
@@ -208,7 +199,7 @@ export default {
       this.$refs.table.refresh();
     },
     banUser(id) {
-      this.$store.dispatch("changeStatusUser", id);
+      this.$store.dispatch("lawyer/changeStatusUser", id);
     },
     // updateCustomerRole(id,role){
     //   this.$store.dispatch("updateCustomerRole", {id,role})
@@ -216,7 +207,7 @@ export default {
     createLawyerAccount(inpName, inpEmail) {
       if (inpName.trim() !== "" && inpEmail.trim() !== "") {
         try {
-          this.$store.dispatch("createLawyer", { inpName, inpEmail });
+          this.$store.dispatch("lawyer/createLawyer", { inpName, inpEmail });
           this.errorMessage = "success";
         } catch (error) {
           this.errorMessage = "error";
@@ -230,9 +221,6 @@ export default {
         }
       }
     },
-  },
-  mounted() {
-    this.$store.dispatch("getUserListApi");
   },
 };
 </script>

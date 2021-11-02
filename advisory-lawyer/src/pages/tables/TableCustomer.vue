@@ -110,7 +110,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 import CustomerModal from '../modals/CustomerModal.vue';
 export default {
   components :{
@@ -158,11 +158,8 @@ export default {
     }
   },
   computed: {
-    ...mapActions({
-      // userList: "getUserList",
-      // getUserListApi: "getUserListApi",
-    }),
-    ...mapState({
+
+    ...mapState('customer',{
       customerList: "listUser",
       customer: "customer"
     }),
@@ -180,40 +177,37 @@ export default {
       }
 
       if(intStatus !== -1){
-        this.$store.dispatch("searchByStatus", intStatus);
+        this.$store.dispatch("customer/searchByStatus", intStatus);
       }else{
-        this.$store.dispatch("getUserListApi");
+        this.$store.dispatch("customer/getUserListApi");
       }
       this.searchName = "",
       this.searchEmail = ""
     },
     searchByName(username){
-      this.$store.dispatch("searchByName", username);
+      this.$store.dispatch("customer/searchByName", username);
       this.selected = undefined
       this.searchEmail = ''
     },
     searchByEmail(email){
-      this.$store.dispatch("searchByEmail", email);
+      this.$store.dispatch("customer/searchByEmail", email);
       this.selected = undefined
       this.searchName = ''
     },
 
     clickViewDetail(user) {
-      this.$store.dispatch("getCustomerByEmail", user.email) 
+      this.$store.dispatch("customer/getCustomerByEmail", user.email) 
     },
     onUpdate() {
      this.$refs.table.refresh();
     },
     banUser(id) {
-      this.$store.dispatch("changeStatusUser", id);
+      this.$store.dispatch("customer/changeStatusUser", id);
     },
     updateCustomerRole(id,role){
-      this.$store.dispatch("updateCustomerRole", {id,role})
+      this.$store.dispatch("customer/updateCustomerRole", {id,role})
     }
 
-  },
-  mounted() {
-    // this.$store.dispatch("getUserListApi");
   },
 };
 </script>

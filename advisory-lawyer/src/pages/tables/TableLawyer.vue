@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
+import {mapState } from "vuex";
 import LawyerModal from '../modals/LawyerModal.vue';
 export default {
   components :{
@@ -63,7 +63,6 @@ export default {
   },
   data() {
     return {
-      
       listUser: [],
       roleOption: [
         {
@@ -100,27 +99,27 @@ export default {
     }
   },
   computed: {
-    ...mapState({
+    ...mapState('lawyer',{
       listLawyer: "listLawyer",
       lawyer: "lawyer"
     }),
   },
   methods: {
     clickViewDetail(user) {
-      this.$store.dispatch("getLawyerByEmail", user.email) 
+      this.$store.dispatch("lawyer/getLawyerByEmail", user.email) 
     },
     onUpdate() {
      this.$refs.table.refresh();
     },
     banUser(id) {
-      this.$store.dispatch("changeStatusLawyer", id);
+      this.$store.dispatch("lawyer/changeStatusLawyer", id);
     },
     updateRole(user){
-      this.$store.dispatch("updateUnroleUser", {user})
+      this.$store.dispatch("lawyer/updateUnroleUser", {user})
     },
   },
   mounted() {
-    this.$store.dispatch("getListLawyer");
+    this.$store.dispatch("lawyer/getListLawyer");
   },
 };
 </script>

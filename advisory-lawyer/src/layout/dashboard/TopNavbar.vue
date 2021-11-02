@@ -73,7 +73,7 @@ export default {
     hideSidebar() {
       this.$sidebar.displaySidebar(false);
     },
-    async logOut(){
+    logOut(){
         firebase.auth().signOut().then(() => localStorage.clear());
     }
   }

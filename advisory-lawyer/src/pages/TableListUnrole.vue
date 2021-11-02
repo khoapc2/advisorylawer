@@ -99,7 +99,6 @@
   </div>
 </template>
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
 import TableUnrole from './tables/TableUnrole.vue'
 
 export default {
@@ -148,16 +147,8 @@ export default {
     if (localStorage.getItem("role") !== "admin") {
       this.$router.push("/");
     } else {
-      this.$store.dispatch("getListUnroleUser");
-    }
 
-    // this.listUser = this._getUserList
-    // listUser = _getUserList
-  },
-  computed: {
-    ...mapState({
-      customerList: "listUnroleUser",
-    }),
+    }
   },
   methods: {
     searchByStatus(ev){
@@ -172,20 +163,20 @@ export default {
       }
 
       if(intStatus !== -1){
-        this.$store.dispatch("searchUnRoleByStatus", intStatus);
+        this.$store.dispatch("unroleUser/searchUnRoleByStatus", intStatus);
       }else{
-        this.$store.dispatch("getListOfficer");
+        this.$store.dispatch("unroleUser/getListOfficer");
       }
       this.searchName = "",
       this.searchEmail = ""
     },
     searchByName(username){
-      this.$store.dispatch("searchUnRoleByName", username);
+      this.$store.dispatch("unroleUser/searchUnRoleByName", username);
       this.selected = undefined
       this.searchEmail = ''
     },
     searchByEmail(email){
-      this.$store.dispatch("searchUnRoleByEmail", email);
+      this.$store.dispatch("unroleUser/searchUnRoleByEmail", email);
       this.selected = undefined
       this.searchName = ''
     },
@@ -193,14 +184,14 @@ export default {
      this.$refs.table.refresh();
     },
     banUser(id) {
-      this.$store.dispatch("changeStatusUser", id);
+      this.$store.dispatch("unroleUser/changeStatusUser", id);
     },
     updateRole(id,role){
-      this.$store.dispatch("updateUnroleUser", {id,role})
+      this.$store.dispatch("unroleUser/updateUnroleUser", {id,role})
     },
     createCustomerAccount(inpName, inpEmail){
       if(inpName.trim() !== '' && inpEmail.trim() !== ''){
-        this.$store.dispatch("createCustomer", {inpName,inpEmail})
+        this.$store.dispatch("unroleUser/createCustomer", {inpName,inpEmail})
       }
       else {
         this.message = "Create fail"

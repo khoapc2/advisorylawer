@@ -103,7 +103,6 @@
   </div>
 </template>
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
 import TableOffice from './tables/TableOffice.vue'
 
 export default {
@@ -155,16 +154,8 @@ export default {
     if (localStorage.getItem("role") !== "admin") {
       this.$router.push("/");
     } else {
-      this.$store.dispatch("getListOfficer");
+      this.$store.dispatch("office/getListOfficer");
     }
-  },
-  computed: {
-    ...mapGetters({
-      _getUserList: "GET_LIST_USER",
-    }),
-    ...mapState({
-      officerList: "listOfficer",
-    }),
   },
   methods: {
     searchByStatus(ev){
@@ -180,40 +171,31 @@ export default {
       }
 
       if(intStatus !== -1){
-        this.$store.dispatch("searchOfficeByStatus", intStatus);
+        this.$store.dispatch("office/searchOfficeByStatus", intStatus);
       }else{
-        this.$store.dispatch("getListOfficer");
+        this.$store.dispatch("office/getListOfficer");
       }
       this.searchName = "",
       this.searchEmail = ""
     },
     searchByName(username){
-      this.$store.dispatch("searchOfficeByName", username);
+      this.$store.dispatch("office/searchOfficeByName", username);
       this.selected = undefined
       this.searchEmail = ''
     },
     searchByEmail(email){
-      this.$store.dispatch("searchOfficeByEmail", email);
+      this.$store.dispatch("office/searchOfficeByEmail", email);
       this.selected = undefined
       this.searchName = ''
     },
     onUpdate() {
      this.$refs.table.refresh();
     },
-    // banUser(id) {
-    //   console.log(id);
-    //   this.$store.dispatch("changeStatusOfficer", id);
-    // },
-    // updateCustomerRole(id,role){
-    //   this.$store.dispatch("updateCustomerRole", {id,role})
-    // },
     createOfficeAccount(inpName, inpEmail){
       if(inpName.trim() !== '' && inpEmail.trim() !== ''){
         console.log(inpName, inpEmail);
         try{
-        this.$store.dispatch("createOffice", {inpName,inpEmail})
-        // this.inpName = '',
-        //   this.inpEmail = ''
+        this.$store.dispatch("office/createOffice", {inpName,inpEmail})
           this.errorMessage = "success"
         }catch(error){
           this.errorMessage = "error"
@@ -228,9 +210,6 @@ export default {
         }
       }
     }
-  },
-  mounted() {
-    this.$store.dispatch("getListOfficer");
   },
 };
 </script>

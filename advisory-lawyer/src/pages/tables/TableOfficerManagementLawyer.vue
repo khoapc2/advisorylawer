@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
+import {mapState } from "vuex";
 
 export default {
   data() {
@@ -64,7 +64,7 @@ export default {
     }
   },
   computed: {
-    ...mapState({
+    ...mapState("office",{
       listOfficeLawyer: "listOfficerManagementLawyer",
       listLevel: "level",
     }),
@@ -76,12 +76,12 @@ export default {
     deleteUser(id, username) {
       this.$confirm("Are you want to remove this lawyer: " + username).then(
         () => {
-          this.$store.dispatch("removeLawyerFromOffice", id);
+          this.$store.dispatch("office/removeLawyerFromOffice", id);
         }
       );
     },
     updateLevel(user) {
-      this.$store.dispatch("updateLevelLawyer", user);
+      this.$store.dispatch("office/updateLevelLawyer", user);
       this.$fire({
         title: "Update Successful",
         type: "success",
@@ -92,8 +92,8 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch("getListLawyerOffice");
-    this.$store.dispatch("getLevel");
+    this.$store.dispatch("office/getListLawyerOffice");
+    this.$store.dispatch("office/getLevel");
   },
 };
 </script>

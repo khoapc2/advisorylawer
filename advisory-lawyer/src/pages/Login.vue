@@ -51,18 +51,7 @@ export default {
       this.ui.start("#firebaseui-auth-container", uiConfig);
     }
   },
-  computed: {
-    ...mapGetters({
-      _getUser: 'getUser'
-    }
-      
-    )
-  },
-  methods: {
-    
-  },
  
-  
   created() {
     if (firebase.apps.length === 0) {
       firebase.initializeApp(firebaseConfig);

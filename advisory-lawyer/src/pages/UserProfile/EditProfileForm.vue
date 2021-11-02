@@ -159,7 +159,7 @@ export default {
       this.name = localStorage.getItem("displayName");
       if(this.role === "admin"){}
       else if(this.role === "lawyer_office"){
-        this.$store.dispatch("getOfficerProfile");
+        this.$store.dispatch("office/getOfficerProfile");
       }else{
         this.$router.push("/");
       }
@@ -169,17 +169,13 @@ export default {
   },
   methods: {
     updateOfficerProfile(user){
-      console.log("UPDATE" + user)
-      this.$store.dispatch("updateOfficeProfile", user);
+      this.$store.dispatch("office/updateOfficeProfile", user);
     }
   },
   computed: {
-    ...mapState({
+    ...mapState("office",{
       officeProfile: "officerProfile",
     }),
-    // ...mapActions({
-    //   _userProfile: "getUserProfile",
-    // }),
   },
 };
 </script>

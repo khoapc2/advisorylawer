@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
+import { mapState } from "vuex";
 
 export default {
   data() {
@@ -90,7 +90,7 @@ export default {
     }
   },
   computed: {
-    ...mapState({
+    ...mapState('unroleUser',{
       unroleUserList: "listUnroleUser",
     }),
   },
@@ -99,30 +99,15 @@ export default {
      this.$refs.table.refresh();
     },
     banUser(id) {
-      this.$store.dispatch("updateStatusUnrole", id);
+      this.$store.dispatch("unroleUser/updateStatusUnrole", id);
     },
     updateRole(user){
-      this.$store.dispatch("updateUnroleUser", {user})
+      this.$store.dispatch("unroleUser/updateUnroleUser", {user})
     },
   },
   mounted() {
-    this.$store.dispatch("getListUnroleUser");
+    this.$store.dispatch("unroleUser/getListUnroleUser");
   },
 };
 </script>
-
-  
-
-
-
-
-
-
-
-
-
-  
-
-
-
 <style lang="scss" scoped></style>>

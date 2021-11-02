@@ -86,7 +86,7 @@
   </div>
 </template>
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
+import {mapState } from "vuex";
 import TableOfficerManagementLawyer from './tables/TableOfficerManagementLawyer.vue'
 
 export default {
@@ -135,26 +135,18 @@ export default {
     if (localStorage.getItem("role") !== "lawyer_office") {
       this.$router.push("/");
     } else {
-      this.$store.dispatch("getUserListApi");
+      // this.$store.dispatch("office/getUserListApi");
     }
   },
   computed: {
-    ...mapGetters({
-      _getUserList: "GET_LIST_USER",
-    }),
-    ...mapActions({
-      // userList: "getUserList",
-      // getUserListApi: "getUserListApi",
-    }),
-    ...mapState({
-      customerList: "listUser",
+    ...mapState('office',{
       listLevel: "level"
     }),
   },
   methods: {
     addLawyer(lawyerEmail){
       try{
-        this.$store.dispatch("addLawyerToOffice", lawyerEmail);
+        this.$store.dispatch("office/addLawyerToOffice", lawyerEmail);
         this.inpEmail = "";
       //   this.$fire({
       //   title: "Add Successful",
@@ -171,21 +163,21 @@ export default {
       var level = ev.target.value
       
       if(this.selected !== undefined){
-        this.$store.dispatch("searchLawyerOfficeByLevel", level);
+        this.$store.dispatch("office/searchLawyerOfficeByLevel", level);
       }else{
-        this.$store.dispatch("getListLawyerOffice");
+        this.$store.dispatch("office/getListLawyerOffice");
       }
            
       this.searchName = "",
       this.searchEmail = ""
     },
     searchByName(name){
-      this.$store.dispatch("searchLawyerOfficeByName", name);
+      this.$store.dispatch("office/searchLawyerOfficeByName", name);
       this.selected = undefined
       this.searchEmail = ''
     },
     searchByEmail(email){
-      this.$store.dispatch("searchLawyerOfficeByEmail", email);
+      this.$store.dispatch("office/searchLawyerOfficeByEmail", email);
       this.selected = undefined
       this.searchName = ''
     },
@@ -194,8 +186,8 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch("getUserListApi");
-    this.$store.dispatch("getLevel");
+    // this.$store.dispatch("getUserListApi");
+    this.$store.dispatch("office/getLevel");
   },
 };
 </script>

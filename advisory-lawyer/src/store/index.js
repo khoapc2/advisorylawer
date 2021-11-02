@@ -1,28 +1,25 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-// import actions from './actions';
-// import getters from './getters';
-// import mutations from './mutations';
-
 Vue.use(Vuex);
-
-
 import state from "./states";
-import getters from "./getters";
 import mutations from "./mutations";
-// import * as actions from "./actions";
 import actions from './actions';
+import customerModule from './modules/customer/index.js';
+import lawyerModule from './modules/lawyer/index.js';
+import officeModule from './modules/office/index.js';
+import unroleUser from './modules/unrole-user/index.js';
+
 
 
 export const store = new Vuex.Store({
+    modules: {
+        customer: customerModule,
+        lawyer: lawyerModule,
+        office: officeModule,
+        unroleUser: unroleUser,
+    },
     state,
-    getters,
     mutations,
     actions,
-    // : {
-    //     getUserInfo(context, payload){
-    //         context.commit('setUserInfor', payload)
-    //     }
-    // },
 });
