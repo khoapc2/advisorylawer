@@ -91,7 +91,7 @@ export default {
       axios({
         method: "POST",
         url:
-          "https://104.215.186.78/api/customers/details",
+          "https://104.215.186.78/api/v1/customers/details",
         data:{
           email: `${email}`
         },
@@ -105,24 +105,6 @@ export default {
     }
   },
 
-  getCustomerByEmail(context, email) {
-    if(email !== null){
-      axios({
-        method: "POST",
-        url:
-          "https://104.215.186.78/api/customers/details",
-        data:{
-          email: `${email}`
-        },
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
-        },
-      }).then((response) => {
-        context.commit("CUSTOMER", response.data);
-      });
-    }
-  },
 
   searchByName(context, username){
     const pageSize = 10;

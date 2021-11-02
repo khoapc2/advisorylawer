@@ -16,22 +16,9 @@ export default {
     
     
     
-    // Customer
-    CUSTOMER(state, data){
-        console.log(data);
-        state.customer = data
-    },
-
-    // Lawyer
-    LAWYER(state, data){
-        state.lawyer = data
-    },
-
-    //Office
-    OFFICE(state, data){
-        state.office = data
-    },
+    
 
     
 
+    
 };

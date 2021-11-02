@@ -17,4 +17,8 @@ export default {
             state.listUser.splice(i, 1);
         }
     },
+    
+    CUSTOMER(state, data){
+        state.customer = data
+    },
 }

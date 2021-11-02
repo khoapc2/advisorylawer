@@ -5,4 +5,9 @@ export default {
             state.listLawyer = data
         }  
     },
+
+    // Lawyer
+    LAWYER(state, data){
+        state.lawyer = data
+    },
 }

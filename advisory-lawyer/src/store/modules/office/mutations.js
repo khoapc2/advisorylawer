@@ -17,5 +17,10 @@ export default {
 
     GET_LEVEL(state,data){
         state.level = data
-    }
+    },
+
+    //Office
+    OFFICE(state, data){
+        state.office = data
+    },
 }
