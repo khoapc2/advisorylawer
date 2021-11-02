@@ -29,6 +29,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 
+
+
 Vue.use(VueSimpleAlert);
 Vue.use(VueSimpleAlert, { reverseButtons: true });
 
@@ -38,6 +40,11 @@ Vue.use(IconsPlugin);
 Vue.config.productionTip = false;
 Vue.use(PaperDashboard);
 Vue.use(NowUiKit);
+
+
+
+
+
 
 // var firebaseConfig = {
 //   apiKey: "AIzaSyAgzYKDm5O_9woBI9Srik46ZANGT8mDa40",
@@ -51,6 +58,11 @@ Vue.use(NowUiKit);
 // firebase.initializeApp(firebaseConfig)
 
 new Vue({
+
+
+
+
+  
   router,
   store,
   render: h => h(App)

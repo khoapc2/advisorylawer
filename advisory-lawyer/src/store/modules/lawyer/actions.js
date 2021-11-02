@@ -36,7 +36,6 @@ export default {
     });
   },
 
-
   searchLawyerByEmail(context, email) {
     const pageSize = 10;
     const pageIndex = 1;

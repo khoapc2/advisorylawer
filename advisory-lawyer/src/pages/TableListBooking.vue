@@ -4,13 +4,14 @@
     <table class="table" ref="table">
       <thead class="thead-dark">
         <tr>
-          <th scope="col" style="text-align:center">Customer's Name</th>
-          <th scope="col" style="text-align:center">Lawyer's Name</th>
-          <th scope="col" style="text-align:center">Role</th>
-          <th scope="col" style="text-align:center">Status</th>
-          <th scope="col" colspan="2" style="text-align:center">Action</th>
+          <th scope="col">Customer's Name</th>
+          <th scope="col">Lawyer's Name</th>
+          <th scope="col">Booking Date</th>
+          <th scope="col">Pay Date</th>
+          <th scope="col">Pay Method</th>
+          <th scope="col">Price</th>
         </tr>
-        <tr>
+        <!-- <tr>
           <td>
             <div class="form-horizontal">
               <input
@@ -40,23 +41,22 @@
                   }}</option>
                 </select>
           </td>
-        </tr>
+        </tr> -->
       </thead>
-      <table-unrole>
+      <table-booking>
 
-      </table-unrole>
+      </table-booking>
     </table>
 
     
   </div>
 </template>
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
-import TableUnrole from './tables/TableUnrole.vue'
+import TableBooking from './tables/TableBooking.vue'
 
 export default {
   components: {
-    TableUnrole
+    TableBooking
     },
   data() {
     return {
@@ -94,32 +94,16 @@ export default {
   created() {
     if (localStorage.getItem("role") !== "admin") {
       this.$router.push("/");
-    } else {
-      this.$store.dispatch("getListUnroleUser");
-    }
+    } 
   },
   computed: {
-    ...mapState({
-      customerList: "listUnroleUser",
-    }),
+   
   },
   methods: {
-    onUpdate() {
-     this.$refs.table.refresh();
-    },
-    
- 
-    createCustomerAccount(inpName, inpEmail){
-      if(inpName.trim() !== '' && inpEmail.trim() !== ''){
-        this.$store.dispatch("createCustomer", {inpName,inpEmail})
-      }
-      else {
-        this.message = "Create fail"
-      }
-    }
+   
   },
   mounted() {
-    this.$store.dispatch("getUserListApi");
+    
   },
 };
 </script>

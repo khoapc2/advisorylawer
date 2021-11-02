@@ -159,8 +159,6 @@ export default {
       // this.$store.dispatch("lawyer/getUserListApi");
     }
 
-    // this.listUser = this._getUserList
-    // listUser = _getUserList
   },
   computed: {
     

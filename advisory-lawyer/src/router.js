@@ -1,7 +1,5 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-// import Index from './pages/Index.vue';
-// import Landing from './pages/Landing.vue';
 import Login from './pages/Login.vue';
 // import Profile from './pages/Profile.vue';
 import MainNavbar from './layout/MainNavbar.vue';
@@ -14,6 +12,7 @@ import TableListOfficer from "@/pages/TableListOfficer.vue";
 import TableListLawyer from "@/pages/TableListLawyer.vue";
 import TableListUnrole from "@/pages/TableListUnrole.vue";
 import TableListOfficeManagementLawyer from "@/pages/TableListOfficeManagementLawyer.vue";
+import TableListBooking from "@/pages/TableListBooking.vue";
 
 
 
@@ -111,7 +110,11 @@ export default new Router({
           name: "Office Management Lawyer",
           component: TableListOfficeManagementLawyer
         },
-
+        {
+          path: "/table-list-booking",
+          name: "Booking Management",
+          component: TableListBooking
+        },
       ]
     },
 
