@@ -44,11 +44,11 @@ namespace AdvisoryLawyer.API.Controllers
 
         [Authorize]
         [HttpGet]
-        public IActionResult GetListAccount([FromQuery] UserAccountRequest request, UserAccountSortBy sort_by, OrderBy order_by, int page_index = 1, int page_size = 5)
+        public async Task<IActionResult> GetListAccount([FromQuery] UserAccountRequest request, UserAccountSortBy sort_by, OrderBy order_by, int page_index = 1, int page_size = 5)
         {
             try
             {
-                var listAccount = _service.GetListAccount(request, sort_by, order_by, page_index, page_size);
+                var listAccount = await _service.GetListAccount(request, sort_by, order_by, page_index, page_size);
                 return Ok(listAccount);
             }
             catch (Exception ex)

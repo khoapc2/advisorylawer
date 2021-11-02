@@ -20,6 +20,7 @@ using Reso.Core.Utilities;
 using AdvisoryLawyer.Business.Requests.CustomerRequest;
 using AdvisoryLawyer.Business.Requests.LawyerRequest;
 using AdvisoryLawyer.Business.Requests.LawyerOfficeRequest;
+using Microsoft.EntityFrameworkCore;
 
 namespace AdvisoryLawyer.Business.Services
 {
@@ -70,7 +71,7 @@ namespace AdvisoryLawyer.Business.Services
             return _mapper.Map<UserAccountModel>(account);
         }
 
-        public IPagedList<UserAccountModel> GetListAccount(UserAccountRequest request, UserAccountSortBy sortBy, OrderBy orderBy, int pageIndex, int pageSize)
+        public async Task<IPagedList<UserAccountModel>> GetListAccount(UserAccountRequest request, UserAccountSortBy sortBy, OrderBy orderBy, int pageIndex, int pageSize)
         {
             var accountList = _genericRepository.GetAllByIQueryable();
             if (accountList == null) return null;
@@ -100,7 +101,27 @@ namespace AdvisoryLawyer.Business.Services
                     }
                     break;
             }
-            return PagedListExtensions.ToPagedList(accountModelList, pageIndex, pageSize);
+
+            var sortedList = PagedListExtensions.ToPagedList(accountModelList, pageIndex, pageSize);
+
+            if (request.Role.Equals("lawyer"))
+            {
+                for (int i = 0; i < sortedList.Count; i++)
+                {
+                    var lawyer = await _lawyerService.GetDetailByEmail(sortedList.ElementAt(i).Email);
+                    sortedList.ElementAt(i).OfficeName = lawyer.LawyerOfficeName;
+                }
+            } 
+            else if (request.Role.Equals("lawyer_office"))
+            {
+                for (int i = 0; i < sortedList.Count; i++)
+                {
+                    var office = await _lawyerOfficeService.GetDetailByEmail(sortedList.ElementAt(i).Email);
+                    sortedList.ElementAt(i).OfficeName = office.Name;
+                }
+            }
+
+            return sortedList;
         }
 
         public async Task<int> ChangeAccountStatus(int id)

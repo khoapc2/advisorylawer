@@ -15,6 +15,7 @@ namespace AdvisoryLawyer.Business.ViewModel
         public string Name { get; set; }
         [String]
         public string Email { get; set; }
+        public string OfficeName { get; set; }
         public string Role { get; set; }
         public int? Status { get; set; }
     }
