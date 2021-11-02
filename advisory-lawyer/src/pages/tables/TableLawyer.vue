@@ -14,7 +14,7 @@
                 option.name
               }}</option>
             </select> -->
-
+          <td>{{ user.office_name }}</td>
           
           <td v-if="user.status === 1">Active</td>
           <td v-else>Inactive</td>
@@ -106,6 +106,7 @@ export default {
   },
   methods: {
     clickViewDetail(user) {
+      console.log(user.name)
       this.$store.dispatch("lawyer/getLawyerByEmail", user.email) 
     },
     onUpdate() {
