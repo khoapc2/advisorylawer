@@ -53,6 +53,7 @@
         <tr>
           <th scope="col" >Name</th>
           <th scope="col" >Email</th>
+          <th scope="col" >Office</th>
           <th scope="col" >Status</th>
           <th scope="col" colspan="2" style="text-align:center">Action</th>
         </tr>
@@ -81,7 +82,7 @@
               @keyup.enter="searchByEmail(searchEmail)"
             />
           </td>
-          
+          <td></td>
           <td>
             <select class="form-control" :required="true" v-model="selected" @change="searchByStatus($event)">
               <option :value="undefined" disabled style="display:none">Select something</option>
