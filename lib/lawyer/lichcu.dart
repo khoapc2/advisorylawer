@@ -1,6 +1,5 @@
 import 'package:advisories_lawyer/lawyer/addslot.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

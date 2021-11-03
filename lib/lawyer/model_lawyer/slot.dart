@@ -17,11 +17,11 @@ class SlotDTO {
   factory SlotDTO.fromJson(Map<String, dynamic> json) {
     return SlotDTO(
       id : json['id'],
-      bookingId : json['booking_id'],
-      startAt : json['start_at'],
-      endAt : json['end_at'],
-      price : json['price'],
-      lawyerId : json['lawyer_id']
+      bookingId : json['booking_id']?? "",
+      startAt : json['start_at']?? "",
+      endAt : json['end_at']?? "",
+      price : json['price']?? "",
+      lawyerId : json['lawyer_id']?? ""
     );
     
   }
