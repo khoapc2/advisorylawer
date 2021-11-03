@@ -1,7 +1,11 @@
-
 import 'package:advisories_lawyer/lawyer/addslot.dart';
+import 'package:advisories_lawyer/lawyer/model_lawyer/slot.dart';
+import 'package:advisories_lawyer/lawyer/network_lawyer/network_request.dart';
+import 'package:advisories_lawyer/views/home_page.dart';
+import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class LawyerSchedule extends StatefulWidget {
@@ -10,33 +14,49 @@ class LawyerSchedule extends StatefulWidget {
 }
 
 class _SheduleState extends State<LawyerSchedule> {
+  List<SlotDTO> slotData = <SlotDTO>[];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    NetworkRequest.fetachSlot().then((dataFromSever) {
+      setState(() {
+        slotData = dataFromSever;
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            TableCalendar(
-              focusedDay: DateTime.now(),
-              firstDay: DateTime(1990),
-              lastDay: DateTime(2050),
-            ),
-            /*RaisedButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AddSlotTask()));
-              },
-              child: Text("click"),
-              color: Colors.white,
-            ),*/
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: GestureDetector(
+      child: Column(
+        children: [
+          Container(
+            margin: EdgeInsets.only(left: 20, right: 20, top: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(DateFormat.yMMMMd().format(DateTime.now()),
+                          style: TextStyle(color: Colors.grey, fontSize: 15)),
+                      Text(
+                        "Today",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22),
+                      )
+                    ],
+                  ),
+                ),
+                GestureDetector(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => AddSlotTask()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AddSlotTask()));
                   },
                   child: Container(
                     width: 100,
@@ -51,53 +71,97 @@ class _SheduleState extends State<LawyerSchedule> {
                     )),
                   ),
                 ),
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 10, left: 15, right: 10),
+            child: DatePicker(
+              DateTime.now(),
+              height: 100,
+              initialSelectedDate: DateTime.now(),
+              selectedTextColor: Colors.white,
+              selectionColor: Colors.blue,
+              dateTextStyle: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.grey),
+            ),
+          ),
+          /*Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AddSlotTask()));
+                },
+                child: Container(
+                  width: 100,
+                  height: 40,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Color(0xff4e5ae8)),
+                  child: Center(
+                      child: Text(
+                    "+ Add task",
+                    style: TextStyle(color: Colors.white),
+                  )),
+                ),
               ),
             ),
-            Container(
-              padding: EdgeInsets.only(left: 30),
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.55,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular((30)),
-                      topRight: Radius.circular((30))),
-                  color: Color(0xff30384c)),
-              child: Stack(
-                children: <Widget>[
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(top: 30),
-                        child: Text(
-                          "Task today",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
+          ),*/
+          Expanded(
+            child: ListView.builder(
+                padding: EdgeInsets.all(10),
+                //list
+                itemCount: slotData.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    child: InkWell(
+                      onTap: () {
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '${slotData[index].id}',
+                              style: TextStyle(
+                                  fontSize: 16, color: Colors.black),
+                            ),
+                            Text(
+                              '${slotData[index].lawyerId}',
+                              style: TextStyle(
+                                  fontSize: 16, color: Colors.black),
+                            ),
+                            Text(
+                              '${slotData[index].price}',
+                              style: TextStyle(
+                                  fontSize: 16, color: Colors.black),
+                            ),
+                            Text(
+                              '${slotData[index].startAt}',
+                              style: TextStyle(
+                                  fontSize: 16, color: Colors.black),
+                            ),
+                            Text(
+                              '${slotData[index].endAt}',
+                              style: TextStyle(
+                                  fontSize: 16, color: Colors.black),
+                            ),
+                          ],
                         ),
                       ),
-                      serviceTask(
-                          "8:00 AM",
-                          "advice for Tom",
-                          CupertinoIcons.check_mark_circled_solid,
-                          Color(0xff00cf8d)),
-                      serviceTask("10:00 AM", "meeting the department",
-                          Icons.radio_button_unchecked, Color(0xff00cf8d)),
-                      serviceTask("13:00 PM", "advice for Tom2",
-                          Icons.radio_button_unchecked, Color(0xff00cf8d)),
-                      serviceTask(
-                          "15:00 PM",
-                          "advice for Tom3",
-                          CupertinoIcons.check_mark_circled_solid,
-                          Color(0xff00cf8d)),
-                    ],
-                  )
-                ],
-              ),
+                    ),
+                  );
+                }
             )
-          ],
-        ),
+          )
+        ],
       ),
     );
   }
@@ -140,77 +204,3 @@ class _SheduleState extends State<LawyerSchedule> {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*import 'dart:ffi';
-
-import 'package:flutter/material.dart';
-import 'package:table_calendar/table_calendar.dart';
-
-class Schedule extends StatefulWidget {
-
-  @override
-  _ScheduleState createState() => _ScheduleState();
-}
-
-class _ScheduleState extends State<Schedule> {
-  late CalendarController _controller;
-  @override
-  void initState(){
-    super.initState();
-  }
-  @override
-  void dispose(){
-    super.dispose();
-    _controller.dispose();
-  }
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            TableCalendar(
-              calendarController: _controller
-              )
-          ],
-        ),
-        ),
-    );
-  }
-}*/
