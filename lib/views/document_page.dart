@@ -1,23 +1,29 @@
 import 'dart:io';
 
+import 'package:advisories_lawyer/lawyer/model_lawyer/category.dart';
 import 'package:advisories_lawyer/models/documents.dart';
+import 'package:advisories_lawyer/view_model/list_document_view_model.dart.dart';
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class DocPage extends StatefulWidget {
-  const DocPage({Key? key}) : super(key: key);
+  final int categoryID;
+  const DocPage(this.categoryID);
 
   @override
-  _DocPageState createState() => _DocPageState();
+  _DocPageState createState() => _DocPageState(categoryID: categoryID);
 }
 
 class _DocPageState extends State<DocPage> {
   late Future<List<Doc>> futureDoc;
+  late final int categoryID;
+  _DocPageState({required this.categoryID});
   @override
   void initState() {
     super.initState();
-    futureDoc = fetchDoc();
+    futureDoc = fetchDoc(categoryID);
   }
 
   @override
@@ -32,7 +38,6 @@ class _DocPageState extends State<DocPage> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               List<Doc> doc = snapshot.data!;
-
               return ListView.builder(
                 itemCount: snapshot.data!.length,
                 itemBuilder: (BuildContext context, int index) {

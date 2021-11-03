@@ -4,20 +4,19 @@ class DocumentDTO {
   String description;
   int categoryId;
 
-  DocumentDTO({
-    required this.id, 
-    required this.name, 
-    required this.description, 
-    required this.categoryId});
+  DocumentDTO(
+      {required this.id,
+      required this.name,
+      required this.description,
+      required this.categoryId});
 
   factory DocumentDTO.fromJson(Map<String, dynamic> json) {
     return DocumentDTO(
-      id : json['id'],
-      name : json['name'],
-      description : json['description'],
-      categoryId : json['category_id'],
+      id: json['id'],
+      name: json['name'],
+      description: json['description'],
+      categoryId: json['category_id'],
     );
-    
   }
 
   Map<String, dynamic> toJson() {
