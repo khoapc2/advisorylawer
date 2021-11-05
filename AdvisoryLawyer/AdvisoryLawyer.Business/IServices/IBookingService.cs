@@ -19,5 +19,6 @@ namespace AdvisoryLawyer.Business.IServices
         Task<BookingModel> CreateBooking(CreateBookingRequest request);
         Task<BookingModel> UpdateBooking(int id, UpdateBookingRequest request);
         Task<bool> DeleteBooking(int id);
+        Task<IEnumerable<BookingModel>> GetAllBookingByOfficeID(int officeId);
     }
 }

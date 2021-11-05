@@ -15,6 +15,7 @@ using PagedList;
 using AdvisoryLawyer.Business.Requests;
 using AutoMapper.QueryableExtensions;
 using Reso.Core.Utilities;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookingLawyer.Business.Services
 {
@@ -124,6 +125,13 @@ namespace BookingLawyer.Business.Services
             await _res.SaveAsync();
 
             return _mapper.Map<BookingModel>(Booking);
+        }
+
+        public async Task<IEnumerable<BookingModel>> GetAllBookingByOfficeID(int officeId)
+        {
+            var bookings = await _res.GetAllByIQueryable().Include(b => b.Lawyer).Include(b => b.Customer)
+                .Where(b => b.Lawyer.LawyerOfficeId == officeId).ToListAsync();
+            return _mapper.Map<IEnumerable<BookingModel>>(bookings);
         }
     }
 }

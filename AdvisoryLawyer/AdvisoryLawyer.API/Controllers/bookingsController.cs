@@ -2,6 +2,7 @@
 using AdvisoryLawyer.Business.Requests;
 using AdvisoryLawyer.Business.Requests.BookingRequest;
 using AdvisoryLawyer.Business.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -64,6 +65,21 @@ namespace BookingLawyer.API.Controllers
             if (rs == false)
                 return BadRequest();
             return Ok();
+        }
+
+        //[Authorize]
+        [HttpGet("office/{id}")]
+        public async Task<IActionResult> GetAllBookingByOfficeID(int id)
+        {
+            try
+            {
+                var bookings = await _BookingService.GetAllBookingByOfficeID(id);
+                return Ok(bookings);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
