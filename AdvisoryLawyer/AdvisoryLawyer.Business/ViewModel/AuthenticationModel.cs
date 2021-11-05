@@ -13,5 +13,6 @@ namespace AdvisoryLawyer.Business.ViewModel
         public string display_name { get; set; }
         public string email { get; set; }
         public string role { get; set; }
+        public string Uid { get; set; }
     }
 }

@@ -12,5 +12,6 @@ namespace AdvisoryLawyer.Data.Models
         public string Email { get; set; }
         public string Role { get; set; }
         public int Status { get; set; }
+        public string Uid { get; set; }
     }
 }

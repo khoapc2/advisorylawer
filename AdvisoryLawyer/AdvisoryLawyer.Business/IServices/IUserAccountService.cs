@@ -12,7 +12,7 @@ namespace AdvisoryLawyer.Business.IServices
 {
     public interface IUserAccountService
     {
-        public Task<UserAccountModel> CheckGmail(string gmail, string fullname);
+        public Task<UserAccountModel> CheckGmail(string gmail, string fullname, string uid);
         public Task<UserAccountModel> GetAccountByID(int id);
         public Task<IPagedList<UserAccountModel>> GetListAccount(UserAccountRequest request, UserAccountSortBy sortBy, OrderBy orderBy, int pageIndex, int pageSize);
         public Task<int> ChangeAccountStatus(int id);

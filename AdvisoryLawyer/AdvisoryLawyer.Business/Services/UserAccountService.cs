@@ -42,7 +42,7 @@ namespace AdvisoryLawyer.Business.Services
             _customerService = customerService;
         }
 
-        public async Task<UserAccountModel> CheckGmail(string email, string fullname)
+        public async Task<UserAccountModel> CheckGmail(string email, string fullname, string uid)
         {
             var account = await _genericRepository.FindAsync(u => u.Email.Equals(email));
             if (account == null)
@@ -52,7 +52,8 @@ namespace AdvisoryLawyer.Business.Services
                     Email = email,
                     Name = fullname,
                     Role = "undefined",
-                    Status = 1
+                    Status = 1,
+                    Uid = uid
                 };
                 await _genericRepository.InsertAsync(newAccount);
                 await _genericRepository.SaveAsync();
