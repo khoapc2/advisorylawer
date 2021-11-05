@@ -228,5 +228,11 @@ namespace AdvisoryLawyer.Business.Services
             }
             return _mapper.Map<UserAccountModel>(account);
         }
+
+        public async Task<UserAccountModel> GetAccountByEmail(string email)
+        {
+            var account = await _genericRepository.FindAsync(x => x.Email.Equals(email));
+            return _mapper.Map<UserAccountModel>(account);
+        }
     }
 }

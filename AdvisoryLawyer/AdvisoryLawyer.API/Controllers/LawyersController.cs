@@ -2,6 +2,7 @@
 using AdvisoryLawyer.Business.Requests;
 using AdvisoryLawyer.Business.Requests.LawyerOfficeRequest;
 using AdvisoryLawyer.Business.Requests.LawyerRequest;
+using AdvisoryLawyer.Business.Services;
 using AdvisoryLawyer.Business.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -16,9 +17,11 @@ namespace AdvisoryLawyer.API.Controllers
     public class LawyersController : ControllerBase
     {
         private readonly ILawyerService _service;
-        public LawyersController(ILawyerService service)
+        private readonly IUserAccountService _userAccountService;
+        public LawyersController(ILawyerService service, IUserAccountService userAccountService)
         {
             _service = service;
+            _userAccountService = userAccountService;
         }
 
         //GET api/lawyers
@@ -161,7 +164,18 @@ namespace AdvisoryLawyer.API.Controllers
             try
             {
                 var lawyer = await _service.UpdateLevelForLawyer(request);
-                if (lawyer != null) return Ok(lawyer);
+                if (lawyer != null) {
+
+                    // send Firebase messaging
+                    var userAccount = await _userAccountService.GetAccountByEmail(lawyer.Email);
+                    var uid = userAccount.Uid;
+                    string response = await SendFirebaseMessaging
+                        .SendNotification(uid, "Văn phòng đã cập nhật thông tin của bạn",
+                             "Bạn được cập nhật level");
+                    //
+
+                    return Ok(lawyer); 
+                }
                 return BadRequest();
             }
             catch (Exception ex)

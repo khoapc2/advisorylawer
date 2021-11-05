@@ -19,5 +19,7 @@ namespace AdvisoryLawyer.Business.IServices
         public Task<bool> RemoveAccount(string token);
         public Task<UserAccountModel> UpdateRole(UpdateRoleRequest request);
         public Task<UserAccountModel> CreateAccount(UserAccountRequest request);
+
+        public Task<UserAccountModel> GetAccountByEmail(string email);
     }
 }
