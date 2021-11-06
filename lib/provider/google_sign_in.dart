@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import 'firebase_messaging.dart';
+
 class GoogleSignInProvider extends ChangeNotifier {
   final googleSignIn = GoogleSignIn();
 
@@ -86,6 +88,10 @@ class Users {
 
 Future<Users> getUsers() async {
   var idToken = await FirebaseAuth.instance.currentUser!.getIdToken();
+
+  var uid = await FirebaseAuth.instance.currentUser!.uid;
+  await HandleMessagingFirebase.ReceiveMessagingFromServer(uid);
+
 
   var token = {"id_token": idToken};
 

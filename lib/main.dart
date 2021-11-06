@@ -6,6 +6,7 @@ import 'package:advisories_lawyer/views/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -20,6 +21,9 @@ Future<void> main() async {
   HttpOverrides.global = new MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  
+ 
 
   runApp(MyApp());
 }
