@@ -33,40 +33,6 @@ class _DocPageState extends State<LawyerPage> {
       ),
       body: Column(
         children: [
-          Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // Expanded(
-                //   child: Text(""),
-                // ),
-                SizedBox(
-                  width: 50,
-                ),
-                Expanded(
-                  child: Text(
-                    "Name",
-                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Expanded(
-                  child: Text("Email",
-                      style:
-                          TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
-                ),
-                Expanded(
-                  child: Text("Description",
-                      style:
-                          TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
-                ),
-                Expanded(
-                  child: Text("Sex",
-                      style:
-                          TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
-                ),
-              ],
-            ),
-          ),
           Expanded(
             child: Center(
               child: FutureBuilder<List<Lawyer>>(
@@ -77,40 +43,72 @@ class _DocPageState extends State<LawyerPage> {
 
                     return ListView.builder(
                       itemCount: snapshot.data!.length,
+                      scrollDirection: Axis.vertical,
                       itemBuilder: (BuildContext context, int index) {
-                        return InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => BookingPage(),
-                                  settings: RouteSettings(
-                                    arguments: lawyer[index],
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => BookingPage(),
+                                    settings: RouteSettings(
+                                      arguments: lawyer[index],
+                                    ),
+                                  ));
+                            },
+                            child: Card(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    lawyer[index].name,
+                                    style: TextStyle(
+                                        fontSize: 20, color: Colors.green),
                                   ),
-                                ));
-                          },
-                          child: ListTile(
-                            onTap: null,
-                            leading: CircleAvatar(
-                              backgroundColor: Colors.blue,
-                              child: Text(lawyer[index].name[0]),
-                            ),
-                            title: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: Text(lawyer[index].name),
-                                ),
-                                Expanded(
-                                  child: Text(lawyer[index].email + "\n"),
-                                ),
-                                Expanded(
-                                  child: Text(lawyer[index].description + "\n"),
-                                ),
-                                Expanded(
-                                  child: Text(lawyer[index].sex + "\n"),
-                                ),
-                              ],
+                                  Wrap(
+                                    crossAxisAlignment:
+                                        WrapCrossAlignment.center,
+                                    children: [
+                                      Text(lawyer[index].description,
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                          )),
+                                    ],
+                                  ),
+                                  Wrap(
+                                    crossAxisAlignment:
+                                        WrapCrossAlignment.center,
+                                    children: [
+                                      Text(lawyer[index].phoneNumber,
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                          )),
+                                    ],
+                                  ),
+                                  Wrap(
+                                    crossAxisAlignment:
+                                        WrapCrossAlignment.center,
+                                    children: [
+                                      Text(lawyer[index].website,
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                          )),
+                                    ],
+                                  ),
+                                  Wrap(
+                                    crossAxisAlignment:
+                                        WrapCrossAlignment.center,
+                                    children: [
+                                      Text(lawyer[index].sex,
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                          )),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         );

@@ -18,16 +18,6 @@ class HomePage extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasData) {
-            Users? users;
-
-            // print(users!.role);
-            // if (users!.role == "customer") {
-            //   return LoggedIn();
-            // } else if (users.role == "lawyer") {
-            //   return LawyerPage();
-            // } else {
-            //   return LoggedIn();
-            // }
             return WelcomePage();
           } else if (snapshot.hasError) {
             return Center(child: Text('Something went wrong!'));
