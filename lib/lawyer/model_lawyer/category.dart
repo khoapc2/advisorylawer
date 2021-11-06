@@ -6,8 +6,8 @@ class CategoryDTO {
 
   factory CategoryDTO.fromJson(Map<String, dynamic> json) {
     return CategoryDTO(
-      id : json['id'],
-      categoryName :json['category_name'],
+      id: json['id'],
+      categoryName: json['category_name'],
     );
   }
 
