@@ -30,9 +30,6 @@
             </p-button>
           </div>
           </div>
-
-
-           
           <div class="text-center">
             
              <div v-if="errorMessage === 'error'" class="alert alert-danger" role="alert">
@@ -82,7 +79,15 @@
               @keyup.enter="searchByEmail(searchEmail)"
             />
           </td>
-          <td></td>
+          <td>
+            <!-- <select class="form-control" :required="true" v-model="selected" @change="searchOfficeName($event)">
+              <option :value="undefined" disabled style="display:none">Select something</option>
+              <option :value="undefined" > All </option>
+              <option v-for="office in listOfficer" :key="office.id" :value="office.name">{{
+                office.name
+              }}</option>
+            </select> -->
+          </td>
           <td>
             <select class="form-control" :required="true" v-model="selected" @change="searchByStatus($event)">
               <option :value="undefined" disabled style="display:none">Select something</option>
@@ -156,15 +161,32 @@ export default {
   created() {
     if (localStorage.getItem("role") !== "admin") {
       this.$router.push("/");
-    } else {
-      // this.$store.dispatch("lawyer/getUserListApi");
-    }
-
+    } 
+    // else {
+    //   // this.$store.dispatch("lawyer/getUserListApi");
+    // }
   },
-  computed: {
-    
-  },
+  // computed: {
+  //    ...mapState('office',{
+  //     listOfficer: "listOfficer"
+  //   }),
+  // },
   methods: {
+    // searchOfficeName(ev){
+    //   var level = ev.target.value
+
+    //   console.log(level)
+    //   if(this.selected !== undefined){
+    //     // this.$store.dispatch("office/searchLawyerOfficeByLevel", level);
+    //   }else{
+    //     // this.$store.dispatch("office/getListLawyerOffice");
+    //   }
+           
+    //   this.searchName = "",
+    //   this.searchEmail = ""
+    // },
+
+
     searchByStatus(ev){
       var status = ev.target.value
       var intStatus
@@ -207,7 +229,13 @@ export default {
       if (inpName.trim() !== "" && inpEmail.trim() !== "") {
         try {
           this.$store.dispatch("lawyer/createLawyer", { inpName, inpEmail });
-          this.errorMessage = "success";
+            this.$fire({
+              title: "Add Successful",
+              type: "success",
+              timer: 3000,
+            }).then((r) => {
+              console.log(r.value);
+            });
         } catch (error) {
           this.errorMessage = "error";
         }
@@ -221,6 +249,7 @@ export default {
       }
     },
   },
+  
 };
 </script>
 <style lang="scss" scoped></style>

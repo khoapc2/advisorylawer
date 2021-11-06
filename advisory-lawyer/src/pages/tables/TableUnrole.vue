@@ -99,10 +99,32 @@ export default {
      this.$refs.table.refresh();
     },
     banUser(id) {
+      try {
       this.$store.dispatch("unroleUser/updateStatusUnrole", id);
+      this.$fire({
+            title: "Update Successful",
+            type: "success",
+            timer: 3000,
+          }).then((r) => {
+            console.log(r.value);
+          });
+      } catch (err) {
+        console.log(err)
+      }
     },
     updateRole(user){
+      try{
+        this.$fire({
+            title: "Update Successful",
+            type: "success",
+            timer: 3000,
+          }).then((r) => {
+            console.log(r.value);
+          });
       this.$store.dispatch("unroleUser/updateUnroleUser", {user})
+      }catch (err) {
+        console.log(err)
+      }
     },
   },
   mounted() {

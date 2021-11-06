@@ -202,11 +202,19 @@ export default {
      this.$refs.table.refresh();
     },
     banUser(id) {
+      try {
       this.$store.dispatch("customer/changeStatusUser", id);
+        this.$fire({
+        title: "Add Successful",
+        type: "success",
+        timer: 3000,
+      }).then((r) => {
+        console.log(r.value);
+      });
+      } catch (err) {
+        console.log(err)
+      }
     },
-    updateCustomerRole(id,role){
-      this.$store.dispatch("customer/updateCustomerRole", {id,role})
-    }
 
   },
 };

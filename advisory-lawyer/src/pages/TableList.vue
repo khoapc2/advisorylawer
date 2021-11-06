@@ -65,17 +65,10 @@
       </thead>
       <table-customer> </table-customer>
     </table>
-    <!-- <ul class="pagination justify-content-center" style="margin:auto;">
-      <li class="page-item"><a class="page-link btn" href="#">Previous</a></li>
-      <li class="page-item"><a class="page-link btn" href="#">1</a></li>
-      <li class="page-item"><a class="page-link btn" href="#">2</a></li>
-      <li class="page-item"><a class="page-link btn" href="#">3</a></li>
-      <li class="page-item"><a class="page-link btn" href="#">Next</a></li>
-    </ul> -->
+   
   </div>
 </template>
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
 import TableCustomer from "./tables/TableCustomer.vue";
 export default {
   components: {
@@ -89,63 +82,30 @@ export default {
       inpName: "",
       listUser: [],
       errorMessage:'',
-      roleOption: [
-        {
-          name: "customer",
-        },
-        {
-          name: "admin",
-        },
-        {
-          name: "lawyer",
-        },
-        {
-          name: "office lawyer",
-        },
-      ],
-      statusOption: [
-        {
-          name: "",
-        },
-        {
-          name: "Inactive",
-        },
-        {
-          name: "Active",
-        },
-      ],
     };
   },
   created() {
     if (localStorage.getItem("role") !== "admin") {
       this.$router.push("/");
-    } else {
-      this.$store.dispatch("customer/getUserListApi");
-    }
-  },
-  computed: {
-    ...mapState('customer',{
-      customerList: "customerlistUser",
-    }),
+    } 
   },
   methods: {
-    
     onUpdate() {
       this.$refs.table.refresh();
-    },
-    banUser(id) {
-      this.$store.dispatch("customer/changeStatusUser", id);
-    },
-    updateCustomerRole(id, role) {
-      this.$store.dispatch("customer/updateCustomerRole", { id, role });
     },
     createCustomerAccount(inpName, inpEmail) {
       if (inpName.trim() !== "" && inpEmail.trim() !== "") {
         try {
           this.$store.dispatch("customer/createCustomer", {inpName,inpEmail})
           this.inpName = '',
-          this.inpEmail = ''
-          this.errorMessage = "success"
+          this.inpEmail = '',
+            this.$fire({
+              title: "Add Successful",
+              type: "success",
+              timer: 3000,
+            }).then((r) => {
+              console.log(r.value);
+            });   
         }catch(error){
           this.errorMessage = "error"
         }
@@ -159,9 +119,6 @@ export default {
         }
       }
     },
-  },
-  mounted() {
-    this.$store.dispatch("customer/getUserListApi");
   },
 };
 </script>

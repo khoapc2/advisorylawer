@@ -10,7 +10,9 @@
         <sidebar-link v-if="role === 'admin'" to="/table-list-lawyer" name="Lawyer" icon="ti-folder"/>
         <sidebar-link v-if="role === 'admin'" to="/table-list-unrole" name="Unrole Users" icon="ti-folder"/>
         <sidebar-link v-if="role === 'admin'" to="/table-list-booking" name="Booking" icon="ti-folder"/>
+        
         <sidebar-link v-if="role === 'lawyer_office'" to="/table-list-office-mangement-lawyer" name="Lawyer" icon="ti-folder"/>
+        <sidebar-link v-if="role === 'lawyer_office'" to="/table-list-office-booking" name="Booking" icon="ti-folder"/>
 
         <!-- <sidebar-link to="/notifications" name="Notifications" icon="ti-bell"/> -->
       </template>

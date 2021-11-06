@@ -43,19 +43,19 @@
           </td>
         </tr> -->
       </thead>
-      <table-booking>
+      <table-office-booking>
 
-      </table-booking>
+        </table-office-booking>
     </table>
 
     
   </div>
 </template>
 <script>
-import TableBooking from './tables/TableBooking.vue'
+import TableOfficeBooking from './tables/TableOfficeBooking.vue'
 export default {
   components: {
-    TableBooking
+    TableOfficeBooking 
     },
   data() {
     return {
@@ -66,9 +66,18 @@ export default {
     };
   },
   created() {
-    if (localStorage.getItem("role") !== "admin") {
+    if (localStorage.getItem("role") !== "lawyer_office") {
       this.$router.push("/");
     } 
+  },
+  computed: {
+   
+  },
+  methods: {
+   
+  },
+  mounted() {
+    
   },
 };
 </script>

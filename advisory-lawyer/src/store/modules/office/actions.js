@@ -2,6 +2,23 @@ import axios from "axios";
 
 export default {
   //Officer
+
+  officeOption(context) {
+    const pageSize = 10;
+    const pageIndex = 1;
+    axios({
+      method: "GET",
+      url:
+      "https://104.215.186.78/api/v1/lawyer-offices?page_index=" + pageIndex + "&page_size=" + pageSize,
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
+      },
+    }).then((response) => {
+      context.commit("LIST_OFFICER", response.data);
+    });
+  },
+
   searchOfficeByName(context, username){
     const pageSize = 10;
     const pageIndex = 1;
@@ -75,7 +92,6 @@ export default {
       method: "GET",
       url:
         "https://104.215.186.78/api/v1/user-accounts?role=lawyer_office&page_index=1",
-        // https://104.215.186.78/api/v1/lawyers?lawyer_office_id="+ id + "&page_size=" + pageSize
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: `Bearer ${localStorage.getItem("tokenID")}`,

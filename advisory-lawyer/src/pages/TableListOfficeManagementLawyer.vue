@@ -102,41 +102,15 @@ export default {
 
       message: '',
       inpEmail: '',
-      inpName: '',
-      listUser: [],
-      roleOption: [
-        {
-          name: "customer",
-        },
-        {
-          name: "admin",
-        },
-        {
-          name: "lawyer",
-        },
-        {
-          name: "office lawyer",
-        },
-      ],
-      statusOption: [
-        {
-          name: ""
-        },
-        {
-          name: "Inactive"
-        },
-        {
-          name: "Active"
-        }
-      ]
     };
   },
   created() {
     if (localStorage.getItem("role") !== "lawyer_office") {
       this.$router.push("/");
-    } else {
-      // this.$store.dispatch("office/getUserListApi");
-    }
+    } 
+    // else {
+    //   // this.$store.dispatch("office/getUserListApi");
+    // }
   },
   computed: {
     ...mapState('office',{
@@ -148,13 +122,13 @@ export default {
       try{
         this.$store.dispatch("office/addLawyerToOffice", lawyerEmail);
         this.inpEmail = "";
-      //   this.$fire({
-      //   title: "Add Successful",
-      //   type: "success",
-      //   timer: 3000,
-      // }).then((r) => {
-      //   console.log(r.value);
-      // });
+        this.$fire({
+        title: "Add Successful",
+        type: "success",
+        timer: 3000,
+      }).then((r) => {
+        console.log(r.value);
+      });
       }catch(error){
         console.log(error)
       }

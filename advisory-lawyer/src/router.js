@@ -13,6 +13,8 @@ import TableListLawyer from "@/pages/TableListLawyer.vue";
 import TableListUnrole from "@/pages/TableListUnrole.vue";
 import TableListOfficeManagementLawyer from "@/pages/TableListOfficeManagementLawyer.vue";
 import TableListBooking from "@/pages/TableListBooking.vue";
+import TableListOfficeBooking from "@/pages/TableListOfficeBooking.vue";
+
 
 
 
@@ -114,6 +116,11 @@ export default new Router({
           path: "/table-list-booking",
           name: "Booking Management",
           component: TableListBooking
+        },
+        {
+          path: "/table-list-office-booking",
+          name: "Booking Management",
+          component: TableListOfficeBooking
         },
       ]
     },

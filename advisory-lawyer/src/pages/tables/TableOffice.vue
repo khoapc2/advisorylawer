@@ -111,7 +111,18 @@ export default {
      this.$refs.table.refresh();
     },
     banUser(id) {      
+      try {
       this.$store.dispatch("office/changeStatusOfficer", id);
+        this.$fire({
+            title: "Update Successful",
+            type: "success",
+            timer: 3000,
+          }).then((r) => {
+            console.log(r.value);
+          });
+      }catch(err){
+        console.log(err)
+      }
     },
     updateRole(user){
       this.$store.dispatch("office/updateUnroleUser", {user})

@@ -1,5 +1,8 @@
 import axios from "axios";
 
+const link = "https://104.215.186.78/";
+
+
 export default {
   getListBooking(context) {
     const pageIndex = 1;
@@ -15,6 +18,20 @@ export default {
       context.commit("LIST_BOOKING", response.data);
     });
   },
+
+  getListBookingByOfficeID(context, id) {
+    const idOffice = localStorage.getItem('id');
+    axios({
+      method: "GET",
+      url: link + "api/v1/bookings/office/" + idOffice,
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
+      },
+    }).then((response) => {
+      context.commit("LIST_BOOKING", response.data);
+    });
+  }
 
   // searchUnRoleByName(context, username){
   //   const pageSize = 10;

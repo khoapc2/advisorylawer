@@ -101,7 +101,8 @@ export default {
   computed: {
     ...mapState('lawyer',{
       listLawyer: "listLawyer",
-      lawyer: "lawyer"
+      lawyer: "lawyer",
+      // listOfficer: "listOfficer",
     }),
   },
   methods: {
@@ -113,7 +114,18 @@ export default {
      this.$refs.table.refresh();
     },
     banUser(id) {
+      try {
       this.$store.dispatch("lawyer/changeStatusLawyer", id);
+        this.$fire({
+            title: "Update Successful",
+            type: "success",
+            timer: 3000,
+          }).then((r) => {
+            console.log(r.value);
+          });
+      }catch(err){
+        console.log(err)
+      }
     },
     updateRole(user){
       this.$store.dispatch("lawyer/updateUnroleUser", {user})
@@ -121,6 +133,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch("lawyer/getListLawyer");
+    // this.$store.dispatch("lawyer/officeOption");
   },
 };
 </script>

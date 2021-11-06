@@ -123,20 +123,6 @@ export default {
       listUser: [],
       nameErr: '',
       emailErr: '',
-      roleOption: [
-        {
-          name: "customer",
-        },
-        {
-          name: "admin",
-        },
-        {
-          name: "lawyer",
-        },
-        {
-          name: "office lawyer",
-        },
-      ],
       statusOption: [
         {
           name: "All"
@@ -162,7 +148,6 @@ export default {
       var status = ev.target.value
       var intStatus
       if(status === 'Inactive'){
-        console.log(status)
         intStatus = 0;
       }else if(status === 'Active'){
         intStatus = 1;
@@ -193,10 +178,15 @@ export default {
     },
     createOfficeAccount(inpName, inpEmail){
       if(inpName.trim() !== '' && inpEmail.trim() !== ''){
-        console.log(inpName, inpEmail);
         try{
         this.$store.dispatch("office/createOffice", {inpName,inpEmail})
-          this.errorMessage = "success"
+          this.$fire({
+            title: "Update Successful",
+            type: "success",
+            timer: 3000,
+          }).then((r) => {
+            console.log(r.value);
+          });
         }catch(error){
           this.errorMessage = "error"
         }

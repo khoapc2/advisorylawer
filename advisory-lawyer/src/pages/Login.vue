@@ -90,12 +90,12 @@ export default {
                     console.log("LocalStorage  " + localStorage.getItem("tokenID"))
                   // console.log(this.user.role), console.log(this.user.userToken);
                   if ("admin" === this.user.role || "lawyer_office" === this.user.role) {
-                    console.log('Here')
+                    // console.log('Here')
                     this.$router.push("/stats");
                   // } else if ("lawyer_office" === this.user.role){
                   //   this.$router.push("/stats-lawyer_office");
                   }else {
-                    console.log('Here Else')
+                    // console.log('Here Else')
                     this.checkAuth = true;
                     this.$router.push('/')
                   }
