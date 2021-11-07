@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:advisories_lawyer/lawyer/infor_user.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -47,6 +48,10 @@ class GoogleSignInProvider extends ChangeNotifier {
 
       Map<String, dynamic> userMap = jsonDecode(reply);
       var user = Users.fromJson(userMap);
+
+      InforUser inforUser= new InforUser();
+      inforUser.setUserInfo(user);
+      
       print(user.role);
 
       print("-----**" + reply);
@@ -66,18 +71,21 @@ class GoogleSignInProvider extends ChangeNotifier {
 }
 
 class Users {
+  final int id;
   final String name;
   final String email;
   final String role;
 
-  Users(this.name, this.email, this.role);
+  Users(this.id,this.name, this.email, this.role);
 
   Users.fromJson(Map<String, dynamic> json)
-      : name = json['display_name'],
+      : id = json['id'],
+      name = json['display_name'],
         email = json['email'],
         role = json['role'];
 
   Map<String, dynamic> toJson() => {
+    'id': id,
         'name': name,
         'email': email,
         'role': role,

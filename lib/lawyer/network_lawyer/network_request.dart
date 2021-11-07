@@ -1,7 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:advisories_lawyer/lawyer/infor_user.dart';
+import 'package:advisories_lawyer/lawyer/model_lawyer/booking.dart';
 import 'package:advisories_lawyer/lawyer/model_lawyer/category.dart';
+import 'package:advisories_lawyer/lawyer/model_lawyer/customer.dart';
+import 'package:advisories_lawyer/lawyer/model_lawyer/customer_case.dart';
 import 'package:advisories_lawyer/lawyer/model_lawyer/document.dart';
 import 'package:advisories_lawyer/lawyer/model_lawyer/post.dart';
 import 'package:advisories_lawyer/lawyer/model_lawyer/slot.dart';
@@ -18,6 +22,7 @@ class NetworkRequest {
       'https://104.215.186.78/api/v1/slots?page_index=1&page_size=5';
   static const String urlDocument =
       'https://104.215.186.78/api/v1/documents?page_index=1&page_size=10';
+  static String tokenOfUser = '';
 
   static List<CategoryDTO> parseCategory(String responseBody) {
     var list = json.decode(responseBody) as List<dynamic>;
@@ -43,6 +48,20 @@ class NetworkRequest {
     List<DocumentDTO> documents =
         list.map((model) => DocumentDTO.fromJson(model)).toList();
     return documents;
+  }
+
+  static List<BookingDTO> parseBooking(String responseBody) {
+    var list = json.decode(responseBody) as List<dynamic>;
+    List<BookingDTO> bookings =
+        list.map((model) => BookingDTO.fromJson(model)).toList();
+    return bookings;
+  }
+
+
+  static CustomerDTO parseCustomer(String responseBody) {
+    Map<String, dynamic> cusMap = jsonDecode(responseBody);
+    CustomerDTO customerDTO = CustomerDTO.fromJson(cusMap);
+    return customerDTO;
   }
 
   static Future<List<Post>> fetachPosts({int page = 1}) async {
@@ -74,8 +93,9 @@ class NetworkRequest {
     }
   }
 
-  static Future<List<DocumentDTO>> fetachDocument({int page = 1}) async {
-    final response = await http.get(Uri.parse(urlDocument));
+  static Future<List<DocumentDTO>> fetachDocument(int categoryID,{int page = 1}) async {
+    final response = await http.get(Uri.parse(
+        'https://104.215.186.78/api/v1/documents?category_id=$categoryID&page_index=1&page_size=10'));
     if (response.statusCode == 200) {
       print("connect dc r");
       return compute(parseDocument, response.body);
@@ -89,19 +109,141 @@ class NetworkRequest {
   }
 
   static Future<List<SlotDTO>> fetachSlot({int page = 1}) async {
-    var idToken = await FirebaseAuth.instance.currentUser!.getIdToken();
+    tokenOfUser = await FirebaseAuth.instance.currentUser!.getIdToken();
     final response = await http.get(
-      Uri.parse(urlSlot),
+      Uri.parse('https://104.215.186.78/api/v1/slots?lawyer_id=${InforUser.getIdUser()}&sort_by=StartAt&page_index=1&page_size=100'),
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': 'Bearer $idToken',
+        'Authorization': 'Bearer $tokenOfUser',
       },
     );
 
     if (response.statusCode == 200) {
       print("connect dc r");
       return compute(parseSlot, response.body);
+    } else if (response.statusCode == 404) {
+      print("Not found ");
+      throw Exception('Not Found');
+    } else {
+      print("Fail to connect");
+      throw Exception('Failed to get post');
+    }
+  }
+
+  static void createSlot(SlotDTO slotDTO) async {
+    var idToken = await FirebaseAuth.instance.currentUser!.getIdToken();
+    print("co id" + tokenOfUser);
+    
+      final response = await http.post(
+        Uri.parse('https://104.215.186.78/api/v1/slots'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $idToken',
+          
+        },
+        body: jsonEncode(<String, dynamic>{
+          "start_at_formatted": "09/11/2021 11:00",
+          "end_at_formatted": "09/11/2021 12:00",
+          "price": 330,
+          "lawyer_id": 8,
+          "status": 1
+        }),
+      );
+      print("R:"+response.statusCode.toString());
+      if (response.statusCode == 201) {
+        print("create dc r");
+      } else {
+        throw Exception('Failed to create slot.');
+      }
+    
+  }
+  static void deleteSlot(int slotID) async {
+    var idToken = await FirebaseAuth.instance.currentUser!.getIdToken();
+    print("co id" + tokenOfUser);
+    
+      final response = await http.delete(
+        Uri.parse('https://104.215.186.78/api/v1/slots'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $idToken',
+          
+        },
+        body: jsonEncode(<String, dynamic>{
+          "id": slotID
+        
+        }),
+      );
+      print("R:"+response.statusCode.toString());
+      if (response.statusCode == 200) {
+        print("delete dc r");
+      } else {
+        throw Exception('Failed to create slot.');
+      }
+    
+  }
+
+  static Future<List<BookingDTO>> fetachBooking({int page = 1}) async {
+    final response = await http.get(Uri.parse('https://104.215.186.78/api/v1/bookings?LawyerId=8&pageIndex=1&pageSize=10'));
+    if (response.statusCode == 200) {
+      print("connect dc r");
+      return compute(parseBooking, response.body);
+    } else if (response.statusCode == 404) {
+      print("Not found ");
+      throw Exception('Not Found');
+    } else {
+      print("Fail to connect");
+      throw Exception('Failed to get post');
+    }
+  }
+
+  static Future<CustomerDTO> fetachProfileUser(int customerID,{int page = 1}) async {
+    final response = await http.get(Uri.parse('https://104.215.186.78/api/v1/customers/$customerID'));
+
+    Map<String, dynamic> cusMap = jsonDecode(response.body);
+    CustomerDTO customerDTO = CustomerDTO.fromJson(cusMap);
+
+    if (response.statusCode == 200) {
+      print("connect dc r" +response.body);
+      return customerDTO;
+    } else if (response.statusCode == 404) {
+      print("Not found ");
+      throw Exception('Not Found');
+    } else {
+      print("Fail to connect");
+      throw Exception('Failed to get post');
+    }
+  }
+
+  static Future<CustomerCaseDTO> fetachCustomerCase(int customerCaseID,{int page = 1}) async {
+    final response = await http.get(Uri.parse('https://104.215.186.78/api/v1/customer-cases/$customerCaseID'));
+
+    Map<String, dynamic> cusCaseMap = jsonDecode(response.body);
+    CustomerCaseDTO customerCaseDTO = CustomerCaseDTO.fromJson(cusCaseMap);
+
+    if (response.statusCode == 200) {
+      print("connect dc r" +response.body);
+      return customerCaseDTO;
+    } else if (response.statusCode == 404) {
+      print("Not found ");
+      throw Exception('Not Found');
+    } else {
+      print("Fail to connect");
+      throw Exception('Failed to get post');
+    }
+  }
+
+  static Future<BookingDTO> fetachNameCusByBookingID(int bookingID,{int page = 1}) async {
+    final response = await http.get(Uri.parse('https://104.215.186.78/api/v1/bookings/$bookingID'));
+
+    Map<String, dynamic> bookingMap = jsonDecode(response.body);
+    BookingDTO bookingDTO = BookingDTO.fromJson(bookingMap);
+
+    if (response.statusCode == 200) {
+      print("connect dc r" +response.body);
+      return bookingDTO;
     } else if (response.statusCode == 404) {
       print("Not found ");
       throw Exception('Not Found');

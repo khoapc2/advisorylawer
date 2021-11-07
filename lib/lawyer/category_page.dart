@@ -12,7 +12,9 @@ class CategoryPage extends StatefulWidget {
 }
 
 class _CategoryPageState extends State<CategoryPage> {
+
   List<CategoryDTO> categoryData  = <CategoryDTO>[];
+  
   @override
   void initState() {
     // TODO: implement initState
@@ -39,7 +41,7 @@ class _CategoryPageState extends State<CategoryPage> {
                   child: InkWell(
                     onTap: (){
                       Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => DocumentPage()));
+                      MaterialPageRoute(builder: (context) => DocumentPage(categoryData[index].id)));
                     },
                     child: Padding(
                       padding: EdgeInsets.all(10),

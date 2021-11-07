@@ -1,4 +1,5 @@
 import 'package:advisories_lawyer/lawyer/category_page.dart';
+import 'package:advisories_lawyer/lawyer/profile_of_booking.dart';
 import 'package:advisories_lawyer/lawyer/slot_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -157,7 +158,7 @@ class _HomePageState extends State<LawyerHomePage> {
               switch (name) {
                 case "Profile of customer":
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => CategoryPage()));
+                      MaterialPageRoute(builder: (context) => ProfileBooking()));
                   break;
                 case "Document":
                   Navigator.push(context,

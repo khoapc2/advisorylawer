@@ -5,19 +5,23 @@ import 'package:flutter/material.dart';
 
 
 class DocumentPage extends StatefulWidget {
-  const DocumentPage({ Key? key }) : super(key: key);
+  final int categoryID;
+  DocumentPage(this.categoryID);
+  //const DocumentPage({ Key? key }) : super(key: key);
 
   @override
   _DocumentPageState createState() => _DocumentPageState();
 }
 
 class _DocumentPageState extends State<DocumentPage> {
+  
+
   List<DocumentDTO> documentData  = <DocumentDTO>[];
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    NetworkRequest.fetachDocument().then((dataFromSever){
+    NetworkRequest.fetachDocument(widget.categoryID).then((dataFromSever){
       setState(() {
         documentData = dataFromSever;
       });

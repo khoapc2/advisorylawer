@@ -14,16 +14,33 @@ class SlotDTO {
       required this.price,
       required this.lawyerId});
 
-  factory SlotDTO.fromJson(Map<String, dynamic> json) {
+  /*factory SlotDTO.fromJson(Map<String, dynamic> json) {
     return SlotDTO(
       id : json['id'],
-      bookingId : json['booking_id']?? "",
+      bookingId : json['booking_id'] ?? 0,
       startAt : json['start_at']?? "",
       endAt : json['end_at']?? "",
       price : json['price']?? "",
       lawyerId : json['lawyer_id']?? ""
     );
     
+  }*/
+  /*SlotDTO.fromJson(Map<String, dynamic> json)
+    : id = json['id'],
+    bookingId = json['booking_id'] == null ? 0 : 100,
+    startAt = json['start_at'],
+    endAt = json['end_at'],
+    price = json['price'],
+    lawyerId = json['lawyer_id'];*/
+
+  factory SlotDTO.fromJson(Map<String, dynamic> json) {
+    return SlotDTO(
+        id: json['id'],
+        bookingId: json['booking_id'] ?? 0,
+        startAt: json['start_at'],
+        endAt: json['end_at'],
+        price: json['price'],
+        lawyerId: json['lawyer_id']);
   }
 
   Map<String, dynamic> toJson() {
@@ -35,5 +52,10 @@ class SlotDTO {
     data['price'] = this.price;
     data['lawyer_id'] = this.lawyerId;
     return data;
+  }
+  @override
+  String toString() {
+    // TODO: implement toString
+    return "Slot: ${id}-${bookingId}-${startAt}-${endAt}-${price}-${lawyerId}";
   }
 }

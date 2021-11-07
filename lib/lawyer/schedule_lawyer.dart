@@ -1,4 +1,5 @@
 import 'package:advisories_lawyer/lawyer/addslot.dart';
+import 'package:advisories_lawyer/lawyer/model_lawyer/booking.dart';
 import 'package:advisories_lawyer/lawyer/model_lawyer/slot.dart';
 import 'package:advisories_lawyer/lawyer/network_lawyer/network_request.dart';
 import 'package:advisories_lawyer/views/home_page.dart';
@@ -25,6 +26,7 @@ class _SheduleState extends State<LawyerSchedule> {
       });
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -53,10 +55,8 @@ class _SheduleState extends State<LawyerSchedule> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => AddSlotTask()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => AddSlotTask()));
                   },
                   child: Container(
                     width: 100,
@@ -113,54 +113,107 @@ class _SheduleState extends State<LawyerSchedule> {
             ),
           ),*/
           Expanded(
-            child: ListView.builder(
-                padding: EdgeInsets.all(10),
-                //list
-                itemCount: slotData.length,
-                itemBuilder: (context, index) {
-                  return Card(
-                    child: InkWell(
-                      onTap: () {
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '${slotData[index].id}',
-                              style: TextStyle(
-                                  fontSize: 16, color: Colors.black),
-                            ),
-                            Text(
-                              '${slotData[index].lawyerId}',
-                              style: TextStyle(
-                                  fontSize: 16, color: Colors.black),
-                            ),
-                            Text(
-                              '${slotData[index].price}',
-                              style: TextStyle(
-                                  fontSize: 16, color: Colors.black),
-                            ),
-                            Text(
-                              '${slotData[index].startAt}',
-                              style: TextStyle(
-                                  fontSize: 16, color: Colors.black),
-                            ),
-                            Text(
-                              '${slotData[index].endAt}',
-                              style: TextStyle(
-                                  fontSize: 16, color: Colors.black),
-                            ),
-                          ],
+              child: ListView.builder(
+                  padding: EdgeInsets.all(10),
+                  //list
+                  itemCount: slotData.length,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      child: InkWell(
+                        onTap: () {},
+                        child: Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '${slotData[index].id}',
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black),
+                              ),
+                              Text(
+                                '${slotData[index].lawyerId}',
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black),
+                              ),
+                              Text(
+                                '${slotData[index].price}',
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black),
+                              ),
+                              Text(
+                                '${slotData[index].startAt}',
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black),
+                              ),
+                              Text(
+                                '${slotData[index].endAt}',
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black),
+                              ),
+                              Text(
+                                '${slotData[index].bookingId == 0 ?"Trống" : "đã có người thuê"}',
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.black),
+                              ),
+             
+
+                              InkWell(
+                                child: Icon(
+                                  Icons.delete,
+                                  color: Colors.red,
+                                ),
+                                onTap: () {
+                                  if (slotData[index].bookingId == 0) {
+                                    showDialog<String>(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          AlertDialog(
+                                        title: const Text('AlertDialog Title'),
+                                        content: const Text(
+                                            'AlertDialog description'),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            onPressed: () => Navigator.pop( context),
+                                            child: const Text('Cancel'),
+                                          ),
+                                          TextButton(
+                                            onPressed: () {
+                                              NetworkRequest.deleteSlot(slotData[index].id);
+                                              Navigator.pop( context);
+                                            },
+                                            child: const Text('OK'),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  } else {
+                                    showDialog<String>(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          AlertDialog(
+                                        title: const Text('Thông báo '),
+                                        content: const Text(
+                                            'Không thế xóa khi đã có người đặt lịch'),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            onPressed: () =>
+                                                Navigator.pop(context),
+                                            child: const Text('OK'),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }
+                                },
+                              )
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                }
-            )
-          )
+                    );
+                  }))
         ],
       ),
     );
@@ -203,4 +256,18 @@ class _SheduleState extends State<LawyerSchedule> {
       ),
     );
   }
+
+  /*String getNameOfCustomerBooking(int bookingID){
+
+    String result="";
+    if(bookingID == 0){
+      return "Trống";
+    }
+    else{
+      BookingDTO bookingDTO=NetworkRequest.fetachNameCusByBookingID(bookingID) as BookingDTO;
+      result= bookingDTO.customerName;
+    }
+    return result;
+
+  }*/
 }

@@ -12,11 +12,6 @@ class _PhoneBookState extends State<LawyerPhoneBook> {
     "https://randomuser.me/api/portraits/men/86.jpg",
     "https://randomuser.me/api/portraits/women/80.jpg",
     "https://randomuser.me/api/portraits/men/43.jpg",
-    "https://randomuser.me/api/portraits/women/49.jpg",
-    "https://randomuser.me/api/portraits/women/45.jpg",
-    "https://randomuser.me/api/portraits/women/0.jpg",
-    "https://randomuser.me/api/portraits/women/1.jpg",
-    "https://randomuser.me/api/portraits/men/0.jpg"
   ];
   Icon actionIcon = new Icon(
     Icons.search,
@@ -59,11 +54,6 @@ class _PhoneBookState extends State<LawyerPhoneBook> {
                   chatTile(imageUrl[0], "Alex", "customer", "9Am", false),
                   chatTile(imageUrl[1], "Tom", "customer", "8Am", true),
                   chatTile(imageUrl[2], "Emily", "coworker", "6Am", true),
-                  chatTile(imageUrl[3], "John", "coworker", "Yesterday", false),
-                  chatTile(imageUrl[5], "Emma", "coworker", "Yesterday", false),
-                  chatTile(imageUrl[4], "John", "customer", "Aug 20", true),
-                  chatTile(imageUrl[6], "John", "customer", "Aug 20", true),
-                  chatTile(imageUrl[7], "John", "customer", "Aug 20", true),
                 ],
               ),
             ),

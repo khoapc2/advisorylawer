@@ -42,10 +42,10 @@ class _SlotPageState extends State<SlotPage> {
                     return Card(
                       child: InkWell(
                         onTap: () {
-                          Navigator.push(
+                          /*Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => DocumentPage()));
+                                  builder: (context) => DocumentPage()));*/
                         },
                         child: Padding(
                           padding: EdgeInsets.all(10),
