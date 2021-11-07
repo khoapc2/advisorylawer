@@ -50,19 +50,19 @@ class Lawyer {
 
   factory Lawyer.fromJson(Map<String, dynamic> json) {
     return Lawyer(
-        id: json['id'],
-        name: json['name'],
-        email: json['email'],
-        address: json['address'],
-        location: json['location'],
-        description: json['description'],
-        phoneNumber: json['phone_number'],
-        website: json['website'],
-        sex: json['sex'],
-        dateOfBirth: json['date_of_birth'],
-        status: json['status'],
-        lawyerOfficeId: json['lawyer_office_id'],
-        levelId: json['level_id']);
+        id: json['id'] ?? '',
+        name: json['name'] ?? '',
+        email: json['email'] ?? '',
+        address: json['address'] ?? '',
+        location: json['location'] ?? '',
+        description: json['description'] ?? '',
+        phoneNumber: json['phone_number'] ?? '',
+        website: json['website'] ?? '',
+        sex: json['sex'] ?? '',
+        dateOfBirth: json['date_of_birth'] ?? '',
+        status: json['status'] ?? '',
+        lawyerOfficeId: json['lawyer_office_id'] ?? '',
+        levelId: json['level_id'] ?? '');
   }
   @override
   String toString() {

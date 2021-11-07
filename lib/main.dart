@@ -1,11 +1,14 @@
 import 'dart:io';
 
 import 'package:advisories_lawyer/provider/google_sign_in.dart';
+import 'package:advisories_lawyer/views/document_page.dart';
 import 'package:advisories_lawyer/views/home_page.dart';
 import 'package:advisories_lawyer/views/login_page.dart';
+import 'package:advisories_lawyer/views/route.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -20,6 +23,9 @@ Future<void> main() async {
   HttpOverrides.global = new MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  
+ 
 
   runApp(MyApp());
 }
@@ -37,6 +43,8 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         home: HomePage(),
+        initialRoute: '/login',
+        onGenerateRoute: RouteGenerator.generateRoute,
       ),
     );
   }

@@ -1,10 +1,15 @@
 import 'dart:io';
 
+import 'package:advisories_lawyer/lawyer/model_lawyer/category.dart';
 import 'package:advisories_lawyer/models/catagories.dart';
 import 'package:advisories_lawyer/models/customer_case.dart';
+import 'package:advisories_lawyer/models/documents.dart';
 import 'package:advisories_lawyer/models/lawyer.dart';
 import 'package:advisories_lawyer/models/users.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 
 class BookingPage extends StatefulWidget {
   const BookingPage({Key? key}) : super(key: key);
@@ -14,11 +19,14 @@ class BookingPage extends StatefulWidget {
 }
 
 class _BookingPageState extends State<BookingPage> {
-  late Future<List<Catagories>> futureCata;
+  // late Catagories? _mySelection;
+  // late Doc? _mySelection2;
+  // late Future<List<Catagories?>> futureCata;
+  // late Future<List<Doc?>> futureDoc;
   @override
   void initState() {
     super.initState();
-    futureCata = fetchCatagories();
+    // futureCata = fetchCatagories();
   }
 
   final TextEditingController _controller = TextEditingController();
@@ -27,7 +35,7 @@ class _BookingPageState extends State<BookingPage> {
 
   @override
   Widget build(BuildContext context) {
-    final lawyer = ModalRoute.of(context)!.settings.arguments as Lawyer;
+    final doc = ModalRoute.of(context)!.settings.arguments as Doc;
     return Scaffold(
       appBar: AppBar(
         title: Text('Customer case'),
@@ -42,10 +50,9 @@ class _BookingPageState extends State<BookingPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  'Email: ' + lawyer.email,
-                  style: TextStyle(fontSize: 20),
+                  'Câu hỏi: ' + doc.name,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-                Text("Name: " + lawyer.name, style: TextStyle(fontSize: 20)),
                 Container(
                   alignment: Alignment.centerLeft,
                   padding: const EdgeInsets.all(8.0),
@@ -66,12 +73,12 @@ class _BookingPageState extends State<BookingPage> {
         TextField(
           controller: _controller,
           decoration: const InputDecoration(
-              border: OutlineInputBorder(), hintText: 'Enter Title'),
+              border: OutlineInputBorder(), hintText: 'Tiêu đề'),
         ),
         TextField(
           controller: _controller2,
           decoration: const InputDecoration(
-              border: OutlineInputBorder(), hintText: 'Enter Your Problem'),
+              border: OutlineInputBorder(), hintText: 'Vẫn đề của bạn'),
         ),
         ElevatedButton(
           onPressed: () {
@@ -100,7 +107,8 @@ class _BookingPageState extends State<BookingPage> {
                 style: TextStyle(fontSize: 20),
               ),
               Text("Your Problem: " + snapshot.data!.description,
-                  style: TextStyle(fontSize: 20))
+                  style: TextStyle(fontSize: 20)),
+              RaisedButton(onPressed: () {})
             ],
           );
         } else if (snapshot.hasError) {
@@ -112,7 +120,65 @@ class _BookingPageState extends State<BookingPage> {
     );
   }
 
-  // FutureBuilder<List<Catagories>> buildFutureCataBuilder() {
+  // FutureBuilder<List<Catagories?>> buildFutureCataBuilder() {
+  //   return FutureBuilder<List<Catagories?>>(
+  //       future: futureCata,
+  //       builder:
+  //           (BuildContext context, AsyncSnapshot<List<Catagories?>> snapshot) {
+  //         if (!snapshot.hasData)
+  //           return CupertinoActivityIndicator(
+  //             animating: true,
+  //           );
+  //         return DropdownButtonFormField<Catagories?>(
+  //           isDense: true,
+  //           // decoration: spinnerDecoration('Select your Cate'),
+  //           items: snapshot.data!
+  //               .map((category) => DropdownMenuItem<Catagories>(
+  //                     child: Text(category!.categoryName),
+  //                     value: category,
+  //                   ))
+  //               .toList(),
+  //           onChanged: (selectedState) {
+  //             setState(() {
+  //               _mySelection2 = null;
+  //               _mySelection = selectedState;
+  //               futureCata =
+  //                   fetchDoc(_mySelection!.id) as Future<List<Catagories?>>;
+  //             });
+  //           },
+  //           value: _mySelection,
+  //         );
+  //       });
+  // }
+
+  // FutureBuilder<List<Doc?>> buildFutureDocBuilder() {
+  //   return FutureBuilder<List<Doc?>>(
+  //       future: futureDoc,
+  //       builder: (BuildContext context, AsyncSnapshot<List<Doc?>> snapshot) {
+  //         if (!snapshot.hasData)
+  //           return CupertinoActivityIndicator(
+  //             animating: true,
+  //           );
+  //         return DropdownButtonFormField<Doc?>(
+  //           isDense: true,
+  //           // decoration: spinnerDecoration('Select your Cate'),
+  //           items: snapshot.data!
+  //               .map((category) => DropdownMenuItem<Doc?>(
+  //                     child: Text(category!.name),
+  //                     value: category,
+  //                   ))
+  //               .toList(),
+  //           onChanged: (selectedValue) {
+  //             setState(() {
+  //               _mySelection2 = selectedValue;
+  //             });
+  //           },
+  //           value: _mySelection2,
+  //         );
+  //       });
+  // }
+
+  // FutureBuilder<List<Catagories>> buildFutureCateBuilder() {
   //   return FutureBuilder<List<Catagories>>(
   //     future: futureCata,
   //     builder: (context, snapshot) {
@@ -124,8 +190,8 @@ class _BookingPageState extends State<BookingPage> {
   //       child: new DropdownButton(
   //         items: cata.map((item) {
   //           return new DropdownMenuItem(
-  //             child: new Text(item['item_name']),
-  //             value: item['id'].toString(),
+  //             child: new Text(item.categoryName),
+  //             value: item.id.toString(),
   //           );
   //         }).toList(),
   //         onChanged: (newVal) {
@@ -146,5 +212,5 @@ class _BookingPageState extends State<BookingPage> {
   //       return const CircularProgressIndicator();
   //     },
   //   );
-  //}
+  // }
 }

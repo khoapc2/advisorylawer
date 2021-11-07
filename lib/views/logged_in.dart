@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 
 class LoggedIn extends StatelessWidget {
   final user = FirebaseAuth.instance.currentUser!;
-
+  
   Users? users;
   getUser(BuildContext context) async {
     final provider = Provider.of<GoogleSignInProvider>(context, listen: false);

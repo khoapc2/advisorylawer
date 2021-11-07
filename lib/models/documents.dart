@@ -4,9 +4,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-Future<List<Doc>> fetchDoc() async {
+Future<List<Doc>> fetchDoc(int cateid) async {
   final response = await http.get(Uri.parse(
-      'https://104.215.186.78/api/v1/documents?page_index=1&page_size=5'));
+      'https://104.215.186.78/api/v1/documents?category_id=$cateid&page_index=1&page_size=10'));
 
   print(response);
 
