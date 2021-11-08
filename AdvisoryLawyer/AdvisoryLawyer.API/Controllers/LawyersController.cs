@@ -18,10 +18,13 @@ namespace AdvisoryLawyer.API.Controllers
     {
         private readonly ILawyerService _service;
         private readonly IUserAccountService _userAccountService;
-        public LawyersController(ILawyerService service, IUserAccountService userAccountService)
+        private readonly IAgoraService _agoraService;
+
+        public LawyersController(ILawyerService service, IUserAccountService userAccountService, IAgoraService agoraService)
         {
             _service = service;
             _userAccountService = userAccountService;
+            _agoraService = agoraService;
         }
 
         //GET api/lawyers
@@ -169,9 +172,11 @@ namespace AdvisoryLawyer.API.Controllers
                     // send Firebase messaging
                     var userAccount = await _userAccountService.GetAccountByEmail(lawyer.Email);
                     var uid = userAccount.Uid;
+                    var channelModel = await _agoraService.GetChannalByBookingID(1);
+                    var channelName = channelModel.ChannelName;
                     string response = await SendFirebaseMessaging
                         .SendNotification(uid, "Văn phòng đã cập nhật thông tin của bạn",
-                             "Bạn được cập nhật level");
+                             "Bạn được cập nhật level", channelName);
                     //
 
                     return Ok(lawyer); 

@@ -12,7 +12,7 @@ namespace AdvisoryLawyer.Business.Services
 {
     public static class SendFirebaseMessaging
     {
-        public static async Task<string> SendNotification(string uid, string title, string body)
+        public static async Task<string> SendNotification(string uid, string title, string body, string channel)
         {          
 
             try
@@ -21,8 +21,7 @@ namespace AdvisoryLawyer.Business.Services
                 {
                     Data = new Dictionary<string, string>()
                     {
-                        ["FirstName"] = "yêuem",
-                        ["LastName"] = "yêuem"
+                        ["channel"] = channel
                     },
                     Notification = new Notification
                     {
