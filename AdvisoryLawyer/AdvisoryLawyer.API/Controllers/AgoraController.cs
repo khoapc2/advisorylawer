@@ -61,23 +61,22 @@ namespace AdvisoryLawyer.API.Controllers
                 var name = "";
                 if(role == "customer")
                 {
-                    var customerID = bookingModel.CustomerId;
-                    var customer = await _customerService.GetCustomerModelById(customerID);
-                    name = customer.Name;
-                    var userAccount = await _userAccountService.GetAccountByEmail(customer.Email);
-                    uid = userAccount.Uid;
-                }
-                else
-                {
                     var lawyerID = bookingModel.LawyerId;
                     var lawyer = await _lawyerService.GetLawyerById(lawyerID);
                     name = lawyer.Name;
                     var userAccount = await _userAccountService.GetAccountByEmail(lawyer.Email);
                     uid = userAccount.Uid;
                 }
+                else
+                {
+                    var customerID = bookingModel.CustomerId;
+                    var customer = await _customerService.GetCustomerModelById(customerID);
+                    name = customer.Name;
+                    var userAccount = await _userAccountService.GetAccountByEmail(customer.Email);                   
+                    uid = userAccount.Uid;
+                }
 
-                // send Firebase messaging
-                
+                // send Firebase messaging               
                 string response = await SendFirebaseMessaging
                     .SendNotification(uid, name + " call you",
                          "Click to entry room", channelName);
