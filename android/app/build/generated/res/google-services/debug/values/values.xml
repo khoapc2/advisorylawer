@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">71355061912-7icu8bptfn0emnqoaidhealpknkuru3r.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">71355061912</string>
+    <string name="google_api_key" translatable="false">AIzaSyACsfrtSDiEndGv1GCnIl_VYX4Pr4ltY4k</string>
+    <string name="google_app_id" translatable="false">1:71355061912:android:8cf6793083d7ac78c422ed</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyACsfrtSDiEndGv1GCnIl_VYX4Pr4ltY4k</string>
+    <string name="google_storage_bucket" translatable="false">advisory-lawyer.appspot.com</string>
+    <string name="project_id" translatable="false">advisory-lawyer</string>
+</resources>
