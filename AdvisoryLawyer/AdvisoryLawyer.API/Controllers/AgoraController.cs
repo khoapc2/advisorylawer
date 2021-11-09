@@ -59,19 +59,19 @@ namespace AdvisoryLawyer.API.Controllers
                 var role = callRequest.Role;
                 var uid = "";
                 var name = "";
-                if(role == "customer")
+                var lawyerID = bookingModel.LawyerId;
+                var lawyer = await _lawyerService.GetLawyerById(lawyerID);
+                var customerID = bookingModel.CustomerId;
+                var customer = await _customerService.GetCustomerModelById(customerID);
+                if (role == "customer")
                 {
-                    var lawyerID = bookingModel.LawyerId;
-                    var lawyer = await _lawyerService.GetLawyerById(lawyerID);
-                    name = lawyer.Name;
+                    name = customer.Name;
                     var userAccount = await _userAccountService.GetAccountByEmail(lawyer.Email);
                     uid = userAccount.Uid;
                 }
                 else
                 {
-                    var customerID = bookingModel.CustomerId;
-                    var customer = await _customerService.GetCustomerModelById(customerID);
-                    name = customer.Name;
+                    name = lawyer.Name;                  
                     var userAccount = await _userAccountService.GetAccountByEmail(customer.Email);                   
                     uid = userAccount.Uid;
                 }
