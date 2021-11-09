@@ -98,7 +98,7 @@ class _WelcomePageState extends State<WelcomePage> {
                       ));
                     }
                   },
-                  child: Text('continue')),
+                  child: Text('Continue')),
               TextButton(
                   onPressed: () {
                     final provider = Provider.of<GoogleSignInProvider>(context,

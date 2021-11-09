@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import 'firebase_messaging.dart';
+
 class GoogleSignInProvider extends ChangeNotifier {
   final googleSignIn = GoogleSignIn();
 
@@ -51,6 +53,9 @@ class GoogleSignInProvider extends ChangeNotifier {
 
       InforUser inforUser = new InforUser();
       inforUser.setUserInfo(user);
+
+      var uid = FirebaseAuth.instance.currentUser!.uid;
+      await HandleMessagingFirebase.receiveMessagingFromServer(uid);
 
       return user;
     } catch (e) {
