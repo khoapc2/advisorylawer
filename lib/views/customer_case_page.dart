@@ -1,10 +1,13 @@
 import 'dart:io';
 
 import 'package:advisories_lawyer/lawyer/model_lawyer/category.dart';
+
 import 'package:advisories_lawyer/models/catagories.dart';
 import 'package:advisories_lawyer/models/customer_case.dart';
 import 'package:advisories_lawyer/models/documents.dart';
 import 'package:advisories_lawyer/models/lawyer.dart';
+import 'package:advisories_lawyer/models/network_lawyer/network_request.dart';
+import 'package:advisories_lawyer/models/order.dart';
 import 'package:advisories_lawyer/models/users.dart';
 import 'package:advisories_lawyer/views/lawyer_list_page.dart';
 import 'package:advisories_lawyer/views/lawyer_page.dart';
@@ -31,8 +34,8 @@ class _CustomerCasePageState extends State<CustomerCasePage> {
     // futureCata = fetchCatagories();
   }
 
-  final TextEditingController _controller = TextEditingController();
-  final TextEditingController _controller2 = TextEditingController();
+  final TextEditingController _controllerTitle = TextEditingController();
+  final TextEditingController _controllerDes = TextEditingController();
   Future<CustomerCase>? _futureCustomerCase;
 
   @override
@@ -73,12 +76,12 @@ class _CustomerCasePageState extends State<CustomerCasePage> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         TextField(
-          controller: _controller,
+          controller: _controllerTitle,
           decoration: const InputDecoration(
               border: OutlineInputBorder(), hintText: 'Tiêu đề'),
         ),
         TextField(
-          controller: _controller2,
+          controller: _controllerDes,
           decoration: const InputDecoration(
               border: OutlineInputBorder(), hintText: 'Vẫn đề của bạn'),
         ),
@@ -86,7 +89,7 @@ class _CustomerCasePageState extends State<CustomerCasePage> {
           onPressed: () {
             setState(() {
               _futureCustomerCase =
-                  createCustomerCase(_controller.text, _controller2.text);
+                  createCustomerCase(_controllerTitle.text, _controllerDes.text);
             });
           },
           child: const Text('Submit'),
@@ -113,11 +116,15 @@ class _CustomerCasePageState extends State<CustomerCasePage> {
                   style: TextStyle(fontSize: 20)),
               RaisedButton(
                 onPressed: () {
+                  CustomerCase cusCase=CustomerCase(id: 0,name: snapshot.data!.name,description: snapshot.data!.description);
+
+                  //print("CUS"+customerCaseDTO.id.toString());
+
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              LawyerListPage(doc.category_id)));
+                              LawyerListPage(doc.category_id, cusCase)));
                 },
                 child: Text("Chọn Luật sư"),
               ),

@@ -4,6 +4,7 @@ import 'package:advisories_lawyer/provider/google_sign_in.dart';
 import 'package:advisories_lawyer/views/home_page.dart';
 import 'package:advisories_lawyer/views/login_page.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';

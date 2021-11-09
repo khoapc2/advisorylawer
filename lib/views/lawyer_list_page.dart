@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:advisories_lawyer/models/customer_case.dart';
 import 'package:advisories_lawyer/models/documents.dart';
 import 'package:advisories_lawyer/models/lawyer.dart';
 import 'package:advisories_lawyer/views/booking_page.dart';
@@ -12,16 +13,19 @@ import 'package:http/http.dart' as http;
 
 class LawyerListPage extends StatefulWidget {
   final int categoryID;
-  const LawyerListPage(this.categoryID);
+
+  final CustomerCase customerCase;
+  const LawyerListPage(this.categoryID, this.customerCase);
 
   @override
-  _LawyerPageState createState() => _LawyerPageState(categoryID: categoryID);
+  _LawyerPageState createState() => _LawyerPageState(categoryID: categoryID, customerCase: customerCase);
 }
 
 class _LawyerPageState extends State<LawyerListPage> {
   late Future<List<Lawyer>> futureLawyer;
   late final int categoryID;
-  _LawyerPageState({required this.categoryID});
+  late final CustomerCase customerCase;
+  _LawyerPageState({required this.categoryID, required this.customerCase});
   @override
   void initState() {
     super.initState();
@@ -54,12 +58,12 @@ class _LawyerPageState extends State<LawyerListPage> {
                           padding: const EdgeInsets.symmetric(vertical: 10),
                           child: InkWell(
                             onTap: () {
+                              
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => LawyerListSchedule(
-                                          lawyer[index].id,
-                                          lawyer[index].categoryIds)));
+                                          lawyer[index].id, customerCase)));
                             },
                             child: Card(
                               child: ListTile(

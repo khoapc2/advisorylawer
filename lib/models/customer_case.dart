@@ -29,12 +29,19 @@ Future<CustomerCase> createCustomerCase(String name, String description) async {
 }
 
 class CustomerCase {
+  final int id;
   final String name;
   final String description;
 
-  CustomerCase({required this.name, required this.description});
+  CustomerCase({required this.id,required this.name, required this.description});
 
   factory CustomerCase.fromJson(Map<String, dynamic> json) {
-    return CustomerCase(name: json['name'], description: json['description']);
+    return CustomerCase(id: json['id'],name: json['name'], description: json['description']);
+  }
+
+  @override
+  String toString() {
+    // TODO: implement toString
+    return "CustomerCase: "+id.toString()+"-"+name+"-"+description;
   }
 }

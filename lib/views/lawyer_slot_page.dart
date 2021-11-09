@@ -1,7 +1,9 @@
 import 'dart:ui';
 
 import 'package:advisories_lawyer/lawyer/addslot.dart';
+import 'package:advisories_lawyer/lawyer/infor_user.dart';
 import 'package:advisories_lawyer/lawyer/model_lawyer/slot.dart';
+import 'package:advisories_lawyer/models/customer_case.dart';
 import 'package:advisories_lawyer/models/lawyer.dart';
 import 'package:advisories_lawyer/models/network_lawyer/network_request.dart';
 import 'package:advisories_lawyer/views/booking_page.dart';
@@ -15,17 +17,18 @@ import 'package:table_calendar/table_calendar.dart';
 
 class LawyerListSchedule extends StatefulWidget {
   late int lawyerID;
-  late List<int> cateID;
-  LawyerListSchedule(this.lawyerID, this.cateID);
+  late CustomerCase customerCase;
+
+  LawyerListSchedule(this.lawyerID,this.customerCase);
   @override
   _LawyerListSheduleState createState() =>
-      _LawyerListSheduleState(lawyerID: lawyerID, cateID: cateID);
+      _LawyerListSheduleState(lawyerID: lawyerID,customerCase: customerCase);
 }
 
 class _LawyerListSheduleState extends State<LawyerListSchedule> {
-  _LawyerListSheduleState({required this.lawyerID, required this.cateID});
-  late List<int> cateID;
+  _LawyerListSheduleState({required this.lawyerID, required this.customerCase});
   late int lawyerID;
+  late CustomerCase customerCase;
   List<SlotDTO> slotData = <SlotDTO>[];
   @override
   void initState() {
@@ -138,7 +141,7 @@ class _LawyerListSheduleState extends State<LawyerListSchedule> {
                           if (slotData[index].bookingId == 0) {
                             Navigator.push(context, MaterialPageRoute(
                               builder: (context) {
-                                return BookingPage(cateID);
+                                return BookingPage(lawyerID,customerCase,slotData[index]);
                               },
                             ));
                           } else {

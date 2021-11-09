@@ -50,6 +50,7 @@ class _DocPageState extends State<DocPage> {
                             builder: (context) => CustomerCasePage(),
                             settings: RouteSettings(
                               arguments: doc[index],
+                            
                             ),
                           ));
                     },
