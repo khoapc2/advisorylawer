@@ -38,8 +38,10 @@ namespace AdvisoryLawyer.Business.Services
 
         public async Task DeleteSlot(int id)
         {
-            await _genericRepository.DeleteAsync(id);
-            await _genericRepository.SaveAsync();
+            var slott = await _genericRepository.FindAsync(s => s.Id == id);
+            slott.Status = 0;
+            await _genericRepository.UpdateAsync(slott);
+
         }
 
         public IPagedList<SlotModel> GetAllSlot(SlotRequest request, SlotSortBy sortBy, OrderBy orderBy, int pageIndex, int pageSize)
@@ -93,9 +95,15 @@ namespace AdvisoryLawyer.Business.Services
 
         public async Task<SlotModel> UpdateSlot(SlotRequest slot)
         {
-            var newSlot = _mapper.Map<Slot>(slot);
-            await _genericRepository.UpdateAsync(newSlot);
-            return _mapper.Map<SlotModel>(newSlot);
+            //var newSlot = _mapper.Map<Slot>(slot);
+            //await _genericRepository.UpdateAsync(newSlot);
+            //return _mapper.Map<SlotModel>(newSlot);
+
+            var slott = await _genericRepository.FindAsync(s => s.Id == slot.id);
+            if (slott == null) return null;
+            slott.BookingId = slot.booking_id;
+            await _genericRepository.UpdateAsync(slott);
+            return _mapper.Map<SlotModel>(slott);
         }
     }
 }

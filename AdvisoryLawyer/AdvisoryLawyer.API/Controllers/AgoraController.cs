@@ -47,8 +47,8 @@ namespace AdvisoryLawyer.API.Controllers
         }
 
         //[Authorize]
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetChannelByBookingID(CallRequest callRequest)
+        [HttpPost("call")]
+        public async Task<IActionResult> GetChannelByBookingID([FromBody] CallRequest callRequest)
         {
             try
             {

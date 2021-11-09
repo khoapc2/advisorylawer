@@ -71,7 +71,7 @@ namespace AdvisoryLawyer.API.Controllers
             }
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPut]
         public async Task<IActionResult> UpdateSlot([FromBody] SlotRequest newSlot)
         {
@@ -83,7 +83,7 @@ namespace AdvisoryLawyer.API.Controllers
             catch (Exception ex)
             {
                 //logging
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
         }
 

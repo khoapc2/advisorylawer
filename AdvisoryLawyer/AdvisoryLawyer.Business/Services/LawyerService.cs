@@ -115,7 +115,7 @@ namespace AdvisoryLawyer.Business.Services
             return _mapper.Map<LawyerModel>(lawyer);
         }
 
-        public async Task<LawyerModel> GetLawyerById(int id)
+        public async Task<LawyerModel> GetLawyerById(int? id)
         {
             var lawyer = await _genericRepository.GetAllByIQueryable()
                 .Where(x => x.Id == id && x.Status == (int)LawyerStatus.Active)
