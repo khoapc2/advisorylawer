@@ -14,7 +14,7 @@ namespace AdvisoryLawyer.Business.IServices
     {
         IPagedList<LawyerModel> GetAllLawyers(LawyerRequest filter,
             LawyerSortBy sortBy, OrderBy order, int pageIndex, int pageSize);
-        Task<LawyerModel> GetLawyerById(int id);
+        Task<LawyerModel> GetLawyerById(int? id);
         Task<LawyerModel> CreateLawyer(LawyerRequest lawyerRequest);
         Task<LawyerModel> UpdateLawyer(LawyerUpdate lawyerUpdate);
         Task<bool> DeleteLawyer(int id);

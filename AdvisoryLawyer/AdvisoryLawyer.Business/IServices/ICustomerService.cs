@@ -12,7 +12,7 @@ namespace AdvisoryLawyer.Business.IServices
 {
     public interface ICustomerService
     {
-        Task<CustomerModel> GetCustomerModelById(int id);
+        Task<CustomerModel> GetCustomerModelById(int? id);
         IPagedList<CustomerModel> GetAllAdvisory(CustomerModel flitter, int pageIndex,
            int pageSize, CustomerModelSortBy sortBy, OrderBy order);
         Task<CustomerModel> CreateCustomerModel(CreateCustomerModelRequest request);

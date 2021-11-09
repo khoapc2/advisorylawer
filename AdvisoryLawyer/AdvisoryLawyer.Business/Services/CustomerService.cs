@@ -48,7 +48,7 @@ namespace AdvisoryLawyer.Business.Services
             return true;
         }
 
-        public async Task<CustomerModel> GetCustomerModelById(int id)
+        public async Task<CustomerModel> GetCustomerModelById(int? id)
         {
             var Customer = await _res.FindAsync(x => x.Id == id && x.Status == (int)CustomerStatus.Active);
             if (Customer == null)
