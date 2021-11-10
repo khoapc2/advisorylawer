@@ -133,7 +133,6 @@ export default {
   },
   mounted() {
     this.$store.dispatch("lawyer/getListLawyer");
-    // this.$store.dispatch("lawyer/officeOption");
   },
 };
 </script>

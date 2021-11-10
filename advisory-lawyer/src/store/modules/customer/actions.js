@@ -1,4 +1,5 @@
 import axios from "axios";
+const link = "https://104.215.186.78/";
 
 export default {
     //Management Customer
@@ -18,7 +19,7 @@ export default {
   getUserListApi(context) {
     axios({
       method: "GET",
-      url: "https://104.215.186.78/api/v1/user-accounts?role=customer&page_index=1&page_size=10",
+      url: link + "api/v1/user-accounts?role=customer&page_index=1&page_size=10",
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
@@ -31,7 +32,7 @@ export default {
   changeStatusUser(context, id) {
     axios({
       method: "PUT",
-      url: "https://104.215.186.78/api/v1/user-accounts/change-status/",
+      url: link + "api/v1/user-accounts/change-status/",
       data: {
         id: `${id}`,
       },
@@ -48,7 +49,7 @@ export default {
   updateCustomerRole(context, { id, role }) {
     axios({
       method: "PUT",
-      url: "https://104.215.186.78/api/v1/user-accounts",
+      url:  link + "api/v1/user-accounts",
       data: {
         id: `${id}`,
         role: `${role}`,
@@ -67,7 +68,7 @@ export default {
     if (inpEmail !== null && inpName !== null) {
       axios({
         method: "POST",
-        url: "https://104.215.186.78/api/v1/user-accounts",
+        url: link + "api/v1/user-accounts",
         data: {
           name: `${inpName}`,
           email: `${inpEmail}`,
@@ -91,7 +92,7 @@ export default {
       axios({
         method: "POST",
         url:
-          "https://104.215.186.78/api/v1/customers/details",
+        link + "api/v1/customers/details",
         data:{
           email: `${email}`
         },
@@ -113,7 +114,7 @@ export default {
     axios({
       method: "GET",
       url:
-      "https://104.215.186.78/api/v1/user-accounts?name="+username+"&role="+role+"&page_index="+pageIndex+"&page_size="+pageSize,
+      link + "api/v1/user-accounts?name="+username+"&role="+role+"&page_index="+pageIndex+"&page_size="+pageSize,
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
@@ -129,7 +130,7 @@ export default {
     axios({
       method: "GET",
       url:
-      "https://104.215.186.78/api/v1/user-accounts?role=customer&status="+status+"&page_index="+pageIndex+"&page_size="+pageSize,
+      link + "api/v1/user-accounts?role=customer&status="+status+"&page_index="+pageIndex+"&page_size="+pageSize,
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
@@ -146,7 +147,7 @@ export default {
     axios({
       method: "GET",
       url:
-      "https://104.215.186.78/api/v1/user-accounts?email="+ email +"&role=customer&page_index="+ pageIndex +"&page_size=" + pageSize,
+      link +"api/v1/user-accounts?email="+ email +"&role=customer&page_index="+ pageIndex +"&page_size=" + pageSize,
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: `Bearer ${localStorage.getItem("tokenID")}`,

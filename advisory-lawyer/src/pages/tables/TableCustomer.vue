@@ -154,7 +154,7 @@ export default {
     if (localStorage.getItem("role") !== "admin") {
       this.$router.push("/");
     } else {
-      // this.$store.dispatch("getUserListApi");
+      this.$store.dispatch("customer/getUserListApi");
     }
   },
   computed: {
@@ -215,7 +215,9 @@ export default {
         console.log(err)
       }
     },
-
+    mounted() {
+      this.$store.dispatch("customer/getUserListApi");
+    },
   },
 };
 </script>

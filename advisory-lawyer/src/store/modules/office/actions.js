@@ -1,4 +1,5 @@
 import axios from "axios";
+const link = "https://104.215.186.78/";
 
 export default {
   //Officer
@@ -8,8 +9,8 @@ export default {
     const pageIndex = 1;
     axios({
       method: "GET",
-      url:
-      "https://104.215.186.78/api/v1/lawyer-offices?page_index=" + pageIndex + "&page_size=" + pageSize,
+      url: 
+      link + "api/v1/lawyer-offices?page_index=" + pageIndex + "&page_size=" + pageSize,
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
@@ -26,7 +27,7 @@ export default {
     axios({
       method: "GET",
       url:
-      "https://104.215.186.78/api/v1/user-accounts?name="+username+"&role="+role+"&page_index="+pageIndex+"&page_size="+pageSize,
+      link + "api/v1/user-accounts?name="+username+"&role="+role+"&page_index="+pageIndex+"&page_size="+pageSize,
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
@@ -42,7 +43,7 @@ export default {
     axios({
       method: "GET",
       url:
-      "https://104.215.186.78/api/v1/user-accounts?role=lawyer_office&status="+status+"&page_index="+pageIndex+"&page_size="+pageSize,
+      link + "api/v1/user-accounts?role=lawyer_office&status="+status+"&page_index="+pageIndex+"&page_size="+pageSize,
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
@@ -58,7 +59,7 @@ export default {
     axios({
       method: "GET",
       url:
-      "https://104.215.186.78/api/v1/user-accounts?email="+ email +"&role=lawyer_office&page_index="+ pageIndex +"&page_size=" + pageSize,
+      link + "api/v1/user-accounts?email="+ email +"&role=lawyer_office&page_index="+ pageIndex +"&page_size=" + pageSize,
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
@@ -73,7 +74,7 @@ export default {
       axios({
         method: "POST",
         url:
-          "https://104.215.186.78/api/v1/lawyer-offices/details",
+        link + "api/v1/lawyer-offices/details",
         data:{
           email: `${email}`
         },
@@ -91,7 +92,7 @@ export default {
     axios({
       method: "GET",
       url:
-        "https://104.215.186.78/api/v1/user-accounts?role=lawyer_office&page_index=1",
+      link + "api/v1/user-accounts?role=lawyer_office&page_index=1",
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
@@ -104,7 +105,7 @@ export default {
   changeStatusOfficer(context, id) {
     axios({
       method: "PUT",
-      url: "https://104.215.186.78/api/v1/user-accounts/change-status",
+      url: link + "api/v1/user-accounts/change-status",
       data: {
         id: `${id}`,
       },
@@ -124,7 +125,7 @@ export default {
     if (inpEmail !== null && inpName !== null) {
       axios({
         method: "POST",
-        url: "https://104.215.186.78/api/v1/user-accounts",
+        url: link + "api/v1/user-accounts",
         data: {
           name: `${inpName}`,
           email: `${inpEmail}`,
@@ -150,7 +151,7 @@ export default {
     axios({
       method: "GET",
       url:
-      "https://104.215.186.78/api/v1/lawyers?lawyer_office_id="+ id + "&name="+name+"&page_size=" + pageSize,
+      link + "api/v1/lawyers?lawyer_office_id="+ id + "&name="+name+"&page_size=" + pageSize,
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
@@ -166,7 +167,7 @@ export default {
     axios({
       method: "GET",
       url:
-      "https://104.215.186.78/api/v1/lawyers?lawyer_office_id="+ id + "&level_id="+level+"&page_size=" + pageSize,
+      link + "api/v1/lawyers?lawyer_office_id="+ id + "&level_id="+level+"&page_size=" + pageSize,
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
@@ -183,7 +184,7 @@ export default {
     axios({
       method: "GET",
       url:
-      "https://104.215.186.78/api/v1/lawyers?lawyer_office_id="+ id + "&email="+email+"&page_size=" + pageSize,
+      link + "api/v1/lawyers?lawyer_office_id="+ id + "&email="+email+"&page_size=" + pageSize,
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
@@ -200,7 +201,7 @@ export default {
       axios({
         method: "GET",
         url:
-          "https://104.215.186.78/api/v1/lawyers?lawyer_office_id="+ id + "&page_size=" + pageSize,
+        link + "api/v1/lawyers?lawyer_office_id="+ id + "&page_size=" + pageSize,
         headers: {
           "Content-Type": "application/json; charset=utf-8",
           Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
@@ -217,7 +218,7 @@ export default {
       axios({
         method: "GET",
         url:
-          "https://104.215.186.78/api/v1/lawyer-offices/" + id,
+        link + "api/v1/lawyer-offices/" + id,
         headers: {
           "Content-Type": "application/json; charset=utf-8",
           Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
@@ -232,7 +233,7 @@ export default {
     const id = localStorage.getItem('id');
     axios({
       method: "PUT",
-      url: "https://104.215.186.78/api/v1/lawyer-offices",
+      url: link + "api/v1/lawyer-offices",
       data: {
         id: `${id}`,
         name: `${user.name}`,
@@ -257,7 +258,7 @@ export default {
   removeLawyerFromOffice(context, idLawyer){
     axios({
       method: "PUT",
-      url: "https://104.215.186.78/api/v1/lawyers/remove-out-of-office",
+      url: link + "api/v1/lawyers/remove-out-of-office",
       data: {
         id: `${idLawyer}`,
       },
@@ -275,7 +276,7 @@ export default {
   updateLevelLawyer(context, user){
     axios({
       method: "PUT",
-      url: "https://104.215.186.78/api/v1/lawyers/update-level",
+      url: link + "api/v1/lawyers/update-level",
       data: {
         lawyer_id: `${user.id}`,
         level_id: `${user.level_id}`,
@@ -295,7 +296,7 @@ export default {
     const pageSize = 20
     axios({
       method: "GET",
-      url: "https://104.215.186.78/api/v1/levels?page_index=1&page_size=" + pageSize,
+      url: link + "api/v1/levels?page_index=1&page_size=" + pageSize,
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
@@ -312,7 +313,7 @@ export default {
     console.log(lawyer_email)
     axios({
       method: "PUT",
-      url: "https://104.215.186.78/api/v1/lawyers/add-to-office",
+      url: link + "api/v1/lawyers/add-to-office",
       data: {
         "office_id": `${officeID}`,
         "lawyer_email": `${lawyer_email}`
@@ -327,7 +328,4 @@ export default {
       }
     });
   },
-
-
-
 }

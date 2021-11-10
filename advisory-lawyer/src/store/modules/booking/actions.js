@@ -9,7 +9,7 @@ export default {
     const pageSize = 50;
     axios({
       method: "GET",
-      url: "https://104.215.186.78/api/v1/bookings?pageIndex=" + pageIndex + "&pageSize=" + pageSize,
+      url: link + "api/v1/bookings?pageIndex=" + pageIndex + "&pageSize=" + pageSize,
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: `Bearer ${localStorage.getItem("tokenID")}`,

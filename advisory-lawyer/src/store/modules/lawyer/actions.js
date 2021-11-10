@@ -1,5 +1,6 @@
 
 import axios from "axios";
+const link = "https://104.215.186.78/";
 
 export default {
     //Lawyer
@@ -10,7 +11,7 @@ export default {
     axios({
       method: "GET",
       url:
-      "https://104.215.186.78/api/v1/user-accounts?name="+username+"&role="+role+"&page_index="+pageIndex+"&page_size="+pageSize,
+      link + "api/v1/user-accounts?name="+username+"&role="+role+"&page_index="+pageIndex+"&page_size="+pageSize,
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
@@ -26,7 +27,7 @@ export default {
     axios({
       method: "GET",
       url:
-      "https://104.215.186.78/api/v1/user-accounts?role=lawyer&status="+status+"&page_index="+pageIndex+"&page_size="+pageSize,
+      link + "api/v1/user-accounts?role=lawyer&status="+status+"&page_index="+pageIndex+"&page_size="+pageSize,
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
@@ -42,7 +43,7 @@ export default {
     axios({
       method: "GET",
       url:
-      "https://104.215.186.78/api/v1/user-accounts?email="+ email +"&role=lawyer&page_index="+ pageIndex +"&page_size=" + pageSize,
+      link + "api/v1/user-accounts?email="+ email +"&role=lawyer&page_index="+ pageIndex +"&page_size=" + pageSize,
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
@@ -58,7 +59,7 @@ export default {
       axios({
         method: "POST",
         url:
-          "https://104.215.186.78/api/v1/lawyers/details",
+        link + "api/v1/lawyers/details",
         data:{
           email: `${email}`
         },
@@ -76,7 +77,7 @@ export default {
     axios({
       method: "GET",
       url:
-        "https://104.215.186.78/api/v1/user-accounts?role=lawyer&page_index=1",
+      link + "api/v1/user-accounts?role=lawyer&page_index=1",
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
@@ -89,7 +90,7 @@ export default {
   changeStatusLawyer(context, id) {
     axios({
       method: "PUT",
-      url: "https://104.215.186.78/api/v1/user-accounts/change-status",
+      url: link + "api/v1/user-accounts/change-status",
       data: {
         id: `${id}`,
       },
@@ -109,7 +110,7 @@ export default {
     if (inpEmail !== null && inpName !== null) {
       axios({
         method: "POST",
-        url: "https://104.215.186.78/api/v1/user-accounts",
+        url: link + "api/v1/user-accounts",
         data: {
           name: `${inpName}`,
           email: `${inpEmail}`,

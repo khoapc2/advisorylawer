@@ -1,4 +1,5 @@
 import axios from "axios";
+const link = "https://104.215.186.78/";
 
 export default {
   //Unrole User
@@ -9,7 +10,7 @@ export default {
     axios({
       method: "GET",
       url:
-      "https://104.215.186.78/api/v1/user-accounts?name="+username+"&role="+role+"&page_index="+pageIndex+"&page_size="+pageSize,
+      link + "api/v1/user-accounts?name="+username+"&role="+role+"&page_index="+pageIndex+"&page_size="+pageSize,
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
@@ -25,7 +26,7 @@ export default {
     axios({
       method: "GET",
       url:
-      "https://104.215.186.78/api/v1/user-accounts?role=undefined&status="+status+"&page_index="+pageIndex+"&page_size="+pageSize,
+      link + "api/v1/user-accounts?role=undefined&status="+status+"&page_index="+pageIndex+"&page_size="+pageSize,
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
@@ -42,7 +43,7 @@ export default {
     axios({
       method: "GET",
       url:
-      "https://104.215.186.78/api/v1/user-accounts?email="+ email +"&role=undefined&page_index="+ pageIndex +"&page_size=" + pageSize,
+      link + "api/v1/user-accounts?email="+ email +"&role=undefined&page_index="+ pageIndex +"&page_size=" + pageSize,
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
@@ -56,7 +57,7 @@ export default {
     axios({
       method: "GET",
       url:
-        "https://104.215.186.78/api/v1/user-accounts?role=undefined&page_index=1",
+      link + "api/v1/user-accounts?role=undefined&page_index=1",
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         Authorization: `Bearer ${localStorage.getItem("tokenID")}`,
@@ -72,7 +73,7 @@ export default {
     }
     axios({
       method: "PUT",
-      url: "https://104.215.186.78/api/v1/user-accounts",
+      url: link + "api/v1/user-accounts",
       data: {
         id: `${user.id}`,
         name: `${user.name}`,
@@ -93,7 +94,7 @@ export default {
   updateStatusUnrole(context, id){
     axios({
       method: "PUT",
-      url: "https://104.215.186.78/api/v1/user-accounts/change-status/",
+      url: link + "api/v1/user-accounts/change-status/",
       data: {
         id: `${id}`,
       },
